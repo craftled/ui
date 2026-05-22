@@ -228,6 +228,20 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-color-panels",
+      "type": "registry:block",
+      "title": "Color Panels Card",
+      "description": "Pseudo-3D color panels shader (via @paper-design/shaders-react) — semi-transparent slabs rotating around a central axis. Up to 7 colors, density/angle/length/fade/blur/gradient controls. Generative, animated by default.",
+      "dependencies": ["@paper-design/shaders-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-color-panels/featured-color-panels.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "featured-story",
       "type": "registry:block",
       "title": "Featured Story",

@@ -11,6 +11,7 @@ import CtaGradientDemo from "@/registry/new-york/blocks/cta-gradient/cta-gradien
 import CtaNewsletterDemo from "@/registry/new-york/blocks/cta-newsletter/cta-newsletter.demo"
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo"
 import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.demo"
+import FeaturedColorPanelsDemo from "@/registry/new-york/blocks/featured-color-panels/featured-color-panels.demo"
 import FeaturedDitheringDemo from "@/registry/new-york/blocks/featured-dithering/featured-dithering.demo"
 import FeaturedEventDemo from "@/registry/new-york/blocks/featured-event/featured-event.demo"
 import FeaturedFlutedGlassDemo from "@/registry/new-york/blocks/featured-fluted-glass/featured-fluted-glass.demo"
@@ -44,6 +45,7 @@ export const demos: Record<string, ComponentType> = {
   "cta-newsletter": CtaNewsletterDemo,
   "dashboard-finance": DashboardFinanceDemo,
   "dashboard-net-worth": DashboardNetWorthDemo,
+  "featured-color-panels": FeaturedColorPanelsDemo,
   "featured-dithering": FeaturedDitheringDemo,
   "featured-event": FeaturedEventDemo,
   "featured-fluted-glass": FeaturedFlutedGlassDemo,

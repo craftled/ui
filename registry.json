@@ -242,6 +242,20 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-mesh-gradient",
+      "type": "registry:block",
+      "title": "Mesh Gradient Card",
+      "description": "Static mesh gradient shader (via @paper-design/shaders-react) — up to 10 color spots blended with two-direction sine wave distortion. Adjustable blend sharpness, grain, and positions seed. Generative, static by default (speed=0).",
+      "dependencies": ["@paper-design/shaders-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-mesh-gradient/featured-mesh-gradient.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "featured-story",
       "type": "registry:block",
       "title": "Featured Story",

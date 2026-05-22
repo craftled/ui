@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "featured-mesh-gradient",
+  "title": "Mesh Gradient Card",
+  "description": "Static mesh gradient shader (via @paper-design/shaders-react) — up to 10 color spots blended with two-direction sine wave distortion. Adjustable blend sharpness, grain, and positions seed. Generative, static by default (speed=0).",
+  "dependencies": [
+    "@paper-design/shaders-react"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/blocks/featured-mesh-gradient/featured-mesh-gradient.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { StaticMeshGradient } from \"@paper-design/shaders-react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport type FeaturedMeshGradientProps = {\n  /** Up to 10 colors. */\n  colors?: string[]\n  /** Color spot placement seed (0-100). */\n  positions?: number\n  /** Sine wave distortion strength along X (0-1). */\n  waveX?: number\n  /** X-axis wave phase offset (0-1). */\n  waveXShift?: number\n  /** Sine wave distortion strength along Y (0-1). */\n  waveY?: number\n  /** Y-axis wave phase offset (0-1). */\n  waveYShift?: number\n  /** Blending behavior, 0 = hard stripes, 1 = gradual blend (0-1). */\n  mixing?: number\n  /** Grain on shape edges (0-1). */\n  grainMixer?: number\n  /** B/W grain overlay (0-1). */\n  grainOverlay?: number\n  /** Animation speed (0 = static). */\n  speed?: number\n  /** Zoom (0.01-4). */\n  scale?: number\n  /** Rotation (0-360). */\n  rotation?: number\n  /** Horizontal offset (-1 to 1). */\n  offsetX?: number\n  /** Vertical offset (-1 to 1). */\n  offsetY?: number\n  title?: React.ReactNode\n  eyebrow?: React.ReactNode\n  titleClassName?: string\n  children?: React.ReactNode\n  aspectRatio?: string\n  className?: string\n}\n\nconst DEFAULT_COLORS = [\"#ffad0a\", \"#6200ff\", \"#e2a3ff\", \"#ff99fd\"]\n\nexport function FeaturedMeshGradient({\n  colors = DEFAULT_COLORS,\n  positions = 2,\n  waveX = 1,\n  waveXShift = 0.6,\n  waveY = 1,\n  waveYShift = 0.21,\n  mixing = 0.93,\n  grainMixer = 0,\n  grainOverlay = 0,\n  speed = 0,\n  scale = 1,\n  rotation = 270,\n  offsetX = 0,\n  offsetY = 0,\n  title,\n  eyebrow,\n  titleClassName = \"text-white\",\n  children,\n  aspectRatio = \"16/9\",\n  className,\n}: FeaturedMeshGradientProps) {\n  return (\n    <figure\n      className={cn(\n        \"relative isolate overflow-hidden rounded-2xl bg-neutral-900\",\n        className\n      )}\n      style={{ aspectRatio }}\n    >\n      <StaticMeshGradient\n        colors={colors}\n        positions={positions}\n        waveX={waveX}\n        waveXShift={waveXShift}\n        waveY={waveY}\n        waveYShift={waveYShift}\n        mixing={mixing}\n        grainMixer={grainMixer}\n        grainOverlay={grainOverlay}\n        speed={speed}\n        scale={scale}\n        rotation={rotation}\n        offsetX={offsetX}\n        offsetY={offsetY}\n        fit=\"cover\"\n        style={{\n          position: \"absolute\",\n          inset: 0,\n          width: \"100%\",\n          height: \"100%\",\n        }}\n      />\n\n      {children ? (\n        <div className=\"relative z-10 size-full\">{children}</div>\n      ) : null}\n\n      {title || eyebrow ? (\n        <figcaption className=\"absolute right-4 bottom-4 left-4 z-10 flex flex-col gap-1\">\n          {eyebrow ? (\n            <span\n              className={cn(\n                \"text-xs font-medium opacity-80\",\n                titleClassName\n              )}\n            >\n              {eyebrow}\n            </span>\n          ) : null}\n          {title ? (\n            <h3\n              className={cn(\n                \"text-2xl leading-tight font-bold tracking-tight sm:text-3xl\",\n                titleClassName\n              )}\n            >\n              {title}\n            </h3>\n          ) : null}\n        </figcaption>\n      ) : null}\n    </figure>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "featured"
+  ],
+  "type": "registry:block"
+}

@@ -8,6 +8,7 @@ import CtaGradientDemo from "@/registry/new-york/blocks/cta-gradient/cta-gradien
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo"
 import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.demo"
 import FeaturedEventDemo from "@/registry/new-york/blocks/featured-event/featured-event.demo"
+import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo"
 
 export type RegistryItem = {
   name: string
@@ -29,6 +30,7 @@ export const demos: Record<string, ComponentType> = {
   "dashboard-finance": DashboardFinanceDemo,
   "dashboard-net-worth": DashboardNetWorthDemo,
   "featured-event": FeaturedEventDemo,
+  "testimonial-video": TestimonialVideoDemo,
 }
 
 export function getItem(name: string): RegistryItem | null {
@@ -46,6 +48,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   featured: "Featured",
   form: "Forms",
   layout: "Layout",
+  "social-proof": "Social Proof",
 }
 
 export type NavLink = {

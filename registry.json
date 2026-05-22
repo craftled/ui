@@ -101,6 +101,20 @@
         }
       ],
       "categories": ["explainer"]
+    },
+    {
+      "name": "testimonial-video",
+      "type": "registry:block",
+      "title": "Video Testimonial",
+      "description": "Portrait-aspect testimonial card with a poster image, brand chip, play button, pull-quote, author, and client logo. All logos are React slots.",
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/testimonial-video/testimonial-video.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["social-proof"]
     }
   ]
 }

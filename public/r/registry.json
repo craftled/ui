@@ -186,6 +186,20 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-halftone-dots",
+      "type": "registry:block",
+      "title": "Halftone Dots Photo Card",
+      "description": "Single-color halftone dot shader (via @paper-design/shaders-react) — square or hex grids, four dot styles (classic / gooey / holes / soft), grain controls, and an originalColors mode for sampled palettes.",
+      "dependencies": ["@paper-design/shaders-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-halftone-dots/featured-halftone-dots.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "featured-story",
       "type": "registry:block",
       "title": "Featured Story",

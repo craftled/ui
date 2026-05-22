@@ -5,6 +5,7 @@ import CarouselDoDontDemo from "@/registry/new-york/blocks/carousel-do-dont/caro
 import ChartAreaGradientDemo from "@/registry/new-york/blocks/chart-area-gradient/chart-area-gradient.demo"
 import CtaGradientDemo from "@/registry/new-york/blocks/cta-gradient/cta-gradient.demo"
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo"
+import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.demo"
 
 export type RegistryItem = {
   name: string
@@ -23,6 +24,7 @@ export const demos: Record<string, ComponentType> = {
   "chart-area-gradient": ChartAreaGradientDemo,
   "cta-gradient": CtaGradientDemo,
   "dashboard-finance": DashboardFinanceDemo,
+  "dashboard-net-worth": DashboardNetWorthDemo,
 }
 
 export function getItem(name: string): RegistryItem | null {

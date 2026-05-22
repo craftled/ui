@@ -34,6 +34,21 @@
       "categories": ["dashboard", "chart"]
     },
     {
+      "name": "dashboard-net-worth",
+      "type": "registry:block",
+      "title": "Net Worth Dashboard",
+      "description": "Balance card with a sparkline trend and an accounts list. Each account shows a percent-change pill (green up / red down) and the current amount.",
+      "dependencies": ["recharts", "lucide-react"],
+      "registryDependencies": ["chart", "card"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["dashboard", "chart"]
+    },
+    {
       "name": "carousel-do-dont",
       "type": "registry:block",
       "title": "Do/Don't Carousel",

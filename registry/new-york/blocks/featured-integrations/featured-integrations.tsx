@@ -89,15 +89,15 @@ export function FeaturedIntegrations({
           )
         })}
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-10 text-center">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
           {label ? (
-            <p className="text-muted-foreground mb-2 text-sm">{label}</p>
+            <p className="text-muted-foreground mb-3 text-xl">{label}</p>
           ) : null}
-          <div className="text-3xl leading-[1.05] font-bold tracking-tight text-balance sm:text-4xl">
+          <div className="text-6xl leading-[1.02] font-bold tracking-tight text-balance">
             {title}
           </div>
           {description ? (
-            <p className="text-muted-foreground mt-4 max-w-xs text-sm text-balance">
+            <p className="text-muted-foreground mt-6 max-w-md text-xl leading-snug text-balance">
               {description}
             </p>
           ) : null}

@@ -214,6 +214,20 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-grain-gradient",
+      "type": "registry:block",
+      "title": "Grain Gradient Card",
+      "description": "Generative grain-gradient shader (via @paper-design/shaders-react) — no image input, just colors + shape. Seven shapes (wave/dots/truchet/corners/ripple/blob/sphere), up to 7 colors, animated by default. Great for hero backgrounds and OG images.",
+      "dependencies": ["@paper-design/shaders-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-grain-gradient/featured-grain-gradient.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "featured-story",
       "type": "registry:block",
       "title": "Featured Story",

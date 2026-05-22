@@ -14,6 +14,7 @@ import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-wort
 import FeaturedDitheringDemo from "@/registry/new-york/blocks/featured-dithering/featured-dithering.demo"
 import FeaturedEventDemo from "@/registry/new-york/blocks/featured-event/featured-event.demo"
 import FeaturedFlutedGlassDemo from "@/registry/new-york/blocks/featured-fluted-glass/featured-fluted-glass.demo"
+import FeaturedGrainGradientDemo from "@/registry/new-york/blocks/featured-grain-gradient/featured-grain-gradient.demo"
 import FeaturedHalftoneDemo from "@/registry/new-york/blocks/featured-halftone/featured-halftone.demo"
 import FeaturedHalftoneDotsDemo from "@/registry/new-york/blocks/featured-halftone-dots/featured-halftone-dots.demo"
 import FeaturedIntegrationsDemo from "@/registry/new-york/blocks/featured-integrations/featured-integrations.demo"
@@ -46,6 +47,7 @@ export const demos: Record<string, ComponentType> = {
   "featured-dithering": FeaturedDitheringDemo,
   "featured-event": FeaturedEventDemo,
   "featured-fluted-glass": FeaturedFlutedGlassDemo,
+  "featured-grain-gradient": FeaturedGrainGradientDemo,
   "featured-halftone": FeaturedHalftoneDemo,
   "featured-halftone-dots": FeaturedHalftoneDotsDemo,
   "featured-integrations": FeaturedIntegrationsDemo,

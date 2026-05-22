@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { Github } from "lucide-react"
 
+import { ThemeToggle } from "@/components/theme-toggle"
+
 export function SiteHeader() {
   return (
     <header className="bg-background/80 sticky top-0 z-40 w-full border-b backdrop-blur-sm">
@@ -31,6 +33,7 @@ export function SiteHeader() {
             <Github className="size-4" />
             <span className="hidden sm:inline">GitHub</span>
           </a>
+          <ThemeToggle />
         </nav>
       </div>
     </header>

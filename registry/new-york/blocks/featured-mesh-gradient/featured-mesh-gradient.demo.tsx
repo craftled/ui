@@ -70,6 +70,45 @@ const PRESETS: Record<string, Params> = {
   },
 }
 
+function hslToHex(h: number, s: number, l: number): string {
+  l /= 100
+  const a = (s / 100) * Math.min(l, 1 - l)
+  const f = (n: number) => {
+    const k = (n + h / 30) % 12
+    const color = l - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)))
+    return Math.round(255 * color)
+      .toString(16)
+      .padStart(2, "0")
+  }
+  return `#${f(0)}${f(8)}${f(4)}`
+}
+
+function randomPalette(count: number): string[] {
+  const baseHue = Math.random() * 360
+  const spread = 30 + Math.random() * 70
+  return Array.from({ length: count }, (_, i) => {
+    const h = (baseHue + i * spread) % 360
+    const s = 55 + Math.random() * 40
+    const l = 35 + Math.random() * 50
+    return hslToHex(h, s, l)
+  })
+}
+
+function randomParams(): Params {
+  return {
+    colors: randomPalette(4),
+    positions: Math.floor(Math.random() * 100),
+    waveX: Math.random(),
+    waveXShift: Math.random(),
+    waveY: Math.random(),
+    waveYShift: Math.random(),
+    mixing: 0.3 + Math.random() * 0.7,
+    grainMixer: Math.random() > 0.7 ? Math.random() * 0.5 : 0,
+    grainOverlay: Math.random() > 0.6 ? Math.random() * 0.7 : 0,
+    rotation: Math.floor(Math.random() * 360),
+  }
+}
+
 export default function FeaturedMeshGradientDemo() {
   const [params, setParams] = React.useState<Params>(PRESETS.Default)
 
@@ -98,6 +137,13 @@ export default function FeaturedMeshGradientDemo() {
               </button>
             ))}
           </div>
+          <button
+            type="button"
+            onClick={() => setParams(randomParams())}
+            className="bg-foreground text-background hover:bg-foreground/90 mt-1 w-full rounded-md px-2 py-1.5 font-medium transition-colors"
+          >
+            🎲 Randomize
+          </button>
         </div>
 
         <Slider

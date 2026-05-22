@@ -104,6 +104,19 @@
       "categories": ["cta"]
     },
     {
+      "name": "cta-app-stack",
+      "type": "registry:block",
+      "title": "App Stack CTA",
+      "description": "Dark CTA with isometric 3D stack of app icons. Each layer is { bg, content } so logos can be swapped per stack. Uses CSS perspective + rotateX/Z for the iso tilt — no library needed.",
+      "files": [
+        {
+          "path": "registry/new-york/blocks/cta-app-stack/cta-app-stack.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["cta"]
+    },
+    {
       "name": "featured-event",
       "type": "registry:block",
       "title": "Featured Event Promo",

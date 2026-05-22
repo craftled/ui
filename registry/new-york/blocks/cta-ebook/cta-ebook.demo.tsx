@@ -26,6 +26,8 @@ function BookMockup() {
   )
 }
 
+const r4 = (n: number) => n.toFixed(4)
+
 function SunburstRays() {
   return (
     <svg
@@ -35,15 +37,13 @@ function SunburstRays() {
     >
       {Array.from({ length: 28 }, (_, i) => {
         const angle = (i / 28) * Math.PI * 2
-        const x = Math.cos(angle) * 50
-        const y = Math.sin(angle) * 50
         return (
           <line
             key={i}
             x1="0"
             y1="0"
-            x2={x}
-            y2={y}
+            x2={r4(Math.cos(angle) * 50)}
+            y2={r4(Math.sin(angle) * 50)}
             stroke="white"
             strokeOpacity={i % 2 === 0 ? 0.04 : 0.02}
             strokeWidth="0.6"
@@ -69,8 +69,8 @@ function FanRays() {
             key={i}
             x1="100"
             y1="100"
-            x2={100 + Math.cos(angle) * 90}
-            y2={100 + Math.sin(angle) * 90}
+            x2={r4(100 + Math.cos(angle) * 90)}
+            y2={r4(100 + Math.sin(angle) * 90)}
             stroke="white"
             strokeOpacity="0.35"
             strokeWidth="3"

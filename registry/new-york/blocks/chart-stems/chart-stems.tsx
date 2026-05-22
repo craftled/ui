@@ -1,91 +1,139 @@
 "use client"
 
 import * as React from "react"
+import { Bar, BarChart } from "recharts"
 
+import {
+  ChartContainer,
+  type ChartConfig,
+} from "@/registry/new-york/ui/chart"
 import { cn } from "@/lib/utils"
 
-export type ChartStemsDatum = {
-  label: string
-  value: number
-}
-
 export type ChartStemsProps = {
-  data: ChartStemsDatum[]
-  /** Color of the dots + stems. */
+  data: Record<string, string | number>[]
+  /** Numeric key in each row to plot. Default "value". */
+  dataKey?: string
+  /** Display label for the series (shown in tooltips/legends). */
+  label?: string
+  /** Series color — anything CSS accepts. Default var(--chart-3). */
   color?: string
   /** Stem opacity 0-1. Default 0.4. */
   stemOpacity?: number
-  /** Stem stroke width (pixels, non-scaling). Default 1. */
-  stemWidth?: number
-  /** Dot radius (in viewBox units relative to ~1000 width). Default 3. */
+  /** Dot radius in px (non-scaling). Default 3. */
   dotRadius?: number
-  /** CSS background. Pass any gradient. */
+  /** Stem stroke width in px (non-scaling). Default 1. */
+  stemWidth?: number
+  /** CSS background — pass any color, gradient, or `var()`. */
   background?: string
-  /** Aspect ratio (e.g. "16/5"). */
+  /** Aspect ratio (e.g. "16/5"). Default "16/5". */
   aspectRatio?: string
-  /** Vertical headroom from the top before the highest dot, as a fraction (0-1). Default 0.08. */
-  topPadding?: number
-  /** Vertical range the dots occupy, as a fraction of the chart height (0-1). Default 0.35. */
-  range?: number
   className?: string
 }
 
-const DEFAULT_BACKGROUND =
+const DEFAULT_BG =
   "radial-gradient(ellipse 70% 55% at 50% 55%, rgba(253,186,116,0.55), transparent 70%), linear-gradient(180deg, #dbeafe 0%, #fed7aa 50%, #dbeafe 100%)"
 
 export function ChartStems({
   data,
-  color = "#3b82f6",
+  dataKey = "value",
+  label,
+  color = "var(--chart-3)",
   stemOpacity = 0.4,
-  stemWidth = 1,
   dotRadius = 3,
-  background = DEFAULT_BACKGROUND,
+  stemWidth = 1,
+  background = DEFAULT_BG,
   aspectRatio = "16/5",
-  topPadding = 0.08,
-  range = 0.35,
   className,
 }: ChartStemsProps) {
-  const W = 1000
-  const H = 250
-
-  const max = Math.max(...data.map((d) => d.value))
-  const min = Math.min(...data.map((d) => d.value))
-  const span = max - min || 1
-  const topY = H * topPadding
-  const rangeY = H * range
+  const config = React.useMemo<ChartConfig>(
+    () => ({
+      [dataKey]: { label: label ?? dataKey, color },
+    }),
+    [dataKey, label, color]
+  )
 
   return (
     <div
       className={cn("relative overflow-hidden rounded-2xl", className)}
       style={{ background, aspectRatio }}
     >
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        preserveAspectRatio="none"
-        className="absolute inset-0 size-full"
-        aria-hidden
+      <ChartContainer
+        config={config}
+        className="!aspect-auto absolute inset-0 size-full"
       >
-        {data.map((d, i) => {
-          const x = data.length === 1 ? W / 2 : (i / (data.length - 1)) * W
-          const normalized = (d.value - min) / span
-          const y = topY + (1 - normalized) * rangeY
-          return (
-            <g key={i}>
-              <line
-                x1={x}
-                y1={y}
-                x2={x}
-                y2={H}
-                stroke={color}
-                strokeWidth={stemWidth}
-                strokeOpacity={stemOpacity}
-                vectorEffect="non-scaling-stroke"
-              />
-              <circle cx={x} cy={y} r={dotRadius} fill={color} />
-            </g>
-          )
-        })}
-      </svg>
+        <BarChart
+          data={data}
+          margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
+          accessibilityLayer
+        >
+          <Bar
+            dataKey={dataKey}
+            fill={`var(--color-${dataKey})`}
+            shape={(props) => {
+              const p = props as unknown as {
+                x?: number
+                y?: number
+                width?: number
+                height?: number
+                fill?: string
+              }
+              return (
+                <StemShape
+                  x={p.x}
+                  y={p.y}
+                  width={p.width}
+                  height={p.height}
+                  fill={p.fill}
+                  stemOpacity={stemOpacity}
+                  stemWidth={stemWidth}
+                  dotRadius={dotRadius}
+                />
+              )
+            }}
+            isAnimationActive={false}
+          />
+        </BarChart>
+      </ChartContainer>
     </div>
+  )
+}
+
+type StemShapeProps = {
+  x?: number
+  y?: number
+  width?: number
+  height?: number
+  fill?: string
+  stemOpacity: number
+  stemWidth: number
+  dotRadius: number
+}
+
+function StemShape({
+  x = 0,
+  y = 0,
+  width = 0,
+  height = 0,
+  fill,
+  stemOpacity,
+  stemWidth,
+  dotRadius,
+}: StemShapeProps) {
+  const cx = x + width / 2
+  const baseline = y + height
+  return (
+    <g>
+      <line
+        x1={cx}
+        y1={y}
+        x2={cx}
+        y2={baseline}
+        stroke={fill}
+        strokeWidth={stemWidth}
+        strokeOpacity={stemOpacity}
+        vectorEffect="non-scaling-stroke"
+      />
+      <circle cx={cx} cy={y} r={dotRadius} fill={fill} />
+    </g>
   )
 }

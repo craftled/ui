@@ -22,7 +22,9 @@
       "name": "chart-stems",
       "type": "registry:block",
       "title": "Stems Chart",
-      "description": "Ambient time-series chart — each data point is a colored dot with a translucent vertical stem dropping to the baseline. Pure SVG (no library). Color, stem opacity/width, dot radius, gradient background, aspect ratio, and Y-axis padding all customizable.",
+      "description": "Ambient time-series chart — each data point is a colored dot with a translucent vertical stem dropping to the baseline. Built on shadcn's chart primitive + Recharts (BarChart with a custom shape). Color flows through ChartConfig; gradient background, aspect ratio, dot radius, and stem opacity/width all customizable.",
+      "dependencies": ["recharts"],
+      "registryDependencies": ["chart"],
       "files": [
         {
           "path": "registry/new-york/blocks/chart-stems/chart-stems.tsx",

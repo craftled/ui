@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Craftled UI",
   description:
-    "A parasitic, shadcn-native component library. Install via the shadcn CLI.",
+    "A craft-led, shadcn-native component library. Install via the shadcn CLI.",
 }
 
 export default function RootLayout({

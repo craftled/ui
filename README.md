@@ -1,6 +1,6 @@
 # Craftled UI
 
-A parasitic, shadcn-native component library. Stands on the shoulders of [shadcn/ui](https://ui.shadcn.com/) — every Craftled component declares the underlying shadcn primitives as `registryDependencies`, so installing one of ours pulls theirs.
+A craft-led, shadcn-native component library. Stands on the shoulders of [shadcn/ui](https://ui.shadcn.com/) — every Craftled component declares the underlying shadcn primitives as `registryDependencies`, so installing one of ours pulls theirs.
 
 > Live registry: <https://ui.craftled.com>
 

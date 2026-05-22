@@ -8,7 +8,7 @@ export default function Home() {
           Build with Craftled UI
         </h1>
         <p className="text-muted-foreground max-w-prose text-lg">
-          A parasitic, shadcn-native component library. Every item stands on
+          A craft-led, shadcn-native component library. Every item stands on
           shadcn primitives via{" "}
           <code className="bg-muted rounded px-1.5 py-0.5 font-mono text-sm">
             registryDependencies

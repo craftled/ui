@@ -74,7 +74,7 @@ const DEFAULT_DATA: CarouselDoDontData = {
     },
   ],
   footer:
-    'to download more infographics, go to <strong>how-to-ai.guide</strong> · from <strong>Ruben Hassid</strong>, on <em>"How to AI"</em>',
+    'more components at <strong>ui.craftled.com</strong> · made by <strong>Craftled</strong>',
 }
 
 export default function CarouselDoDontDemo() {

@@ -1,10 +1,14 @@
 "use client"
 
 import * as React from "react"
-import { Bar, BarChart } from "recharts"
+import { Bar, BarChart, XAxis, YAxis } from "recharts"
 
 import {
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
   type ChartConfig,
 } from "@/registry/new-york/ui/chart"
 import { cn } from "@/lib/utils"
@@ -13,20 +17,28 @@ export type ChartStemsProps = {
   data: Record<string, string | number>[]
   /** Numeric key in each row to plot. Default "value". */
   dataKey?: string
-  /** Display label for the series (shown in tooltips/legends). */
+  /** Key holding the x-axis label (used by tooltips + axis). Default "label". */
+  labelKey?: string
+  /** Display label for the series. */
   label?: string
   /** Series color — anything CSS accepts. Default var(--chart-3). */
   color?: string
   /** Stem opacity 0-1. Default 0.4. */
   stemOpacity?: number
-  /** Dot radius in px (non-scaling). Default 3. */
+  /** Dot radius in px. Default 3. */
   dotRadius?: number
   /** Stem stroke width in px (non-scaling). Default 1. */
   stemWidth?: number
-  /** CSS background — pass any color, gradient, or `var()`. */
+  /** CSS background. */
   background?: string
   /** Aspect ratio (e.g. "16/5"). Default "16/5". */
   aspectRatio?: string
+  /** Hover tooltip. Default true. */
+  showTooltip?: boolean
+  /** Render X + Y axes. Default false (keeps the ambient look). */
+  showAxes?: boolean
+  /** Render legend below. Default false. */
+  showLegend?: boolean
   className?: string
 }
 
@@ -36,6 +48,7 @@ const DEFAULT_BG =
 export function ChartStems({
   data,
   dataKey = "value",
+  labelKey = "label",
   label,
   color = "var(--chart-3)",
   stemOpacity = 0.4,
@@ -43,6 +56,9 @@ export function ChartStems({
   stemWidth = 1,
   background = DEFAULT_BG,
   aspectRatio = "16/5",
+  showTooltip = true,
+  showAxes = false,
+  showLegend = false,
   className,
 }: ChartStemsProps) {
   const config = React.useMemo<ChartConfig>(
@@ -63,9 +79,47 @@ export function ChartStems({
       >
         <BarChart
           data={data}
-          margin={{ top: 8, right: 0, left: 0, bottom: 0 }}
+          margin={{
+            top: 12,
+            right: showAxes ? 12 : 4,
+            left: showAxes ? 0 : 4,
+            bottom: showAxes ? 4 : 4,
+          }}
           accessibilityLayer
         >
+          {showAxes ? (
+            <>
+              <XAxis
+                dataKey={labelKey}
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                interval="preserveStartEnd"
+                minTickGap={32}
+                tick={{ fill: "currentColor", fillOpacity: 0.55, fontSize: 11 }}
+              />
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickMargin={6}
+                width={32}
+                tick={{ fill: "currentColor", fillOpacity: 0.55, fontSize: 11 }}
+              />
+            </>
+          ) : null}
+
+          {showTooltip ? (
+            <ChartTooltip
+              cursor={false}
+              content={
+                <ChartTooltipContent
+                  indicator="dot"
+                  labelKey={labelKey}
+                />
+              }
+            />
+          ) : null}
+
           <Bar
             dataKey={dataKey}
             fill={`var(--color-${dataKey})`}
@@ -92,21 +146,12 @@ export function ChartStems({
             }}
             isAnimationActive={false}
           />
+
+          {showLegend ? <ChartLegend content={<ChartLegendContent />} /> : null}
         </BarChart>
       </ChartContainer>
     </div>
   )
-}
-
-type StemShapeProps = {
-  x?: number
-  y?: number
-  width?: number
-  height?: number
-  fill?: string
-  stemOpacity: number
-  stemWidth: number
-  dotRadius: number
 }
 
 function StemShape({
@@ -118,7 +163,16 @@ function StemShape({
   stemOpacity,
   stemWidth,
   dotRadius,
-}: StemShapeProps) {
+}: {
+  x?: number
+  y?: number
+  width?: number
+  height?: number
+  fill?: string
+  stemOpacity: number
+  stemWidth: number
+  dotRadius: number
+}) {
   const cx = x + width / 2
   const baseline = y + height
   return (

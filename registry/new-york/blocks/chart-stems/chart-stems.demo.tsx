@@ -12,7 +12,7 @@ const data = Array.from({ length: N }, (_, i) => {
   const drift = t * 14
   const lateRise = t > 0.85 ? (t - 0.85) * 60 : 0
   return {
-    day: `D${i + 1}`,
+    day: `Day ${i + 1}`,
     impressions: Math.round(50 + wave + drift + lateRise),
   }
 })
@@ -22,8 +22,11 @@ export default function ChartStemsDemo() {
     <ChartStems
       data={data}
       dataKey="impressions"
+      labelKey="day"
       label="Daily impressions"
       color="var(--chart-3)"
+      showAxes
+      showLegend
     />
   )
 }

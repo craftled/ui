@@ -103,6 +103,20 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-story",
+      "type": "registry:block",
+      "title": "Featured Story",
+      "description": "Customer-story card (Stripe Customers style): brand-tinted image, customer logo, headline, and a Read story CTA. brandColor drives the duotone tint and bottom gradient; subtle hover animations on image zoom and CTA arrow.",
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-story/featured-story.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "annotated-figure",
       "type": "registry:block",
       "title": "Annotated Figure",

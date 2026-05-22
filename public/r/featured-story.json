@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "featured-story",
+  "title": "Featured Story",
+  "description": "Customer-story card (Stripe Customers style): brand-tinted image, customer logo, headline, and a Read story CTA. brandColor drives the duotone tint and bottom gradient; subtle hover animations on image zoom and CTA arrow.",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/blocks/featured-story/featured-story.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { ArrowRight } from \"lucide-react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport type FeaturedStoryProps = {\n  image: string\n  imageAlt?: string\n  /** Top-left: customer logo. Slot — pass any ReactNode. */\n  brandLogo?: React.ReactNode\n  /** Top-right: small icon (e.g. content type). Slot — pass any ReactNode. */\n  brandIcon?: React.ReactNode\n  title: string\n  ctaLabel?: string\n  /** When set, the whole card becomes an <a>. */\n  href?: string\n  onClick?: () => void\n  /**\n   * Customer brand color. Drives the duotone tint over the image and the\n   * solid color at the bottom. Anything CSS accepts: \"#FF6B1A\", \"rgb(...)\",\n   * \"var(--brand)\".\n   */\n  brandColor?: string\n  className?: string\n}\n\nexport function FeaturedStory({\n  image,\n  imageAlt = \"\",\n  brandLogo,\n  brandIcon,\n  title,\n  ctaLabel = \"Read story\",\n  href,\n  onClick,\n  brandColor = \"#F97316\",\n  className,\n}: FeaturedStoryProps) {\n  const content = (\n    <>\n      <div className=\"absolute inset-0 -z-30 overflow-hidden\">\n        <img\n          src={image}\n          alt={imageAlt}\n          loading=\"lazy\"\n          className=\"size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]\"\n        />\n      </div>\n      <div\n        className=\"absolute inset-0 -z-20 mix-blend-multiply\"\n        style={{ backgroundColor: brandColor }}\n        aria-hidden\n      />\n      <div\n        className=\"absolute inset-0 -z-10\"\n        style={{\n          background: `linear-gradient(to bottom, transparent 35%, ${brandColor} 92%)`,\n        }}\n        aria-hidden\n      />\n\n      <div className=\"flex items-start justify-between gap-4 p-7 sm:p-9\">\n        {brandLogo ? <div className=\"text-white\">{brandLogo}</div> : <span />}\n        {brandIcon ? <div className=\"text-white\">{brandIcon}</div> : null}\n      </div>\n\n      <div className=\"mt-auto flex flex-col gap-4 p-7 sm:p-9\">\n        <h3 className=\"max-w-[80%] text-2xl leading-[1.15] font-semibold tracking-tight text-balance text-white sm:text-3xl\">\n          {title}\n        </h3>\n        {ctaLabel ? (\n          <div className=\"text-sm font-medium text-white\">\n            <span className=\"inline-flex items-center gap-2\">\n              {ctaLabel}\n              <ArrowRight className=\"size-4 transition-transform duration-300 ease-out group-hover:translate-x-1\" />\n            </span>\n          </div>\n        ) : null}\n      </div>\n    </>\n  )\n\n  const shared = cn(\n    \"group relative isolate flex aspect-[16/9] flex-col overflow-hidden rounded-2xl\",\n    \"transition-shadow duration-300 hover:shadow-2xl\",\n    className\n  )\n\n  if (href) {\n    return (\n      <a href={href} className={shared} onClick={onClick}>\n        {content}\n      </a>\n    )\n  }\n\n  return (\n    <div role={onClick ? \"button\" : undefined} className={shared} onClick={onClick}>\n      {content}\n    </div>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "featured"
+  ],
+  "type": "registry:block"
+}

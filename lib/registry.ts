@@ -9,6 +9,7 @@ import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/d
 import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.demo"
 import FeaturedEventDemo from "@/registry/new-york/blocks/featured-event/featured-event.demo"
 import FeaturedIntegrationsDemo from "@/registry/new-york/blocks/featured-integrations/featured-integrations.demo"
+import FeaturedStoryDemo from "@/registry/new-york/blocks/featured-story/featured-story.demo"
 import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo"
 
 export type RegistryItem = {
@@ -32,6 +33,7 @@ export const demos: Record<string, ComponentType> = {
   "dashboard-net-worth": DashboardNetWorthDemo,
   "featured-event": FeaturedEventDemo,
   "featured-integrations": FeaturedIntegrationsDemo,
+  "featured-story": FeaturedStoryDemo,
   "testimonial-video": TestimonialVideoDemo,
 }
 

@@ -71,7 +71,14 @@ export function FeaturedStory({
           {title}
         </h3>
         {ctaLabel ? (
-          <div className="text-sm font-medium text-white">
+          <div
+            className={cn(
+              "text-sm font-medium text-white",
+              "translate-y-1 opacity-0 transition-all duration-300 ease-out",
+              "group-hover:translate-y-0 group-hover:opacity-100",
+              "group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+            )}
+          >
             <span className="inline-flex items-center gap-2">
               {ctaLabel}
               <ArrowRight className="size-4 transition-transform duration-300 ease-out group-hover:translate-x-1" />

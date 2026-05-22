@@ -1,49 +1,49 @@
 "use client"
 
-import { CreditCard, DollarSign, Wallet } from "lucide-react"
+import { Eye, MousePointerClick, TrendingUp } from "lucide-react"
 
 import { DashboardFinance } from "./dashboard-finance"
 
 const data = [
-  { month: "Jan", profit: 20, income: 0, expense: 0 },
-  { month: "Feb", profit: 20, income: 8, expense: 0 },
-  { month: "Mar", profit: 18, income: 22, expense: 0 },
-  { month: "Apr", profit: 12, income: 12, expense: 1 },
-  { month: "May", profit: 22, income: 18, expense: 5 },
-  { month: "Jun", profit: 15, income: 22, expense: 14 },
-  { month: "Jul", profit: 25, income: 7, expense: 13 },
+  { month: "Jan", impressions: 18, clicks: 4, conversions: 1 },
+  { month: "Feb", impressions: 22, clicks: 6, conversions: 1 },
+  { month: "Mar", impressions: 28, clicks: 8, conversions: 2 },
+  { month: "Apr", impressions: 24, clicks: 7, conversions: 2 },
+  { month: "May", impressions: 32, clicks: 10, conversions: 3 },
+  { month: "Jun", impressions: 38, clicks: 12, conversions: 4 },
+  { month: "Jul", impressions: 42, clicks: 14, conversions: 5 },
 ]
 
 export default function DashboardFinanceDemo() {
   return (
     <DashboardFinance
-      title="Finance"
-      subtitle="Yearly report overview"
+      title="Campaign Performance"
+      subtitle="Network delivery, last 7 months"
       reportTitle="Report"
-      reportSubtitle="Monthly Avg. $45.578k"
+      reportSubtitle="Monthly Avg. 28.5k delivery"
       data={data}
       series={[
-        { key: "profit", label: "Profit", color: "var(--chart-2)" },
-        { key: "income", label: "Income", color: "var(--chart-1)" },
-        { key: "expense", label: "Expense", color: "var(--chart-4)" },
+        { key: "impressions", label: "Impressions", color: "var(--chart-2)" },
+        { key: "clicks", label: "Clicks", color: "var(--chart-1)" },
+        { key: "conversions", label: "Conversions", color: "var(--chart-4)" },
       ]}
       kpis={[
         {
-          label: "Total Profit",
-          value: "$48,568.20",
-          icon: DollarSign,
+          label: "Impressions",
+          value: "204,318",
+          icon: Eye,
           tint: "teal",
         },
         {
-          label: "Total Income",
-          value: "$38,453.25",
-          icon: Wallet,
+          label: "Clicks",
+          value: "12,540",
+          icon: MousePointerClick,
           tint: "orange",
         },
         {
-          label: "Total Expense",
-          value: "$2,453.45",
-          icon: CreditCard,
+          label: "Conversions",
+          value: "1,847",
+          icon: TrendingUp,
           tint: "yellow",
         },
       ]}

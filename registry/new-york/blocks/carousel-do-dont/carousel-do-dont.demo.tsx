@@ -10,64 +10,65 @@ import { CarouselDoDont, type CarouselDoDontData } from "./carousel-do-dont"
 const DEFAULT_DATA: CarouselDoDontData = {
   sections: [
     {
-      title: "Stop prompting Claude like this:",
+      title: "Stop advertising like this:",
       rows: [
         {
-          leftLabel: "The Prompt",
-          leftText: '"Write me a LinkedIn post about AI."',
+          leftLabel: "The Spend",
+          leftText:
+            '"Blast Meta ads at everyone 18–65 with a credit card."',
           rightLabel: "The Problem",
           rightText:
-            "<strong>No context.</strong> You gave Claude nothing. You got what everyone gets. The 70th percentile. The statistical average of the entire internet. Congrats.",
+            "<strong>No signal.</strong> You're paying to interrupt people who never asked to hear from you. Your CAC climbs every quarter. Welcome to the bidding war.",
           tone: "terracotta",
         },
         {
-          leftLabel: "The Prompt",
+          leftLabel: "The Spend",
           leftText:
-            "Act as a world-class copywriter with 20 years of experience in B2B SaaS who studied under Ogilvy and writes like Paul Graham...",
+            '"$50k programmatic display buy on a major news site, run-of-network."',
           rightLabel: "The Problem",
           rightText:
-            "<strong>Claude still has no idea who you are.</strong> Prompt libraries are a coping mechanism. I built the Prompt Maker. Used over 1M times. Stop using it.",
+            "<strong>You bought a billboard on a highway</strong> and hoped the right cars drove past. Display CTRs hover around 0.05%. You called it a strategy.",
           tone: "orange",
         },
         {
-          leftLabel: "The Prompt",
+          leftLabel: "The Spend",
           leftText:
-            '"Make it punchier."\n→ "No, more professional."\n→ "Actually, try a different tone."',
+            '"Sponsor a B2B influencer carousel — 200k followers, surely some of them are buyers."',
           rightLabel: "The Problem",
           rightText:
-            "<strong>You can't describe what you want.</strong> So Claude keeps guessing. 12 rewrites later, you're back where you started.",
+            "<strong>Vanity reach.</strong> The followers aren't your buyers. The post will trend. Your pipeline won't move. You're paying for someone else's audience, not yours.",
           tone: "mustard",
         },
       ],
     },
     {
-      title: "Start doing this instead:",
+      title: "Start advertising like this instead:",
       rows: [
         {
-          leftLabel: "The Prompt",
+          leftLabel: "The Spend",
           leftText:
-            "\"I want to write a LinkedIn post about the AI tools I use daily. Don't start yet. Ask me clarifying questions first, so we align on angle, tone, and audience.\"",
+            "Sponsor a niche newsletter read by 8,000 senior developers.",
           rightLabel: "The Power",
           rightText:
-            "Everything changes here. You stopped guessing. <strong>You let Claude ask you.</strong> The first draft is already 3× better. Because Claude forced you to be clear.",
+            "Small list. Right list. <strong>The audience opted in because they trust the publisher.</strong> Your message lands in a context they actually care about.",
           tone: "sage",
         },
         {
-          leftLabel: "The Prompt",
+          leftLabel: "The Spend",
           leftText:
-            '[ABOUT ME.md + ANTI AI WRITING STYLE.md + COPYWRITING.md uploaded]\n"I want to write a LinkedIn post about AI tools I use daily. First, read the uploaded files completely. DO NOT start executing yet. Ask me clarifying questions so we can refine together step by step."',
+            "Place across a curated network of B2B publications — devs, designers, founders, marketers.",
           rightLabel: "The Power",
           rightText:
-            "<strong>Claude now knows your voice, your standards, your audience.</strong> The things you'd never say. The things you'd never sound like. 80% of taste is what you reject. You put your rejections in a file. Now Claude has your operating system.",
+            "<strong>One application, dozens of relevant audiences.</strong> Founders read founder pubs. Designers read design pubs. Your spend follows your buyer.",
           tone: "mint",
         },
         {
-          leftLabel: "The Prompt",
+          leftLabel: "The Spend",
           leftText:
-            "Doesn't write prompts anymore. Uses Cowork. Context files auto-loaded in a folder. Plugins installed. Connectors plugged in. Claude asks the questions. Claude builds the files. They steer.",
+            "Set audience, budget, creative. Fund the account once. Let the network deliver.",
           rightLabel: "The Power",
           rightText:
-            "<strong>You stopped prompting altogether and started operating.</strong> Claude isn't just a chatbot; it's part of the workflow. Your taste, your scars, your refusals — all in text files that compound with every conversation.",
+            "<strong>Self-serve, transparent, no expiring credits.</strong> You stopped chasing impressions and started buying intent — from people who chose to be there.",
           tone: "forest",
         },
       ],

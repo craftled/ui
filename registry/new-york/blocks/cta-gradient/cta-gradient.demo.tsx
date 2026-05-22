@@ -6,14 +6,14 @@ export default function CtaGradientDemo() {
   return (
     <div className="mx-auto max-w-md">
       <CtaGradient
-        title="Start using ClickUp today"
+        title="Start advertising with Epigraph today"
         bullets={[
-          "Manage all your work in one place",
-          "Collaborate with your team",
-          "Use ClickUp for FREE—forever",
+          "Reach founders, designers, devs, and marketers",
+          "Launch campaigns in minutes—not weeks",
+          "Ad credits that never expire",
         ]}
-        ctaLabel="Get Started"
-        ctaHref="#"
+        ctaLabel="Apply to Advertise"
+        ctaHref="https://epigraphmedia.com"
       />
     </div>
   )

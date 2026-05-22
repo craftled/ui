@@ -200,6 +200,20 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-fluted-glass",
+      "type": "registry:block",
+      "title": "Fluted Glass Photo Card",
+      "description": "Fluted glass shader (via @paper-design/shaders-react) — streaked, ribbed distortions over an image with five grid shapes (lines/linesIrregular/wave/zigzag/pattern) and five distortion shapes (prism/lens/contour/cascade/flat). Looks like looking through textured architectural glass.",
+      "dependencies": ["@paper-design/shaders-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-fluted-glass/featured-fluted-glass.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "featured-story",
       "type": "registry:block",
       "title": "Featured Story",

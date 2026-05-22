@@ -4,7 +4,7 @@ import { Github } from "lucide-react"
 export function SiteHeader() {
   return (
     <header className="bg-background/80 sticky top-0 z-40 w-full border-b backdrop-blur-sm">
-      <div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-6 px-6">
+      <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-6">
         <Link
           href="/"
           className="flex items-center gap-2 text-sm font-semibold tracking-tight"

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-area-gradient",
+  "title": "Area Chart — Gradient",
+  "description": "A gradient-filled area chart built on shadcn's chart primitive. Pass time-series data, get a polished result.",
+  "dependencies": [
+    "recharts"
+  ],
+  "registryDependencies": [
+    "chart",
+    "card"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/blocks/chart-area-gradient/chart-area-gradient.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Area, AreaChart, CartesianGrid, XAxis, YAxis } from \"recharts\"\n\nimport {\n  ChartContainer,\n  ChartTooltip,\n  ChartTooltipContent,\n  type ChartConfig,\n} from \"@/registry/new-york/ui/chart\"\n\nexport type ChartAreaGradientSeries = {\n  key: string\n  label: string\n  color?: string\n}\n\nexport type ChartAreaGradientProps = {\n  data: Record<string, string | number>[]\n  series: ChartAreaGradientSeries[]\n  labelKey?: string\n  stacked?: boolean\n  className?: string\n}\n\nexport function ChartAreaGradient({\n  data,\n  series,\n  labelKey = \"month\",\n  stacked = true,\n  className,\n}: ChartAreaGradientProps) {\n  const config = React.useMemo<ChartConfig>(() => {\n    return Object.fromEntries(\n      series.map((s, i) => [\n        s.key,\n        {\n          label: s.label,\n          color: s.color ?? `var(--chart-${(i % 5) + 1})`,\n        },\n      ])\n    )\n  }, [series])\n\n  const gradientId = React.useId().replace(/:/g, \"\")\n\n  return (\n    <ChartContainer config={config} className={className}>\n      <AreaChart\n        data={data}\n        margin={{ left: 12, right: 12, top: 8 }}\n        accessibilityLayer\n      >\n        <defs>\n          {series.map((s) => (\n            <linearGradient\n              key={s.key}\n              id={`${gradientId}-${s.key}`}\n              x1=\"0\"\n              y1=\"0\"\n              x2=\"0\"\n              y2=\"1\"\n            >\n              <stop\n                offset=\"0%\"\n                stopColor={`var(--color-${s.key})`}\n                stopOpacity={0.4}\n              />\n              <stop\n                offset=\"100%\"\n                stopColor={`var(--color-${s.key})`}\n                stopOpacity={0}\n              />\n            </linearGradient>\n          ))}\n        </defs>\n        <CartesianGrid vertical={false} strokeDasharray=\"3 3\" />\n        <XAxis\n          dataKey={labelKey}\n          tickLine={false}\n          axisLine={false}\n          tickMargin={8}\n        />\n        <YAxis tickLine={false} axisLine={false} tickMargin={8} width={40} />\n        <ChartTooltip\n          cursor={false}\n          content={<ChartTooltipContent indicator=\"dot\" />}\n        />\n        {series.map((s) => (\n          <Area\n            key={s.key}\n            dataKey={s.key}\n            type=\"natural\"\n            stroke={`var(--color-${s.key})`}\n            strokeWidth={2}\n            fill={`url(#${gradientId}-${s.key})`}\n            stackId={stacked && series.length > 1 ? \"a\" : undefined}\n          />\n        ))}\n      </AreaChart>\n    </ChartContainer>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "chart",
+    "dashboard"
+  ],
+  "type": "registry:block"
+}

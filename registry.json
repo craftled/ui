@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "craftled",
+  "homepage": "https://ui.craftled.com",
+  "items": [
+    {
+      "name": "chart-area-gradient",
+      "type": "registry:block",
+      "title": "Area Chart — Gradient",
+      "description": "A gradient-filled area chart built on shadcn's chart primitive. Pass time-series data, get a polished result.",
+      "dependencies": ["recharts"],
+      "registryDependencies": ["chart", "card"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/chart-area-gradient/chart-area-gradient.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["chart", "dashboard"]
+    }
+  ]
+}

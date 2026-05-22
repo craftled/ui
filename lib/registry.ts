@@ -3,6 +3,7 @@ import type { ComponentType } from "react"
 import registry from "@/registry.json"
 import CarouselDoDontDemo from "@/registry/new-york/blocks/carousel-do-dont/carousel-do-dont.demo"
 import ChartAreaGradientDemo from "@/registry/new-york/blocks/chart-area-gradient/chart-area-gradient.demo"
+import CtaGradientDemo from "@/registry/new-york/blocks/cta-gradient/cta-gradient.demo"
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo"
 
 export type RegistryItem = {
@@ -20,6 +21,7 @@ export const items = registry.items as RegistryItem[]
 export const demos: Record<string, ComponentType> = {
   "carousel-do-dont": CarouselDoDontDemo,
   "chart-area-gradient": ChartAreaGradientDemo,
+  "cta-gradient": CtaGradientDemo,
   "dashboard-finance": DashboardFinanceDemo,
 }
 
@@ -32,6 +34,7 @@ export function getItem(name: string): RegistryItem | null {
 const CATEGORY_LABELS: Record<string, string> = {
   carousel: "Carousels",
   chart: "Charts",
+  cta: "CTAs",
   dashboard: "Dashboards",
   form: "Forms",
   layout: "Layout",

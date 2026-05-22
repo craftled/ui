@@ -46,6 +46,20 @@
         }
       ],
       "categories": ["carousel"]
+    },
+    {
+      "name": "cta-gradient",
+      "type": "registry:block",
+      "title": "Gradient CTA Card",
+      "description": "Dark CTA card with a checked bullet list and a full-width gradient action button. Drop in a title, bullets, and label.",
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/cta-gradient/cta-gradient.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["cta"]
     }
   ]
 }

@@ -6,6 +6,7 @@ import ChartAreaGradientDemo from "@/registry/new-york/blocks/chart-area-gradien
 import CtaGradientDemo from "@/registry/new-york/blocks/cta-gradient/cta-gradient.demo"
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo"
 import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.demo"
+import FeaturedEventDemo from "@/registry/new-york/blocks/featured-event/featured-event.demo"
 
 export type RegistryItem = {
   name: string
@@ -25,6 +26,7 @@ export const demos: Record<string, ComponentType> = {
   "cta-gradient": CtaGradientDemo,
   "dashboard-finance": DashboardFinanceDemo,
   "dashboard-net-worth": DashboardNetWorthDemo,
+  "featured-event": FeaturedEventDemo,
 }
 
 export function getItem(name: string): RegistryItem | null {
@@ -38,6 +40,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   chart: "Charts",
   cta: "CTAs",
   dashboard: "Dashboards",
+  featured: "Featured",
   form: "Forms",
   layout: "Layout",
 }

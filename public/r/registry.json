@@ -75,6 +75,19 @@
         }
       ],
       "categories": ["cta"]
+    },
+    {
+      "name": "featured-event",
+      "type": "registry:block",
+      "title": "Featured Event Promo",
+      "description": "Promo card for a webinar, summit, podcast, or any event. Brand + event-type pills, a headline, and N participant photos. Pattern overlay is a slot — pass any SVG/React node; bg color is a className.",
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-event/featured-event.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
     }
   ]
 }

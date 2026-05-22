@@ -1,47 +1,63 @@
 "use client"
 
 import * as React from "react"
+import { HalftoneCmyk } from "@paper-design/shaders-react"
 
 import { cn } from "@/lib/utils"
 
 export type FeaturedHalftoneProps = {
   image: string
   imageAlt?: string
-  /** Title overlay (bottom-left). */
+  /** Bottom-left title overlay. */
   title?: React.ReactNode
-  /** Optional small label rendered above the title. */
+  /** Small label above the title. */
   eyebrow?: React.ReactNode
-  /** Halftone dot pitch in px. Default 4. */
-  dotSize?: number
-  /** Dot fill opacity, 0-1. Default 0.45. */
-  dotIntensity?: number
-  /** CSS filter on the image. Default: warm risograph treatment. */
-  imageFilter?: string
+  /** Class for the title text — color, weight overrides. */
+  titleClassName?: string
+  /** Dot rendering style. Default "dots". */
+  type?: "dots" | "ink" | "sharp"
+  /** Halftone cell size, 0-1. Default 0.18. */
+  size?: number
+  /** Dot edge softness, 0-1. Default 0.5. */
+  softness?: number
+  /** Image contrast, 0-2. Default 1. */
+  contrast?: number
+  /** Paper / background color. */
+  colorBack?: string
+  /** CMYK ink colors. */
+  colorC?: string
+  colorM?: string
+  colorY?: string
+  colorK?: string
+  /** Grain overlay strength, 0-1. */
+  grainOverlay?: number
+  /** Grain mixer strength, 0-1. */
+  grainMixer?: number
   /** Aspect ratio. Default "1/1". */
   aspectRatio?: string
-  /** Title text color class. Default text-white. */
-  titleClassName?: string
   className?: string
 }
 
-const DEFAULT_FILTER =
-  "contrast(1.35) saturate(1.2) sepia(0.12) brightness(0.95)"
-
 export function FeaturedHalftone({
   image,
-  imageAlt = "",
+  imageAlt: _imageAlt,
   title,
   eyebrow,
-  dotSize = 4,
-  dotIntensity = 0.45,
-  imageFilter = DEFAULT_FILTER,
+  titleClassName = "text-stone-900",
+  type = "dots",
+  size = 0.18,
+  softness = 0.55,
+  contrast = 1.1,
+  colorBack = "#f3ead8",
+  colorC = "#1f6f97",
+  colorM = "#d23a5a",
+  colorY = "#e8a334",
+  colorK = "#1a1a1a",
+  grainOverlay = 0.25,
+  grainMixer = 0.15,
   aspectRatio = "1/1",
-  titleClassName = "text-white",
   className,
 }: FeaturedHalftoneProps) {
-  const dotRadius = dotSize / 4
-  const dotPattern = `radial-gradient(circle, rgba(0,0,0,${dotIntensity}) ${dotRadius}px, transparent ${dotRadius + 0.5}px)`
-
   return (
     <figure
       className={cn(
@@ -50,37 +66,37 @@ export function FeaturedHalftone({
       )}
       style={{ aspectRatio }}
     >
-      <img
-        src={image}
-        alt={imageAlt}
-        loading="lazy"
-        className="absolute inset-0 size-full object-cover"
-        style={{ filter: imageFilter }}
-      />
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 mix-blend-multiply"
+      <HalftoneCmyk
+        image={image}
+        type={type}
+        size={size}
+        softness={softness}
+        contrast={contrast}
+        colorBack={colorBack}
+        colorC={colorC}
+        colorM={colorM}
+        colorY={colorY}
+        colorK={colorK}
+        grainOverlay={grainOverlay}
+        grainMixer={grainMixer}
+        fit="cover"
         style={{
-          backgroundImage: dotPattern,
-          backgroundSize: `${dotSize}px ${dotSize}px`,
-        }}
-      />
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 mix-blend-screen opacity-60"
-        style={{
-          backgroundImage: `radial-gradient(circle, rgba(255,255,255,${dotIntensity * 0.5}) ${dotRadius / 2}px, transparent ${dotRadius + 0.5}px)`,
-          backgroundSize: `${dotSize * 1.4}px ${dotSize * 1.4}px`,
-          backgroundPosition: `${dotSize / 2}px ${dotSize / 2}px`,
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
         }}
       />
 
       {title || eyebrow ? (
         <figcaption className="absolute right-4 bottom-4 left-4 flex flex-col gap-1">
           {eyebrow ? (
-            <span className={cn("text-xs font-medium opacity-80", titleClassName)}>
+            <span
+              className={cn(
+                "text-xs font-medium opacity-80",
+                titleClassName
+              )}
+            >
               {eyebrow}
             </span>
           ) : null}

@@ -161,7 +161,8 @@
       "name": "featured-halftone",
       "type": "registry:block",
       "title": "Halftone Photo Card",
-      "description": "Applies a halftone/risograph effect to any image: CSS filter for color treatment + radial-gradient dot patterns with multiply/screen blends for the printed-paper look. Title + eyebrow slots, all knobs (dot size, dot intensity, image filter, aspect ratio) tunable.",
+      "description": "Real CMYK halftone shader (via @paper-design/shaders-react) applied to any image. WebGL renders the printing-press look — channel-by-channel ink colors, dot size/softness, grain overlay, three dot styles (dots/ink/sharp).",
+      "dependencies": ["@paper-design/shaders-react"],
       "files": [
         {
           "path": "registry/new-york/blocks/featured-halftone/featured-halftone.tsx",

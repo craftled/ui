@@ -34,9 +34,10 @@ export default function RootLayout({
       >
         <div className="flex min-h-svh flex-col">
           <SiteHeader />
-          <div className="mx-auto flex w-full max-w-screen-2xl flex-1 gap-8 px-6">
+          <div className="mx-auto flex w-full max-w-screen-2xl flex-1 justify-center gap-8 px-6">
             <SiteSidebar />
-            <main className="mx-auto w-full min-w-0 max-w-[700px] py-8">{children}</main>
+            <main className="w-full min-w-0 max-w-[700px] py-8">{children}</main>
+            <div className="hidden w-56 shrink-0 md:block" aria-hidden />
           </div>
         </div>
       </body>

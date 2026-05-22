@@ -35,7 +35,7 @@ export function FeaturedEvent({
   return (
     <article
       className={cn(
-        "relative isolate overflow-hidden rounded-2xl bg-slate-900 text-white",
+        "@container relative isolate size-full overflow-hidden rounded-2xl bg-slate-900 text-white",
         className
       )}
     >
@@ -44,10 +44,10 @@ export function FeaturedEvent({
           {overlay}
         </div>
       ) : null}
-      <div className="grid grid-cols-1 gap-8 p-8 md:grid-cols-[1.1fr_1fr] md:items-center md:gap-12 md:p-12">
-        <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-2 self-start text-sm font-semibold text-slate-900">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1">
+      <div className="grid h-full grid-cols-1 gap-6 p-8 @2xl:grid-cols-[1.1fr_1fr] @2xl:items-center @2xl:gap-10 @2xl:p-12 @4xl:gap-14 @4xl:p-16">
+        <div className="flex flex-col gap-5 @2xl:gap-8 @4xl:gap-10">
+          <div className="flex items-center gap-2 self-start text-xs font-semibold text-slate-900 @sm:text-sm @2xl:text-base">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 @2xl:px-4 @2xl:py-1.5">
               {brandLogo}
               {brandName}
             </span>
@@ -55,26 +55,26 @@ export function FeaturedEvent({
               className="size-1.5 shrink-0 rounded-full bg-white/60"
               aria-hidden
             />
-            <span className="inline-flex items-center rounded-full bg-white px-3 py-1">
+            <span className="inline-flex items-center rounded-full bg-white px-3 py-1 @2xl:px-4 @2xl:py-1.5">
               {eventType}
             </span>
           </div>
-          <h2 className="text-2xl leading-[1.15] font-semibold tracking-tight text-balance sm:text-3xl md:text-[2rem]">
+          <h2 className="text-2xl leading-[1.08] font-semibold tracking-tight text-balance @sm:text-3xl @lg:text-4xl @2xl:text-5xl @4xl:text-[3.5rem]">
             {title}
           </h2>
         </div>
 
         <div
           className={cn(
-            "grid gap-5",
+            "grid gap-4 @2xl:gap-6 @4xl:gap-7",
             participants.length === 1 && "grid-cols-1 justify-items-center",
             participants.length === 2 && "grid-cols-2",
-            participants.length >= 3 && "grid-cols-2 sm:grid-cols-3"
+            participants.length >= 3 && "grid-cols-2 @sm:grid-cols-3"
           )}
         >
           {participants.map((p, i) => (
-            <figure key={i} className="flex flex-col gap-2">
-              <div className="aspect-square w-full overflow-hidden rounded-lg bg-white/5">
+            <figure key={i} className="flex flex-col gap-2 @2xl:gap-3">
+              <div className="aspect-square w-full overflow-hidden rounded-lg bg-white/5 @4xl:rounded-xl">
                 <img
                   src={p.photo}
                   alt={p.name}
@@ -83,10 +83,12 @@ export function FeaturedEvent({
                 />
               </div>
               <figcaption className="flex flex-col gap-0.5 leading-tight">
-                <span className="text-sm font-semibold sm:text-base">
+                <span className="text-sm font-semibold @2xl:text-lg @4xl:text-xl">
                   {p.name}
                 </span>
-                <span className="text-xs text-white/70">{p.role}</span>
+                <span className="text-xs text-white/70 @2xl:text-sm @4xl:text-base">
+                  {p.role}
+                </span>
               </figcaption>
             </figure>
           ))}

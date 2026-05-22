@@ -1,6 +1,7 @@
 import type { ComponentType } from "react"
 
 import registry from "@/registry.json"
+import CarouselDoDontDemo from "@/registry/new-york/blocks/carousel-do-dont/carousel-do-dont.demo"
 import ChartAreaGradientDemo from "@/registry/new-york/blocks/chart-area-gradient/chart-area-gradient.demo"
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo"
 
@@ -17,6 +18,7 @@ export const items = registry.items as RegistryItem[]
 // Demo map. When you add a new component, add a sibling `<name>.demo.tsx`
 // with a default export and register it here.
 export const demos: Record<string, ComponentType> = {
+  "carousel-do-dont": CarouselDoDontDemo,
   "chart-area-gradient": ChartAreaGradientDemo,
   "dashboard-finance": DashboardFinanceDemo,
 }
@@ -28,6 +30,7 @@ export function getItem(name: string): RegistryItem | null {
 // --- Sidebar navigation -----------------------------------------------------
 
 const CATEGORY_LABELS: Record<string, string> = {
+  carousel: "Carousels",
   chart: "Charts",
   dashboard: "Dashboards",
   form: "Forms",

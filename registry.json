@@ -32,6 +32,20 @@
         }
       ],
       "categories": ["dashboard", "chart"]
+    },
+    {
+      "name": "carousel-do-dont",
+      "type": "registry:block",
+      "title": "Do/Don't Carousel",
+      "description": "Editable LinkedIn-style comparison slide with a stop-doing-this / start-doing-this rhythm. Pass sections, get colored prompt rows.",
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/carousel-do-dont/carousel-do-dont.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["carousel"]
     }
   ]
 }

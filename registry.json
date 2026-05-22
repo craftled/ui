@@ -90,6 +90,20 @@
       "categories": ["cta"]
     },
     {
+      "name": "cta-ebook",
+      "type": "registry:block",
+      "title": "Ebook / Report CTA",
+      "description": "Dark CTA with an eyebrow tag, headline, description, inline email form, and a decoration slot for the book/report mockup. Accent prop picks the tag + button color from a palette.",
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/cta-ebook/cta-ebook.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["cta"]
+    },
+    {
       "name": "featured-event",
       "type": "registry:block",
       "title": "Featured Event Promo",

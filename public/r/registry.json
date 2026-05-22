@@ -158,6 +158,19 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-halftone",
+      "type": "registry:block",
+      "title": "Halftone Photo Card",
+      "description": "Applies a halftone/risograph effect to any image: CSS filter for color treatment + radial-gradient dot patterns with multiply/screen blends for the printed-paper look. Title + eyebrow slots, all knobs (dot size, dot intensity, image filter, aspect ratio) tunable.",
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-halftone/featured-halftone.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "featured-story",
       "type": "registry:block",
       "title": "Featured Story",

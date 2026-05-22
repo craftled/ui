@@ -12,6 +12,7 @@ import CtaNewsletterDemo from "@/registry/new-york/blocks/cta-newsletter/cta-new
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo"
 import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.demo"
 import FeaturedEventDemo from "@/registry/new-york/blocks/featured-event/featured-event.demo"
+import FeaturedHalftoneDemo from "@/registry/new-york/blocks/featured-halftone/featured-halftone.demo"
 import FeaturedIntegrationsDemo from "@/registry/new-york/blocks/featured-integrations/featured-integrations.demo"
 import FeaturedStoryDemo from "@/registry/new-york/blocks/featured-story/featured-story.demo"
 import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo"
@@ -40,6 +41,7 @@ export const demos: Record<string, ComponentType> = {
   "dashboard-finance": DashboardFinanceDemo,
   "dashboard-net-worth": DashboardNetWorthDemo,
   "featured-event": FeaturedEventDemo,
+  "featured-halftone": FeaturedHalftoneDemo,
   "featured-integrations": FeaturedIntegrationsDemo,
   "featured-story": FeaturedStoryDemo,
   "testimonial-video": TestimonialVideoDemo,

@@ -6,6 +6,9 @@ import { cn } from "@/lib/utils"
 
 import { FeaturedIntegrations } from "./featured-integrations"
 
+const OG_WIDTH = 1400
+const OG_HEIGHT = 735
+
 function Monogram({
   letter,
   color,
@@ -50,10 +53,43 @@ export default function FeaturedIntegrationsDemo() {
   return (
     <div className="flex flex-col gap-4">
       <div className="bg-background overflow-hidden rounded-xl border">
-        <FeaturedIntegrations {...SHARED_PROPS} />
+        <OgFrame width={OG_WIDTH} height={OG_HEIGHT}>
+          <FeaturedIntegrations {...SHARED_PROPS} />
+        </OgFrame>
       </div>
       <div className="dark bg-background overflow-hidden rounded-xl border">
-        <FeaturedIntegrations {...SHARED_PROPS} />
+        <OgFrame width={OG_WIDTH} height={OG_HEIGHT}>
+          <FeaturedIntegrations {...SHARED_PROPS} />
+        </OgFrame>
+      </div>
+    </div>
+  )
+}
+
+function OgFrame({
+  width,
+  height,
+  children,
+}: {
+  width: number
+  height: number
+  children: React.ReactNode
+}) {
+  return (
+    <div
+      className="@container relative w-full overflow-hidden"
+      style={{ aspectRatio: `${width} / ${height}` }}
+    >
+      <div
+        className="absolute top-0 left-0"
+        style={{
+          width,
+          height,
+          transformOrigin: "top left",
+          transform: `scale(calc(100cqw / ${width}px))`,
+        }}
+      >
+        {children}
       </div>
     </div>
   )

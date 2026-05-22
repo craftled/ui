@@ -2,6 +2,7 @@ import type { ComponentType } from "react"
 
 import registry from "@/registry.json"
 import ChartAreaGradientDemo from "@/registry/new-york/blocks/chart-area-gradient/chart-area-gradient.demo"
+import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo"
 
 export type RegistryItem = {
   name: string
@@ -17,6 +18,7 @@ export const items = registry.items as RegistryItem[]
 // with a default export and register it here.
 export const demos: Record<string, ComponentType> = {
   "chart-area-gradient": ChartAreaGradientDemo,
+  "dashboard-finance": DashboardFinanceDemo,
 }
 
 export function getItem(name: string): RegistryItem | null {

@@ -17,6 +17,21 @@
         }
       ],
       "categories": ["chart", "dashboard"]
+    },
+    {
+      "name": "dashboard-finance",
+      "type": "registry:block",
+      "title": "Finance Dashboard",
+      "description": "A two-pane finance card: stacked bar chart on the left, KPI rail with icon tiles and a CTA on the right.",
+      "dependencies": ["recharts", "lucide-react"],
+      "registryDependencies": ["chart", "card", "button"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/dashboard-finance/dashboard-finance.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["dashboard", "chart"]
     }
   ]
 }

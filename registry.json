@@ -88,6 +88,19 @@
         }
       ],
       "categories": ["featured"]
+    },
+    {
+      "name": "annotated-figure",
+      "type": "registry:block",
+      "title": "Annotated Figure",
+      "description": "Wrap any object as children and pin labeled callouts to specific points via { x, y, side } percentages. Dashed stems extend out to the figure edges.",
+      "files": [
+        {
+          "path": "registry/new-york/blocks/annotated-figure/annotated-figure.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["explainer"]
     }
   ]
 }

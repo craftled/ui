@@ -8,6 +8,7 @@ import CtaGradientDemo from "@/registry/new-york/blocks/cta-gradient/cta-gradien
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo"
 import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.demo"
 import FeaturedEventDemo from "@/registry/new-york/blocks/featured-event/featured-event.demo"
+import FeaturedIntegrationsDemo from "@/registry/new-york/blocks/featured-integrations/featured-integrations.demo"
 import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo"
 
 export type RegistryItem = {
@@ -30,6 +31,7 @@ export const demos: Record<string, ComponentType> = {
   "dashboard-finance": DashboardFinanceDemo,
   "dashboard-net-worth": DashboardNetWorthDemo,
   "featured-event": FeaturedEventDemo,
+  "featured-integrations": FeaturedIntegrationsDemo,
   "testimonial-video": TestimonialVideoDemo,
 }
 

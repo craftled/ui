@@ -90,6 +90,19 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-integrations",
+      "type": "registry:block",
+      "title": "Integrations Orbit",
+      "description": "Dashed circle with N app icons orbiting around a centered headline. Icons auto-distribute (override each angle if needed). All slots are ReactNode; uses shadcn theme tokens so light + dark auto-adapt.",
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-integrations/featured-integrations.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "annotated-figure",
       "type": "registry:block",
       "title": "Annotated Figure",

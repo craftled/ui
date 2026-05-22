@@ -172,6 +172,20 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-dithering",
+      "type": "registry:block",
+      "title": "Dithering Photo Card",
+      "description": "Image dithering shader (via @paper-design/shaders-react) — supports random + Bayer 2x2/4x4/8x8 patterns, custom 2-3 color palettes, configurable color steps, and an originalColors mode that samples directly from the image.",
+      "dependencies": ["@paper-design/shaders-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-dithering/featured-dithering.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "featured-story",
       "type": "registry:block",
       "title": "Featured Story",

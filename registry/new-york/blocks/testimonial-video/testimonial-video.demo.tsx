@@ -12,17 +12,18 @@ export default function TestimonialVideoDemo() {
         quote="Epigraph has become the standard way to monetize a B2B newsletter."
         author={{ name: "Tomas Lau", role: "Founder, Best Writing" }}
         brandLogo={
-          <>
-            <span className="flex size-5 items-center justify-center rounded-sm bg-neutral-900 text-[10px] font-bold text-white">
-              E
-            </span>
-            <span>Epigraph</span>
-          </>
+          <img
+            src="/logos/epigraph.svg"
+            alt="Epigraph Media"
+            className="h-3.5 w-auto"
+          />
         }
         clientLogo={
-          <span className="text-2xl leading-none font-bold tracking-tight">
-            Best Writing
-          </span>
+          <img
+            src="/logos/best-writing.svg"
+            alt="Best Writing"
+            className="h-6 w-auto [filter:brightness(0)_invert(1)]"
+          />
         }
       />
     </div>

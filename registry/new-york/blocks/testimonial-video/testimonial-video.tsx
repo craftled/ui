@@ -39,8 +39,9 @@ export function TestimonialVideo({
 }: TestimonialVideoProps) {
   const showPlay = showPlayButton ?? Boolean(videoHref || onPlay)
   const playMarkup = (
-    <span className="flex size-12 items-center justify-center rounded-full bg-white text-neutral-900 ring-[5px] ring-white/25 transition-transform group-hover:scale-105">
-      <Play className="size-4 translate-x-px fill-current" />
+    <span className="relative flex size-14 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25 backdrop-blur-md transition-transform group-hover:scale-105">
+      <span className="absolute inset-[5px] rounded-full bg-white shadow-[inset_0_-1px_2px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.18)]" />
+      <Play className="relative size-3.5 translate-x-px fill-neutral-900 text-neutral-900" />
     </span>
   )
 

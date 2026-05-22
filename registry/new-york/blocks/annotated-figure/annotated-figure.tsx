@@ -7,75 +7,114 @@ import { cn } from "@/lib/utils"
 export type AnnotatedFigureAnchor = {
   /** Visible label text. */
   label: string
-  /** Which edge of the figure the label sits at. */
+  /** Which side of the object the label sits on. */
   side: "left" | "right"
-  /** Horizontal position of the anchor dot, as a % of the object's width. */
+  /** Horizontal % of the anchor dot within the object's width. */
   x: string
-  /** Vertical position of the anchor dot AND the label, as a % of the figure's height. */
+  /** Vertical % of the anchor dot AND label, within the object's height. */
   y: string
 }
 
 export type AnnotatedFigureProps = {
-  /** Width of the central object as a % of the figure (the rest is split as label gutters). */
+  /** Width of the central object. Anything CSS accepts: "60%", "320px", "20rem". */
   objectWidth?: string
-  /** Dot + label specs. */
   annotations: AnnotatedFigureAnchor[]
-  /** Tailwind class for the dot color (background). */
+  /** Tailwind classes for the dot. */
   dotClassName?: string
-  /** Tailwind class for the dashed stem line. */
+  /** Tailwind classes for the dashed stem line. */
   lineClassName?: string
-  /** Tailwind class for the label text. */
+  /** Tailwind classes for the label text. */
   labelClassName?: string
-  /** The central object being annotated. */
+  /** The object being annotated. */
   children: React.ReactNode
   className?: string
 }
 
 export function AnnotatedFigure({
-  objectWidth = "62%",
+  objectWidth = "60%",
   annotations,
   dotClassName = "bg-rose-500 shadow-[0_0_0_4px] shadow-rose-500/20",
-  lineClassName = "border-white/25",
-  labelClassName = "text-white/55",
+  lineClassName = "border-white/40",
+  labelClassName = "text-white/60",
   children,
   className,
 }: AnnotatedFigureProps) {
+  const left = annotations.filter((a) => a.side === "left")
+  const right = annotations.filter((a) => a.side === "right")
+
   return (
     <figure
       className={cn(
         "relative isolate overflow-hidden rounded-2xl bg-neutral-950 p-6 sm:p-10",
         className
       )}
+      style={{ "--ow": objectWidth } as React.CSSProperties}
     >
-      <div className="relative mx-auto" style={{ width: objectWidth }}>
-        <div className="relative">{children}</div>
-        {annotations.map((a, i) => (
-          <span
-            key={i}
-            aria-hidden
-            className={cn(
-              "absolute z-10 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full",
-              dotClassName
-            )}
-            style={{ left: a.x, top: a.y }}
-          />
-        ))}
-      </div>
+      <div className="grid grid-cols-1 items-stretch gap-y-6 sm:grid-cols-[1fr_var(--ow)_1fr] sm:gap-y-0">
+        <Gutter
+          side="left"
+          annotations={left}
+          labelClassName={labelClassName}
+          lineClassName={lineClassName}
+        />
 
+        <div className="relative">
+          <div className="relative">{children}</div>
+          {annotations.map((a, i) => (
+            <span
+              key={i}
+              aria-hidden
+              className={cn(
+                "absolute z-10 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full",
+                dotClassName
+              )}
+              style={{ left: a.x, top: a.y }}
+            />
+          ))}
+        </div>
+
+        <Gutter
+          side="right"
+          annotations={right}
+          labelClassName={labelClassName}
+          lineClassName={lineClassName}
+        />
+      </div>
+    </figure>
+  )
+}
+
+function Gutter({
+  side,
+  annotations,
+  labelClassName,
+  lineClassName,
+}: {
+  side: "left" | "right"
+  annotations: AnnotatedFigureAnchor[]
+  labelClassName: string
+  lineClassName: string
+}) {
+  if (annotations.length === 0) {
+    return <div aria-hidden className="hidden sm:block" />
+  }
+  return (
+    <div
+      aria-hidden
+      className={cn(
+        "pointer-events-none relative hidden sm:block",
+        side === "left" ? "pr-3" : "pl-3"
+      )}
+    >
       {annotations.map((a, i) => (
         <div
           key={i}
           className={cn(
-            "pointer-events-none absolute z-0 hidden -translate-y-1/2 items-center gap-3 text-sm sm:flex",
-            a.side === "left"
-              ? "left-6 sm:left-10"
-              : "right-6 flex-row-reverse sm:right-10",
+            "absolute inset-x-0 flex -translate-y-1/2 items-center gap-3 text-sm",
+            side === "right" && "flex-row-reverse",
             labelClassName
           )}
-          style={{
-            top: a.y,
-            width: `calc((100% - ${objectWidth}) / 2 - 1.5rem)`,
-          }}
+          style={{ top: a.y }}
         >
           <span className="whitespace-nowrap">{a.label}</span>
           <div
@@ -86,6 +125,6 @@ export function AnnotatedFigure({
           />
         </div>
       ))}
-    </figure>
+    </div>
   )
 }

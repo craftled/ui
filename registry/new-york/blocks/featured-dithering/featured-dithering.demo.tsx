@@ -2,9 +2,31 @@
 
 import * as React from "react"
 
+import {
+  randomBool,
+  randomInRange,
+  randomItem,
+  randomPalette,
+} from "@/lib/random-palette"
 import { cn } from "@/lib/utils"
 
 import { FeaturedDithering } from "./featured-dithering"
+
+const TYPES = ["random", "2x2", "4x4", "8x8"] as const
+
+function randomParams(): Params {
+  const palette = randomPalette(3, { spreadMin: 80, spreadMax: 200 })
+  return {
+    type: randomItem(TYPES),
+    size: randomInRange(0.5, 5),
+    colorSteps: 1 + Math.floor(Math.random() * 6),
+    colorBack: palette[0],
+    colorFront: palette[1],
+    colorHighlight: palette[2],
+    originalColors: randomBool(0.2),
+    inverted: randomBool(0.2),
+  }
+}
 
 type Params = {
   type: "random" | "2x2" | "4x4" | "8x8"
@@ -85,6 +107,13 @@ export default function FeaturedDitheringDemo() {
               </button>
             ))}
           </div>
+          <button
+            type="button"
+            onClick={() => setParams(randomParams())}
+            className="bg-foreground text-background hover:bg-foreground/90 mt-1 w-full rounded-md px-2 py-1.5 font-medium transition-colors"
+          >
+            🎲 Randomize
+          </button>
         </div>
 
         <SelectField

@@ -2,9 +2,38 @@
 
 import * as React from "react"
 
+import {
+  hslToHex,
+  randomBool,
+  randomInRange,
+  randomPalette,
+} from "@/lib/random-palette"
 import { cn } from "@/lib/utils"
 
 import { FeaturedColorPanels } from "./featured-color-panels"
+
+function randomParams(): Params {
+  return {
+    colors: randomPalette(4 + Math.floor(Math.random() * 4)),
+    colorBack: randomBool(0.4)
+      ? "#000000"
+      : hslToHex(Math.random() * 360, 20, 5),
+    density: randomInRange(1, 5),
+    angle1: randomInRange(-1, 1),
+    angle2: randomInRange(-1, 1),
+    length: randomInRange(0.5, 2.5),
+    edges: randomBool(0.3),
+    blur: randomInRange(0, 0.4),
+    fadeIn: randomInRange(0, 1),
+    fadeOut: randomInRange(0, 1),
+    gradient: randomInRange(0, 1),
+    speed: 0.5,
+    scale: randomInRange(0.7, 1.8),
+    rotation: Math.floor(Math.random() * 360),
+    offsetX: randomInRange(-0.3, 0.3),
+    offsetY: randomInRange(-0.3, 0.3),
+  }
+}
 
 type Params = {
   colors: string[]
@@ -136,6 +165,13 @@ export default function FeaturedColorPanelsDemo() {
               </button>
             ))}
           </div>
+          <button
+            type="button"
+            onClick={() => setParams(randomParams())}
+            className="bg-foreground text-background hover:bg-foreground/90 mt-1 w-full rounded-md px-2 py-1.5 font-medium transition-colors"
+          >
+            🎲 Randomize
+          </button>
         </div>
 
         <Slider

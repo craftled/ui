@@ -2,9 +2,45 @@
 
 import * as React from "react"
 
+import { randomInRange, randomItem } from "@/lib/random-palette"
 import { cn } from "@/lib/utils"
 
 import { FeaturedFlutedGlass } from "./featured-fluted-glass"
+
+const SHAPES = [
+  "lines",
+  "linesIrregular",
+  "wave",
+  "zigzag",
+  "pattern",
+] as const
+const DISTORTION_SHAPES = [
+  "prism",
+  "lens",
+  "contour",
+  "cascade",
+  "flat",
+] as const
+
+function randomParams(): Params {
+  return {
+    shape: randomItem(SHAPES),
+    distortionShape: randomItem(DISTORTION_SHAPES),
+    size: randomInRange(0.3, 0.9),
+    angle: Math.random() * 180,
+    distortion: randomInRange(0.3, 1),
+    shift: randomInRange(-0.5, 0.5),
+    stretch: Math.random(),
+    blur: randomInRange(0, 0.4),
+    edges: randomInRange(0.1, 0.7),
+    margin: 0,
+    shadows: randomInRange(0, 0.5),
+    highlights: randomInRange(0, 0.3),
+    grainOverlay: 0,
+    colorShadow: "#000000",
+    colorHighlight: "#ffffff",
+  }
+}
 
 type Params = {
   shape: "lines" | "linesIrregular" | "wave" | "zigzag" | "pattern"
@@ -120,6 +156,13 @@ export default function FeaturedFlutedGlassDemo() {
               </button>
             ))}
           </div>
+          <button
+            type="button"
+            onClick={() => setParams(randomParams())}
+            className="bg-foreground text-background hover:bg-foreground/90 mt-1 w-full rounded-md px-2 py-1.5 font-medium transition-colors"
+          >
+            🎲 Randomize
+          </button>
         </div>
 
         <SelectField

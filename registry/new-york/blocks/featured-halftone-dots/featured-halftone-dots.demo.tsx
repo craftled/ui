@@ -2,9 +2,41 @@
 
 import * as React from "react"
 
+import {
+  hslToHex,
+  randomBool,
+  randomInRange,
+  randomItem,
+} from "@/lib/random-palette"
 import { cn } from "@/lib/utils"
 
 import { FeaturedHalftoneDots } from "./featured-halftone-dots"
+
+const TYPES = ["classic", "gooey", "holes", "soft"] as const
+const GRIDS = ["square", "hex"] as const
+
+function randomParams(): Params {
+  return {
+    type: randomItem(TYPES),
+    grid: randomItem(GRIDS),
+    size: randomInRange(0.25, 0.8),
+    radius: randomInRange(0.8, 2),
+    contrast: randomInRange(0.2, 1),
+    grainMixer: randomInRange(0, 0.3),
+    grainOverlay: randomInRange(0, 0.3),
+    grainSize: 0.5,
+    colorBack: randomBool(0.5)
+      ? "#000000"
+      : hslToHex(Math.random() * 360, 25, 90 + Math.random() * 5),
+    colorFront: hslToHex(
+      Math.random() * 360,
+      60 + Math.random() * 30,
+      35 + Math.random() * 45
+    ),
+    originalColors: randomBool(0.25),
+    inverted: randomBool(0.2),
+  }
+}
 
 type Params = {
   type: "classic" | "gooey" | "holes" | "soft"
@@ -109,6 +141,13 @@ export default function FeaturedHalftoneDotsDemo() {
               </button>
             ))}
           </div>
+          <button
+            type="button"
+            onClick={() => setParams(randomParams())}
+            className="bg-foreground text-background hover:bg-foreground/90 mt-1 w-full rounded-md px-2 py-1.5 font-medium transition-colors"
+          >
+            🎲 Randomize
+          </button>
         </div>
 
         <SelectField

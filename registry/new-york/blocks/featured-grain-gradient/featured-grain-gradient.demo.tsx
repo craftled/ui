@@ -2,12 +2,40 @@
 
 import * as React from "react"
 
+import {
+  hslToHex,
+  randomInRange,
+  randomItem,
+  randomPalette,
+} from "@/lib/random-palette"
 import { cn } from "@/lib/utils"
 
 import {
   FeaturedGrainGradient,
   type FeaturedGrainGradientProps,
 } from "./featured-grain-gradient"
+
+const SHAPES = [
+  "wave",
+  "dots",
+  "truchet",
+  "corners",
+  "ripple",
+  "blob",
+  "sphere",
+] as const
+
+function randomParams(): Params {
+  return {
+    shape: randomItem(SHAPES),
+    colors: randomPalette(3 + Math.floor(Math.random() * 3)),
+    colorBack: hslToHex(Math.random() * 360, 30, 4 + Math.random() * 10),
+    softness: Math.random(),
+    intensity: Math.random(),
+    noise: randomInRange(0.1, 0.8),
+    speed: 1,
+  }
+}
 
 type Params = {
   shape: NonNullable<FeaturedGrainGradientProps["shape"]>
@@ -104,6 +132,13 @@ export default function FeaturedGrainGradientDemo() {
               </button>
             ))}
           </div>
+          <button
+            type="button"
+            onClick={() => setParams(randomParams())}
+            className="bg-foreground text-background hover:bg-foreground/90 mt-1 w-full rounded-md px-2 py-1.5 font-medium transition-colors"
+          >
+            🎲 Randomize
+          </button>
         </div>
 
         <SelectField

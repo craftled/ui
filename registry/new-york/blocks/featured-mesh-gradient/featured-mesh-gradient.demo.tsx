@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import { randomPalette } from "@/lib/random-palette"
 import { cn } from "@/lib/utils"
 
 import { FeaturedMeshGradient } from "./featured-mesh-gradient"
@@ -68,30 +69,6 @@ const PRESETS: Record<string, Params> = {
     grainOverlay: 0,
     rotation: 0,
   },
-}
-
-function hslToHex(h: number, s: number, l: number): string {
-  l /= 100
-  const a = (s / 100) * Math.min(l, 1 - l)
-  const f = (n: number) => {
-    const k = (n + h / 30) % 12
-    const color = l - a * Math.max(-1, Math.min(k - 3, Math.min(9 - k, 1)))
-    return Math.round(255 * color)
-      .toString(16)
-      .padStart(2, "0")
-  }
-  return `#${f(0)}${f(8)}${f(4)}`
-}
-
-function randomPalette(count: number): string[] {
-  const baseHue = Math.random() * 360
-  const spread = 30 + Math.random() * 70
-  return Array.from({ length: count }, (_, i) => {
-    const h = (baseHue + i * spread) % 360
-    const s = 55 + Math.random() * 40
-    const l = 35 + Math.random() * 50
-    return hslToHex(h, s, l)
-  })
 }
 
 function randomParams(): Params {

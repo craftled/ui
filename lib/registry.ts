@@ -4,6 +4,7 @@ import registry from "@/registry.json"
 import AnnotatedFigureDemo from "@/registry/new-york/blocks/annotated-figure/annotated-figure.demo"
 import CarouselDoDontDemo from "@/registry/new-york/blocks/carousel-do-dont/carousel-do-dont.demo"
 import ChartAreaGradientDemo from "@/registry/new-york/blocks/chart-area-gradient/chart-area-gradient.demo"
+import ChartStemsDemo from "@/registry/new-york/blocks/chart-stems/chart-stems.demo"
 import CtaAppStackDemo from "@/registry/new-york/blocks/cta-app-stack/cta-app-stack.demo"
 import CtaEbookDemo from "@/registry/new-york/blocks/cta-ebook/cta-ebook.demo"
 import CtaGradientDemo from "@/registry/new-york/blocks/cta-gradient/cta-gradient.demo"
@@ -31,6 +32,7 @@ export const demos: Record<string, ComponentType> = {
   "annotated-figure": AnnotatedFigureDemo,
   "carousel-do-dont": CarouselDoDontDemo,
   "chart-area-gradient": ChartAreaGradientDemo,
+  "chart-stems": ChartStemsDemo,
   "cta-app-stack": CtaAppStackDemo,
   "cta-ebook": CtaEbookDemo,
   "cta-gradient": CtaGradientDemo,

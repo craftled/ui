@@ -19,6 +19,19 @@
       "categories": ["chart", "dashboard"]
     },
     {
+      "name": "chart-stems",
+      "type": "registry:block",
+      "title": "Stems Chart",
+      "description": "Ambient time-series chart — each data point is a colored dot with a translucent vertical stem dropping to the baseline. Pure SVG (no library). Color, stem opacity/width, dot radius, gradient background, aspect ratio, and Y-axis padding all customizable.",
+      "files": [
+        {
+          "path": "registry/new-york/blocks/chart-stems/chart-stems.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["chart"]
+    },
+    {
       "name": "dashboard-finance",
       "type": "registry:block",
       "title": "Finance Dashboard",

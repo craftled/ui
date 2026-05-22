@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-stems",
+  "title": "Stems Chart",
+  "description": "Ambient time-series chart — each data point is a colored dot with a translucent vertical stem dropping to the baseline. Pure SVG (no library). Color, stem opacity/width, dot radius, gradient background, aspect ratio, and Y-axis padding all customizable.",
+  "files": [
+    {
+      "path": "registry/new-york/blocks/chart-stems/chart-stems.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nexport type ChartStemsDatum = {\n  label: string\n  value: number\n}\n\nexport type ChartStemsProps = {\n  data: ChartStemsDatum[]\n  /** Color of the dots + stems. */\n  color?: string\n  /** Stem opacity 0-1. Default 0.4. */\n  stemOpacity?: number\n  /** Stem stroke width (pixels, non-scaling). Default 1. */\n  stemWidth?: number\n  /** Dot radius (in viewBox units relative to ~1000 width). Default 3. */\n  dotRadius?: number\n  /** CSS background. Pass any gradient. */\n  background?: string\n  /** Aspect ratio (e.g. \"16/5\"). */\n  aspectRatio?: string\n  /** Vertical headroom from the top before the highest dot, as a fraction (0-1). Default 0.08. */\n  topPadding?: number\n  /** Vertical range the dots occupy, as a fraction of the chart height (0-1). Default 0.35. */\n  range?: number\n  className?: string\n}\n\nconst DEFAULT_BACKGROUND =\n  \"radial-gradient(ellipse 70% 55% at 50% 55%, rgba(253,186,116,0.55), transparent 70%), linear-gradient(180deg, #dbeafe 0%, #fed7aa 50%, #dbeafe 100%)\"\n\nexport function ChartStems({\n  data,\n  color = \"#3b82f6\",\n  stemOpacity = 0.4,\n  stemWidth = 1,\n  dotRadius = 3,\n  background = DEFAULT_BACKGROUND,\n  aspectRatio = \"16/5\",\n  topPadding = 0.08,\n  range = 0.35,\n  className,\n}: ChartStemsProps) {\n  const W = 1000\n  const H = 250\n\n  const max = Math.max(...data.map((d) => d.value))\n  const min = Math.min(...data.map((d) => d.value))\n  const span = max - min || 1\n  const topY = H * topPadding\n  const rangeY = H * range\n\n  return (\n    <div\n      className={cn(\"relative overflow-hidden rounded-2xl\", className)}\n      style={{ background, aspectRatio }}\n    >\n      <svg\n        viewBox={`0 0 ${W} ${H}`}\n        preserveAspectRatio=\"none\"\n        className=\"absolute inset-0 size-full\"\n        aria-hidden\n      >\n        {data.map((d, i) => {\n          const x = data.length === 1 ? W / 2 : (i / (data.length - 1)) * W\n          const normalized = (d.value - min) / span\n          const y = topY + (1 - normalized) * rangeY\n          return (\n            <g key={i}>\n              <line\n                x1={x}\n                y1={y}\n                x2={x}\n                y2={H}\n                stroke={color}\n                strokeWidth={stemWidth}\n                strokeOpacity={stemOpacity}\n                vectorEffect=\"non-scaling-stroke\"\n              />\n              <circle cx={x} cy={y} r={dotRadius} fill={color} />\n            </g>\n          )\n        })}\n      </svg>\n    </div>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "chart"
+  ],
+  "type": "registry:block"
+}

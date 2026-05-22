@@ -66,23 +66,25 @@ export function FeaturedStory({
         {brandIcon ? <div className="text-white">{brandIcon}</div> : null}
       </div>
 
-      <div className="mt-auto flex flex-col gap-4 p-7 sm:p-9">
+      <div className="mt-auto p-7 sm:p-9">
         <h3 className="max-w-[80%] text-2xl leading-[1.15] font-semibold tracking-tight text-balance text-white sm:text-3xl">
           {title}
         </h3>
         {ctaLabel ? (
           <div
             className={cn(
-              "text-sm font-medium text-white",
-              "translate-y-1 opacity-0 transition-all duration-300 ease-out",
-              "group-hover:translate-y-0 group-hover:opacity-100",
-              "group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+              "grid grid-rows-[0fr] opacity-0",
+              "transition-[grid-template-rows,opacity] duration-300 ease-out",
+              "group-hover:grid-rows-[1fr] group-hover:opacity-100",
+              "group-focus-visible:grid-rows-[1fr] group-focus-visible:opacity-100"
             )}
           >
-            <span className="inline-flex items-center gap-2">
-              {ctaLabel}
-              <ArrowRight className="size-4 transition-transform duration-300 ease-out group-hover:translate-x-1" />
-            </span>
+            <div className="overflow-hidden">
+              <div className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-white">
+                {ctaLabel}
+                <ArrowRight className="size-4 transition-transform duration-300 ease-out group-hover:translate-x-1" />
+              </div>
+            </div>
           </div>
         ) : null}
       </div>

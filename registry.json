@@ -77,6 +77,19 @@
       "categories": ["cta"]
     },
     {
+      "name": "cta-newsletter",
+      "type": "registry:block",
+      "title": "Newsletter CTA",
+      "description": "Newsletter signup with a headline, email input + subscribe button, and a decorative slot on the right. Form supports onSubmit handler or native action URL.",
+      "files": [
+        {
+          "path": "registry/new-york/blocks/cta-newsletter/cta-newsletter.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["cta"]
+    },
+    {
       "name": "featured-event",
       "type": "registry:block",
       "title": "Featured Event Promo",

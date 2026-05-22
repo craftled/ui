@@ -5,6 +5,7 @@ import AnnotatedFigureDemo from "@/registry/new-york/blocks/annotated-figure/ann
 import CarouselDoDontDemo from "@/registry/new-york/blocks/carousel-do-dont/carousel-do-dont.demo"
 import ChartAreaGradientDemo from "@/registry/new-york/blocks/chart-area-gradient/chart-area-gradient.demo"
 import CtaGradientDemo from "@/registry/new-york/blocks/cta-gradient/cta-gradient.demo"
+import CtaNewsletterDemo from "@/registry/new-york/blocks/cta-newsletter/cta-newsletter.demo"
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo"
 import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.demo"
 import FeaturedEventDemo from "@/registry/new-york/blocks/featured-event/featured-event.demo"
@@ -29,6 +30,7 @@ export const demos: Record<string, ComponentType> = {
   "carousel-do-dont": CarouselDoDontDemo,
   "chart-area-gradient": ChartAreaGradientDemo,
   "cta-gradient": CtaGradientDemo,
+  "cta-newsletter": CtaNewsletterDemo,
   "dashboard-finance": DashboardFinanceDemo,
   "dashboard-net-worth": DashboardNetWorthDemo,
   "featured-event": FeaturedEventDemo,

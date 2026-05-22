@@ -4,21 +4,21 @@ import { CtaNewsletter } from "./cta-newsletter"
 
 function Mockup() {
   return (
-    <div className="relative h-72 w-full">
+    <div className="relative h-56 w-full">
       <MockCard
-        className="absolute top-0 right-4 w-64 -rotate-6"
+        className="absolute top-0 right-2 w-44 -rotate-6"
         accent="bg-rose-500"
         label="Best Writing"
         lines={3}
       />
       <MockCard
-        className="absolute top-24 right-0 w-56 rotate-3"
+        className="absolute top-16 right-0 w-40 rotate-3"
         accent="bg-blue-500"
         label="Pynions"
         lines={2}
       />
       <MockCard
-        className="absolute top-44 right-20 w-60 -rotate-2"
+        className="absolute top-32 right-10 w-44 -rotate-2"
         accent="bg-violet-500"
         label="AI Turnpoint"
         lines={2}

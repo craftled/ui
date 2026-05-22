@@ -54,7 +54,7 @@ export function CtaNewsletter({
     >
       <div className="relative grid grid-cols-1 gap-8 p-8 sm:p-12 md:grid-cols-[1.1fr_1fr] md:items-center md:gap-6">
         <div className="flex max-w-md flex-col gap-6">
-          <h2 className="text-foreground text-3xl leading-[1.1] font-bold tracking-tight text-balance sm:text-4xl">
+          <h2 className="text-foreground text-2xl leading-[1.1] font-bold tracking-tight text-balance sm:text-3xl">
             {title}
           </h2>
           {description ? (

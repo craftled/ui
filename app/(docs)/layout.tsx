@@ -4,7 +4,7 @@ import { Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
 
-import "./globals.css";
+import "../globals.css";
 
 const inter = Inter({
   variable: "--font-inter",

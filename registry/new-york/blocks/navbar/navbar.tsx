@@ -113,7 +113,7 @@ export function Navbar({
       className={cn(
         positionClass,
         "border-foreground/5 border-b bg-background/80 backdrop-blur transition-all duration-300",
-        "data-[scrolled=true]:bg-background/85 data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-black/5 data-[scrolled=true]:shadow-sm",
+        "data-[scrolled=true]:bg-background/85 data-[scrolled=true]:shadow-black/5 data-[scrolled=true]:shadow-sm data-[scrolled=true]:backdrop-blur-md",
         isMobileMenuOpen && "max-lg:h-screen max-lg:overflow-hidden",
         isMobileMenuOpen && "bg-background/90",
         className

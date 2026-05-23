@@ -121,7 +121,6 @@ function CodeBlock({
       )}
       <div
         className="[&_pre]:!bg-transparent [&_pre]:!font-mono overflow-x-auto bg-card p-4 text-sm [&_pre]:leading-relaxed"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: highlighted by shiki on the server
         dangerouslySetInnerHTML={{ __html: file.html }}
       />
     </div>

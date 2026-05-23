@@ -7,11 +7,38 @@
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
-      "description": "shadcn's Button primitive — variants (default/secondary/outline/ghost/link/destructive) and sizes (xs/sm/default/lg + icon variants), shipped under @craftled so blocks can declare it as a registryDependency.",
+      "description": "shadcn's Button primitive — variants (default/secondary/outline/ghost/link/destructive) and sizes (sm/default/lg/icon), with Craftled styling: border + ring + drop shadow for default/destructive, elevated shadow + ring on outline.",
       "dependencies": ["@radix-ui/react-slot", "class-variance-authority"],
       "files": [
         {
           "path": "registry/new-york/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Form input with Craftled treatment: ring-1 ring-foreground/10 + shadow-sm at rest, multi-layer focus ring (border-foreground/35 + ring-ring/25 at 3px), branded selection color, aria-invalid styling.",
+      "files": [
+        {
+          "path": "registry/new-york/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Accessible form label built on @radix-ui/react-label. Auto-dims when paired with a disabled peer or inside a disabled group.",
+      "dependencies": ["@radix-ui/react-label"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/label.tsx",
           "type": "registry:ui"
         }
       ],
@@ -110,6 +137,7 @@
       "type": "registry:block",
       "title": "Newsletter CTA",
       "description": "Newsletter signup with a headline, email input + subscribe button, and a decorative slot on the right. Form supports onSubmit handler or native action URL.",
+      "registryDependencies": ["button", "input"],
       "files": [
         {
           "path": "registry/new-york/blocks/cta-newsletter/cta-newsletter.tsx",
@@ -124,6 +152,7 @@
       "title": "Ebook / Report CTA",
       "description": "Dark CTA with an eyebrow tag, headline, description, inline email form, and a decoration slot for the book/report mockup. Accent prop picks the tag + button color from a palette.",
       "dependencies": ["lucide-react"],
+      "registryDependencies": ["input"],
       "files": [
         {
           "path": "registry/new-york/blocks/cta-ebook/cta-ebook.tsx",

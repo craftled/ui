@@ -3,6 +3,7 @@
 import * as React from "react"
 import { AtSign } from "lucide-react"
 
+import { Input } from "@/registry/new-york/ui/input"
 import { cn } from "@/lib/utils"
 
 export type CtaEbookProps = {
@@ -111,16 +112,16 @@ export function CtaEbook({
             onSubmit={handleSubmit}
             className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-1.5 sm:flex-row sm:items-center"
           >
-            <div className="flex flex-1 items-center gap-2 px-3">
-              <AtSign className="size-4 text-white/40" />
-              <input
+            <div className="relative flex-1">
+              <AtSign className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-white/40" />
+              <Input
                 type="email"
                 name="email"
                 required
                 placeholder={inputPlaceholder}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="min-w-0 flex-1 bg-transparent py-2.5 text-sm placeholder:text-white/40 focus-visible:outline-none"
+                className="h-auto border-transparent bg-transparent py-2.5 pl-9 text-white shadow-none ring-0 placeholder:text-white/40 focus-visible:border-transparent focus-visible:ring-0"
               />
             </div>
             <button

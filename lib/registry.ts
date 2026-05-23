@@ -24,6 +24,8 @@ import FeaturedMeshGradientDemo from "@/registry/new-york/blocks/featured-mesh-g
 import FeaturedStoryDemo from "@/registry/new-york/blocks/featured-story/featured-story.demo"
 import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo"
 import ButtonDemo from "@/registry/new-york/ui/button.demo"
+import InputDemo from "@/registry/new-york/ui/input.demo"
+import LabelDemo from "@/registry/new-york/ui/label.demo"
 
 export type RegistryItem = {
   name: string
@@ -60,6 +62,8 @@ export const demos: Record<string, ComponentType> = {
   "featured-logo-spotlight": FeaturedLogoSpotlightDemo,
   "featured-mesh-gradient": FeaturedMeshGradientDemo,
   "featured-story": FeaturedStoryDemo,
+  input: InputDemo,
+  label: LabelDemo,
   "testimonial-video": TestimonialVideoDemo,
 }
 

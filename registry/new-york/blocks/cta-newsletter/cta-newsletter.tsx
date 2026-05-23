@@ -2,6 +2,8 @@
 
 import * as React from "react"
 
+import { Button } from "@/registry/new-york/ui/button"
+import { Input } from "@/registry/new-york/ui/input"
 import { cn } from "@/lib/utils"
 
 export type CtaNewsletterProps = {
@@ -67,30 +69,18 @@ export function CtaNewsletter({
             onSubmit={handleSubmit}
             className="flex flex-col gap-2 sm:flex-row"
           >
-            <input
+            <Input
               type="email"
               name="email"
               required
               placeholder={inputPlaceholder}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={cn(
-                "min-w-0 flex-1 rounded-xl border px-4 py-3 text-sm",
-                "border-input bg-background",
-                "placeholder:text-muted-foreground",
-                "focus-visible:ring-ring/40 focus-visible:border-ring focus-visible:ring-2 focus-visible:outline-none"
-              )}
+              className="flex-1"
             />
-            <button
-              type="submit"
-              disabled={submitting}
-              className={cn(
-                "bg-foreground text-background rounded-xl px-6 py-3 text-sm font-semibold",
-                "transition-opacity hover:opacity-90 disabled:opacity-50"
-              )}
-            >
+            <Button type="submit" disabled={submitting}>
               {submitting ? "…" : ctaLabel}
-            </button>
+            </Button>
           </form>
         </div>
         {decoration ? (

@@ -259,8 +259,8 @@
       "name": "featured-logo-spotlight",
       "type": "registry:block",
       "title": "Logo Spotlight Card",
-      "description": "Centered logo on a mesh gradient background, wrapped in a translucent glassy halo (backdrop-blur + ring). Mesh colors / wave / mixing tunable; logo is any ReactNode (img, svg, monogram). Great for brand hero/customer-of-the-month tiles.",
-      "dependencies": ["@paper-design/shaders-react"],
+      "description": "Centered logo on a mesh gradient background, wrapped in a translucent glassy halo (backdrop-blur + ring). Composes the Mesh Gradient Card as the background — all mesh props pass through; logo is any ReactNode (img, svg, monogram).",
+      "registryDependencies": ["featured-mesh-gradient"],
       "files": [
         {
           "path": "registry/new-york/blocks/featured-logo-spotlight/featured-logo-spotlight.tsx",

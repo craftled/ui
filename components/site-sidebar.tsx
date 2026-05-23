@@ -11,7 +11,7 @@ export function SiteSidebar() {
 
   return (
     <aside className="hidden w-56 shrink-0 md:block">
-      <div className="sticky top-14 h-[calc(100svh-3.5rem)] overflow-y-auto py-8 pr-4">
+      <div className="sticky top-14 h-[calc(100svh-3.5rem)] overflow-y-auto py-8 pr-4 lg:top-20 lg:h-[calc(100svh-5rem)]">
         <nav aria-label="Components" className="space-y-3 text-left">
           {groups.map((group) => (
             <div className="space-y-0.5" key={group.title}>

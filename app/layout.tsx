@@ -66,7 +66,7 @@ export default function RootLayout({
           disableTransitionOnChange
           enableSystem
         >
-          <div className="flex min-h-svh flex-col">
+          <div className="flex min-h-svh flex-col pt-14 lg:pt-20">
             <SiteHeader />
             {children}
           </div>

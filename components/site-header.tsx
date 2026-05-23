@@ -18,7 +18,7 @@ export function SiteHeader() {
         { label: "Components", href: "/" },
         { label: "Compose", href: "/compose" },
       ]}
-      position="sticky"
+      position="fixed"
       trailing={
         <>
           <Link

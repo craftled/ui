@@ -112,10 +112,10 @@ export function Navbar({
     <header
       className={cn(
         positionClass,
-        "border-foreground/5 border-b transition-all duration-300",
-        "in-data-scrolled:bg-background/75 in-data-scrolled:backdrop-blur",
+        "border-foreground/5 border-b bg-background/80 backdrop-blur transition-all duration-300",
+        "data-[scrolled=true]:bg-background/85 data-[scrolled=true]:backdrop-blur-md data-[scrolled=true]:shadow-black/5 data-[scrolled=true]:shadow-sm",
         isMobileMenuOpen && "max-lg:h-screen max-lg:overflow-hidden",
-        isMobileMenuOpen && "bg-background/75 backdrop-blur",
+        isMobileMenuOpen && "bg-background/90",
         className
       )}
       data-state={isMobileMenuOpen ? "active" : "inactive"}

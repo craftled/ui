@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 
 import { SiteHeader } from "@/components/site-header";
-import { SiteSidebar } from "@/components/site-sidebar";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import "./globals.css";
@@ -69,16 +68,7 @@ export default function RootLayout({
         >
           <div className="flex min-h-svh flex-col">
             <SiteHeader />
-            <div className="mx-auto flex w-full max-w-screen-2xl flex-1 justify-center gap-8 px-6">
-              <SiteSidebar />
-              <main className="w-full min-w-0 max-w-[700px] py-8">
-                {children}
-              </main>
-              <aside
-                className="hidden w-56 shrink-0 py-8 md:block"
-                id="controls-rail-mount"
-              />
-            </div>
+            {children}
           </div>
         </ThemeProvider>
       </body>

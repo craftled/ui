@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import type * as React from "react";
 
+import { DocsShell } from "@/components/docs-shell";
 import { ChartAreaGradient } from "@/registry/new-york/blocks/chart-area-gradient/chart-area-gradient";
 import { Button } from "@/registry/new-york/ui/button";
 import {
@@ -77,38 +78,40 @@ const revenueData = [
 
 export default function ComposePage() {
   return (
-    <TooltipProvider>
-      <div className="flex flex-col gap-12">
-        <header className="flex flex-col gap-2">
-          <h1 className="font-semibold text-3xl tracking-tight">Compose</h1>
-          <p className="text-muted-foreground">
-            Three compositions exercising every primitive — drop-in patterns you
-            can lift verbatim or remix.
-          </p>
-        </header>
+    <DocsShell>
+      <TooltipProvider>
+        <div className="flex flex-col gap-12">
+          <header className="flex flex-col gap-2">
+            <h1 className="font-semibold text-3xl tracking-tight">Compose</h1>
+            <p className="text-muted-foreground">
+              Three compositions exercising every primitive — drop-in patterns
+              you can lift verbatim or remix.
+            </p>
+          </header>
 
-        <Composition
-          description="A two-tab settings card that combines Dialog (header action), Tabs (view switcher), Input + Label (form), Button (submit + cancel), and Separator (visual hierarchy)."
-          title="1. Settings panel"
-        >
-          <SettingsPanel />
-        </Composition>
+          <Composition
+            description="A two-tab settings card that combines Dialog (header action), Tabs (view switcher), Input + Label (form), Button (submit + cancel), and Separator (visual hierarchy)."
+            title="1. Settings panel"
+          >
+            <SettingsPanel />
+          </Composition>
 
-        <Composition
-          description="Header row with a search Input, an editor toolbar wrapped in Tooltips, a Dropdown user menu, and inline Skeleton loading states for the data row."
-          title="2. App shell"
-        >
-          <AppShell />
-        </Composition>
+          <Composition
+            description="Header row with a search Input, an editor toolbar wrapped in Tooltips, a Dropdown user menu, and inline Skeleton loading states for the data row."
+            title="2. App shell"
+          >
+            <AppShell />
+          </Composition>
 
-        <Composition
-          description="A KPI dashboard composing Card, Chart (area-gradient block), Tabs (date range), and a contextual Dropdown for row actions."
-          title="3. Mini dashboard"
-        >
-          <MiniDashboard />
-        </Composition>
-      </div>
-    </TooltipProvider>
+          <Composition
+            description="A KPI dashboard composing Card, Chart (area-gradient block), Tabs (date range), and a contextual Dropdown for row actions."
+            title="3. Mini dashboard"
+          >
+            <MiniDashboard />
+          </Composition>
+        </div>
+      </TooltipProvider>
+    </DocsShell>
   );
 }
 

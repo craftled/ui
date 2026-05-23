@@ -5,11 +5,38 @@ import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+export type TitlePosition =
+  | "top-left"
+  | "top-center"
+  | "top-right"
+  | "center-left"
+  | "center"
+  | "center-right"
+  | "bottom-left"
+  | "bottom-center"
+  | "bottom-right";
+
+const POSITION_CLASSES: Record<TitlePosition, string> = {
+  "top-left": "items-start justify-start text-left",
+  "top-center": "items-start justify-center text-center",
+  "top-right": "items-start justify-end text-right",
+  "center-left": "items-center justify-start text-left",
+  center: "items-center justify-center text-center",
+  "center-right": "items-center justify-end text-right",
+  "bottom-left": "items-end justify-start text-left",
+  "bottom-center": "items-end justify-center text-center",
+  "bottom-right": "items-end justify-end text-right",
+};
+
 export type FeaturedDitheringProps = {
   image: string;
   imageAlt?: string;
   title?: React.ReactNode;
   eyebrow?: React.ReactNode;
+  /** Where to anchor the title block. Default "bottom-left". */
+  titlePosition?: TitlePosition;
+  /** Title font size in px. Eyebrow scales proportionally. Default 30. */
+  titleSize?: number;
   titleClassName?: string;
   /** Dithering pattern. */
   type?: "random" | "2x2" | "4x4" | "8x8";
@@ -36,6 +63,8 @@ export function FeaturedDithering({
   imageAlt: _imageAlt,
   title,
   eyebrow,
+  titlePosition = "bottom-left",
+  titleSize = 30,
   titleClassName = "text-white",
   type = "8x8",
   size = 2,
@@ -48,6 +77,8 @@ export function FeaturedDithering({
   aspectRatio = "16/9",
   className,
 }: FeaturedDitheringProps) {
+  const eyebrowSize = Math.max(11, Math.round(titleSize * 0.4));
+
   return (
     <figure
       className={cn(
@@ -76,25 +107,34 @@ export function FeaturedDithering({
       />
 
       {title || eyebrow ? (
-        <figcaption className="absolute right-4 bottom-4 left-4 flex flex-col gap-1">
-          {eyebrow ? (
-            <span
-              className={cn("font-medium text-xs opacity-80", titleClassName)}
-            >
-              {eyebrow}
-            </span>
-          ) : null}
-          {title ? (
-            <h3
-              className={cn(
-                "font-bold text-2xl leading-tight tracking-tight sm:text-3xl",
-                titleClassName
-              )}
-            >
-              {title}
-            </h3>
-          ) : null}
-        </figcaption>
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-0 flex p-4 sm:p-6",
+            POSITION_CLASSES[titlePosition]
+          )}
+        >
+          <figcaption className="flex max-w-full flex-col gap-1">
+            {eyebrow ? (
+              <span
+                className={cn("font-medium opacity-80", titleClassName)}
+                style={{ fontSize: `${eyebrowSize}px` }}
+              >
+                {eyebrow}
+              </span>
+            ) : null}
+            {title ? (
+              <h3
+                className={cn(
+                  "font-bold leading-tight tracking-tight",
+                  titleClassName
+                )}
+                style={{ fontSize: `${titleSize}px` }}
+              >
+                {title}
+              </h3>
+            ) : null}
+          </figcaption>
+        </div>
       ) : null}
     </figure>
   );

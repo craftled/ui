@@ -6,7 +6,22 @@ import { ControlsRail } from "@/components/controls-rail";
 import { randomInRange, randomItem } from "@/lib/random-palette";
 import { cn } from "@/lib/utils";
 
-import { FeaturedFlutedGlass } from "./featured-fluted-glass";
+import {
+  FeaturedFlutedGlass,
+  type TitlePosition,
+} from "./featured-fluted-glass";
+
+const POSITION_GRID: TitlePosition[] = [
+  "top-left",
+  "top-center",
+  "top-right",
+  "center-left",
+  "center",
+  "center-right",
+  "bottom-left",
+  "bottom-center",
+  "bottom-right",
+];
 
 const SHAPES = [
   "lines",
@@ -23,7 +38,7 @@ const DISTORTION_SHAPES = [
   "flat",
 ] as const;
 
-function randomParams(): Params {
+function randomParams(prev: Params): Params {
   return {
     shape: randomItem(SHAPES),
     distortionShape: randomItem(DISTORTION_SHAPES),
@@ -40,6 +55,11 @@ function randomParams(): Params {
     grainOverlay: 0,
     colorShadow: "#000000",
     colorHighlight: "#ffffff",
+    titleText: prev.titleText,
+    titlePosition:
+      POSITION_GRID[Math.floor(Math.random() * POSITION_GRID.length)] ??
+      "bottom-left",
+    titleSize: 24 + Math.floor(Math.random() * 40),
   };
 }
 
@@ -59,6 +79,15 @@ type Params = {
   grainOverlay: number;
   colorShadow: string;
   colorHighlight: string;
+  titleText: string;
+  titlePosition: TitlePosition;
+  titleSize: number;
+};
+
+const TEXT_DEFAULTS = {
+  titleText: "Fluted glass",
+  titlePosition: "bottom-left" as TitlePosition,
+  titleSize: 30,
 };
 
 const PRESETS: Record<string, Params> = {
@@ -78,6 +107,7 @@ const PRESETS: Record<string, Params> = {
     grainOverlay: 0,
     colorShadow: "#000000",
     colorHighlight: "#ffffff",
+    ...TEXT_DEFAULTS,
   },
   Abstract: {
     shape: "linesIrregular",
@@ -95,6 +125,7 @@ const PRESETS: Record<string, Params> = {
     grainOverlay: 0,
     colorShadow: "#000000",
     colorHighlight: "#ffffff",
+    ...TEXT_DEFAULTS,
   },
   Waves: {
     shape: "wave",
@@ -112,6 +143,7 @@ const PRESETS: Record<string, Params> = {
     grainOverlay: 0,
     colorShadow: "#000000",
     colorHighlight: "#ffffff",
+    ...TEXT_DEFAULTS,
   },
   Folds: {
     shape: "lines",
@@ -129,6 +161,7 @@ const PRESETS: Record<string, Params> = {
     grainOverlay: 0,
     colorShadow: "#000000",
     colorHighlight: "#ffffff",
+    ...TEXT_DEFAULTS,
   },
 };
 
@@ -140,7 +173,7 @@ export default function FeaturedFlutedGlassDemo() {
 
   return (
     <>
-      <FeaturedFlutedGlass image={IMAGE} title="Fluted glass" {...params} />
+      <FeaturedFlutedGlass {...params} image={IMAGE} title={params.titleText} />
 
       <ControlsRail>
         <div className="flex flex-col gap-3 text-foreground/80 text-xs">
@@ -160,12 +193,21 @@ export default function FeaturedFlutedGlassDemo() {
             </div>
             <button
               className="mt-1 w-full rounded-md bg-foreground px-2 py-1.5 font-medium text-background transition-colors hover:bg-foreground/90"
-              onClick={() => setParams(randomParams())}
+              onClick={() => setParams(randomParams(params))}
               type="button"
             >
               🎲 Randomize
             </button>
           </div>
+
+          <TextControls
+            onPositionChange={(v) => setParams({ ...params, titlePosition: v })}
+            onSizeChange={(v) => setParams({ ...params, titleSize: v })}
+            onTextChange={(v) => setParams({ ...params, titleText: v })}
+            position={params.titlePosition}
+            size={params.titleSize}
+            text={params.titleText}
+          />
 
           <SelectField
             label="Shape"
@@ -349,5 +391,70 @@ function ColorField({
         <span className="font-mono text-[11px]">{value}</span>
       </div>
     </label>
+  );
+}
+
+function TextControls({
+  text,
+  position,
+  size,
+  onTextChange,
+  onPositionChange,
+  onSizeChange,
+}: {
+  text: string;
+  position: TitlePosition;
+  size: number;
+  onTextChange: (v: string) => void;
+  onPositionChange: (v: TitlePosition) => void;
+  onSizeChange: (v: number) => void;
+}) {
+  return (
+    <div className="space-y-1.5 border-border border-t pt-3">
+      <div className="font-semibold text-foreground">Text</div>
+      <input
+        className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-foreground text-xs outline-none transition-colors focus:border-foreground/40"
+        onChange={(e) => onTextChange(e.target.value)}
+        placeholder="Title text"
+        type="text"
+        value={text}
+      />
+      <div className="pt-1">
+        <div className="mb-1 text-muted-foreground">Position</div>
+        <div className="grid grid-cols-3 gap-1">
+          {POSITION_GRID.map((pos) => (
+            <button
+              aria-label={`Position ${pos}`}
+              aria-pressed={position === pos}
+              className={cn(
+                "flex aspect-square items-center justify-center rounded-md border transition-colors",
+                position === pos
+                  ? "border-foreground bg-foreground"
+                  : "border-border hover:border-foreground/40"
+              )}
+              key={pos}
+              onClick={() => onPositionChange(pos)}
+              type="button"
+            >
+              <span
+                className={cn(
+                  "block size-1.5 rounded-full transition-colors",
+                  position === pos ? "bg-background" : "bg-muted-foreground/40"
+                )}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+      <Slider
+        format={(v) => `${Math.round(v)}px`}
+        label="Size"
+        max={80}
+        min={12}
+        onChange={onSizeChange}
+        step={1}
+        value={size}
+      />
+    </div>
   );
 }

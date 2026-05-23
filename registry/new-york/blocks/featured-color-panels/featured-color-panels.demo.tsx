@@ -11,9 +11,24 @@ import {
 } from "@/lib/random-palette";
 import { cn } from "@/lib/utils";
 
-import { FeaturedColorPanels } from "./featured-color-panels";
+import {
+  FeaturedColorPanels,
+  type TitlePosition,
+} from "./featured-color-panels";
 
-function randomParams(): Params {
+const POSITION_GRID: TitlePosition[] = [
+  "top-left",
+  "top-center",
+  "top-right",
+  "center-left",
+  "center",
+  "center-right",
+  "bottom-left",
+  "bottom-center",
+  "bottom-right",
+];
+
+function randomParams(prev: Params): Params {
   return {
     colors: randomPalette(4 + Math.floor(Math.random() * 4)),
     colorBack: randomBool(0.4)
@@ -33,6 +48,11 @@ function randomParams(): Params {
     rotation: Math.floor(Math.random() * 360),
     offsetX: randomInRange(-0.3, 0.3),
     offsetY: randomInRange(-0.3, 0.3),
+    titleText: prev.titleText,
+    titlePosition:
+      POSITION_GRID[Math.floor(Math.random() * POSITION_GRID.length)] ??
+      "bottom-left",
+    titleSize: 24 + Math.floor(Math.random() * 40),
   };
 }
 
@@ -53,6 +73,15 @@ type Params = {
   rotation: number;
   offsetX: number;
   offsetY: number;
+  titleText: string;
+  titlePosition: TitlePosition;
+  titleSize: number;
+};
+
+const TEXT_DEFAULTS = {
+  titleText: "Color panels",
+  titlePosition: "bottom-left" as TitlePosition,
+  titleSize: 30,
 };
 
 const PRESETS: Record<string, Params> = {
@@ -81,6 +110,7 @@ const PRESETS: Record<string, Params> = {
     rotation: 0,
     offsetX: 0,
     offsetY: 0,
+    ...TEXT_DEFAULTS,
   },
   Glass: {
     colors: ["#00cfff", "#ff2d55", "#34c759", "#af52de"],
@@ -99,6 +129,7 @@ const PRESETS: Record<string, Params> = {
     rotation: 112,
     offsetX: 0,
     offsetY: 0,
+    ...TEXT_DEFAULTS,
   },
   Gradient: {
     colors: ["#f2ff00", "#00000000", "#00000000", "#5a0283", "#005eff"],
@@ -117,6 +148,7 @@ const PRESETS: Record<string, Params> = {
     rotation: 270,
     offsetX: 0.18,
     offsetY: 0,
+    ...TEXT_DEFAULTS,
   },
   Opening: {
     colors: ["#00ffff"],
@@ -135,6 +167,7 @@ const PRESETS: Record<string, Params> = {
     rotation: 360,
     offsetX: -0.3,
     offsetY: 0.6,
+    ...TEXT_DEFAULTS,
   },
 };
 
@@ -149,7 +182,7 @@ export default function FeaturedColorPanelsDemo() {
 
   return (
     <>
-      <FeaturedColorPanels title="Color panels" {...params} />
+      <FeaturedColorPanels {...params} title={params.titleText} />
 
       <ControlsRail>
         <div className="flex flex-col gap-3 text-foreground/80 text-xs">
@@ -169,12 +202,21 @@ export default function FeaturedColorPanelsDemo() {
             </div>
             <button
               className="mt-1 w-full rounded-md bg-foreground px-2 py-1.5 font-medium text-background transition-colors hover:bg-foreground/90"
-              onClick={() => setParams(randomParams())}
+              onClick={() => setParams(randomParams(params))}
               type="button"
             >
               🎲 Randomize
             </button>
           </div>
+
+          <TextControls
+            onPositionChange={(v) => setParams({ ...params, titlePosition: v })}
+            onSizeChange={(v) => setParams({ ...params, titleSize: v })}
+            onTextChange={(v) => setParams({ ...params, titleText: v })}
+            position={params.titlePosition}
+            size={params.titleSize}
+            text={params.titleText}
+          />
 
           <Slider
             label="Density"
@@ -273,6 +315,7 @@ function Slider({
   min = 0,
   max = 1,
   step = 0.01,
+  format,
 }: {
   label: string;
   value: number;
@@ -280,12 +323,15 @@ function Slider({
   min?: number;
   max?: number;
   step?: number;
+  format?: (v: number) => string;
 }) {
   return (
     <label className="flex flex-col gap-1">
       <div className="flex items-center justify-between">
         <span className="text-muted-foreground">{label}</span>
-        <span className="font-mono text-[11px]">{value.toFixed(2)}</span>
+        <span className="font-mono text-[11px]">
+          {format ? format(value) : value.toFixed(2)}
+        </span>
       </div>
       <input
         className="h-1 w-full cursor-pointer accent-foreground"
@@ -349,5 +395,70 @@ function ColorField({
         <span className="font-mono text-[11px]">{value}</span>
       </div>
     </label>
+  );
+}
+
+function TextControls({
+  text,
+  position,
+  size,
+  onTextChange,
+  onPositionChange,
+  onSizeChange,
+}: {
+  text: string;
+  position: TitlePosition;
+  size: number;
+  onTextChange: (v: string) => void;
+  onPositionChange: (v: TitlePosition) => void;
+  onSizeChange: (v: number) => void;
+}) {
+  return (
+    <div className="space-y-1.5 border-border border-t pt-3">
+      <div className="font-semibold text-foreground">Text</div>
+      <input
+        className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-foreground text-xs outline-none transition-colors focus:border-foreground/40"
+        onChange={(e) => onTextChange(e.target.value)}
+        placeholder="Title text"
+        type="text"
+        value={text}
+      />
+      <div className="pt-1">
+        <div className="mb-1 text-muted-foreground">Position</div>
+        <div className="grid grid-cols-3 gap-1">
+          {POSITION_GRID.map((pos) => (
+            <button
+              aria-label={`Position ${pos}`}
+              aria-pressed={position === pos}
+              className={cn(
+                "flex aspect-square items-center justify-center rounded-md border transition-colors",
+                position === pos
+                  ? "border-foreground bg-foreground"
+                  : "border-border hover:border-foreground/40"
+              )}
+              key={pos}
+              onClick={() => onPositionChange(pos)}
+              type="button"
+            >
+              <span
+                className={cn(
+                  "block size-1.5 rounded-full transition-colors",
+                  position === pos ? "bg-background" : "bg-muted-foreground/40"
+                )}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+      <Slider
+        format={(v) => `${Math.round(v)}px`}
+        label="Size"
+        max={80}
+        min={12}
+        onChange={onSizeChange}
+        step={1}
+        value={size}
+      />
+    </div>
   );
 }

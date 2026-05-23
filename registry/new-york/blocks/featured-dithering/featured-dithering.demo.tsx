@@ -11,11 +11,23 @@ import {
 } from "@/lib/random-palette";
 import { cn } from "@/lib/utils";
 
-import { FeaturedDithering } from "./featured-dithering";
+import { FeaturedDithering, type TitlePosition } from "./featured-dithering";
 
 const TYPES = ["random", "2x2", "4x4", "8x8"] as const;
 
-function randomParams(): Params {
+const POSITION_GRID: TitlePosition[] = [
+  "top-left",
+  "top-center",
+  "top-right",
+  "center-left",
+  "center",
+  "center-right",
+  "bottom-left",
+  "bottom-center",
+  "bottom-right",
+];
+
+function randomParams(prev: Params): Params {
   const palette = randomPalette(3, { spreadMin: 80, spreadMax: 200 });
   return {
     type: randomItem(TYPES),
@@ -26,6 +38,11 @@ function randomParams(): Params {
     colorHighlight: palette[2],
     originalColors: randomBool(0.2),
     inverted: randomBool(0.2),
+    titleText: prev.titleText,
+    titlePosition:
+      POSITION_GRID[Math.floor(Math.random() * POSITION_GRID.length)] ??
+      "bottom-left",
+    titleSize: 24 + Math.floor(Math.random() * 40),
   };
 }
 
@@ -38,6 +55,15 @@ type Params = {
   colorHighlight: string;
   originalColors: boolean;
   inverted: boolean;
+  titleText: string;
+  titlePosition: TitlePosition;
+  titleSize: number;
+};
+
+const TEXT_DEFAULTS = {
+  titleText: "Image dithering",
+  titlePosition: "bottom-left" as TitlePosition,
+  titleSize: 30,
 };
 
 const PRESETS: Record<string, Params> = {
@@ -50,6 +76,7 @@ const PRESETS: Record<string, Params> = {
     colorHighlight: "#eaff94",
     originalColors: false,
     inverted: false,
+    ...TEXT_DEFAULTS,
   },
   Noise: {
     type: "random",
@@ -60,6 +87,7 @@ const PRESETS: Record<string, Params> = {
     colorHighlight: "#ededed",
     originalColors: false,
     inverted: false,
+    ...TEXT_DEFAULTS,
   },
   Retro: {
     type: "2x2",
@@ -70,6 +98,7 @@ const PRESETS: Record<string, Params> = {
     colorHighlight: "#eeeeee",
     originalColors: false,
     inverted: false,
+    ...TEXT_DEFAULTS,
   },
   Natural: {
     type: "8x8",
@@ -80,6 +109,7 @@ const PRESETS: Record<string, Params> = {
     colorHighlight: "#ffffff",
     originalColors: true,
     inverted: false,
+    ...TEXT_DEFAULTS,
   },
 };
 
@@ -91,7 +121,7 @@ export default function FeaturedDitheringDemo() {
 
   return (
     <>
-      <FeaturedDithering image={IMAGE} title="Image dithering" {...params} />
+      <FeaturedDithering {...params} image={IMAGE} title={params.titleText} />
 
       <ControlsRail>
         <div className="flex flex-col gap-3 text-foreground/80 text-xs">
@@ -111,12 +141,21 @@ export default function FeaturedDitheringDemo() {
             </div>
             <button
               className="mt-1 w-full rounded-md bg-foreground px-2 py-1.5 font-medium text-background transition-colors hover:bg-foreground/90"
-              onClick={() => setParams(randomParams())}
+              onClick={() => setParams(randomParams(params))}
               type="button"
             >
               🎲 Randomize
             </button>
           </div>
+
+          <TextControls
+            onPositionChange={(v) => setParams({ ...params, titlePosition: v })}
+            onSizeChange={(v) => setParams({ ...params, titleSize: v })}
+            onTextChange={(v) => setParams({ ...params, titleText: v })}
+            position={params.titlePosition}
+            size={params.titleSize}
+            text={params.titleText}
+          />
 
           <SelectField
             label="Type"
@@ -294,5 +333,70 @@ function ColorField({
         <span className="font-mono text-[11px]">{value}</span>
       </div>
     </label>
+  );
+}
+
+function TextControls({
+  text,
+  position,
+  size,
+  onTextChange,
+  onPositionChange,
+  onSizeChange,
+}: {
+  text: string;
+  position: TitlePosition;
+  size: number;
+  onTextChange: (v: string) => void;
+  onPositionChange: (v: TitlePosition) => void;
+  onSizeChange: (v: number) => void;
+}) {
+  return (
+    <div className="space-y-1.5 border-border border-t pt-3">
+      <div className="font-semibold text-foreground">Text</div>
+      <input
+        className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-foreground text-xs outline-none transition-colors focus:border-foreground/40"
+        onChange={(e) => onTextChange(e.target.value)}
+        placeholder="Title text"
+        type="text"
+        value={text}
+      />
+      <div className="pt-1">
+        <div className="mb-1 text-muted-foreground">Position</div>
+        <div className="grid grid-cols-3 gap-1">
+          {POSITION_GRID.map((pos) => (
+            <button
+              aria-label={`Position ${pos}`}
+              aria-pressed={position === pos}
+              className={cn(
+                "flex aspect-square items-center justify-center rounded-md border transition-colors",
+                position === pos
+                  ? "border-foreground bg-foreground"
+                  : "border-border hover:border-foreground/40"
+              )}
+              key={pos}
+              onClick={() => onPositionChange(pos)}
+              type="button"
+            >
+              <span
+                className={cn(
+                  "block size-1.5 rounded-full transition-colors",
+                  position === pos ? "bg-background" : "bg-muted-foreground/40"
+                )}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+      <Slider
+        format={(v) => `${Math.round(v)}px`}
+        label="Size"
+        max={80}
+        min={12}
+        onChange={onSizeChange}
+        step={1}
+        value={size}
+      />
+    </div>
   );
 }

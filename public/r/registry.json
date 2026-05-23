@@ -141,6 +141,38 @@
       "categories": ["primitive"]
     },
     {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Single or multi-open accordion built on @radix-ui/react-accordion. Pairs with tw-animate-css's accordion-down / accordion-up keyframes for smooth height transitions.",
+      "dependencies": ["@radix-ui/react-accordion", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation Menu",
+      "description": "Top-bar navigation menu with rich dropdowns, built on @radix-ui/react-navigation-menu. Includes Root, List, Item, Trigger, Content, Link, Viewport, Indicator, and a shared navigationMenuTriggerStyle for flat top-level links.",
+      "dependencies": [
+        "@radix-ui/react-navigation-menu",
+        "class-variance-authority",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/ui/navigation-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
       "name": "chart-area-gradient",
       "type": "registry:block",
       "title": "Area Chart — Gradient",
@@ -448,6 +480,22 @@
         }
       ],
       "categories": ["social-proof"]
+    },
+    {
+      "name": "navbar",
+      "type": "registry:block",
+      "title": "Navbar",
+      "description": "Sticky top navbar with brand mark, center nav using NavigationMenu (supports flat links + rich icon/description dropdowns), CTA buttons, and a scroll-aware backdrop blur. Mobile menu uses Accordion. Position prop ('fixed' | 'absolute' | 'sticky' | 'static') so you can drop it on a real page or showcase inside a card.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["accordion", "button", "navigation-menu"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/navbar/navbar.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["navigation"],
+      "layout": "fullwidth"
     }
   ]
 }

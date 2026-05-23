@@ -25,6 +25,7 @@ type Params = {
   titleText: string;
   titlePosition: TitlePosition;
   titleSize: number;
+  titleColor: string;
 };
 
 const POSITION_GRID: TitlePosition[] = [
@@ -54,6 +55,7 @@ const PRESETS: Record<string, Params> = {
     titleText: "Mesh gradient",
     titlePosition: "bottom-left",
     titleSize: 30,
+    titleColor: "#ffffff",
   },
   "1960s": {
     colors: ["#000000", "#082400", "#b1aa91", "#8e8c15"],
@@ -69,6 +71,7 @@ const PRESETS: Record<string, Params> = {
     titleText: "Editorial",
     titlePosition: "center",
     titleSize: 56,
+    titleColor: "#f5f5f4",
   },
   Sunset: {
     colors: ["#264653", "#9c2b2b", "#f4a261", "#ffffff"],
@@ -84,6 +87,7 @@ const PRESETS: Record<string, Params> = {
     titleText: "Golden hour",
     titlePosition: "bottom-left",
     titleSize: 36,
+    titleColor: "#ffffff",
   },
   Sea: {
     colors: ["#013b65", "#03738c", "#a3d3ff", "#f2faef"],
@@ -99,6 +103,7 @@ const PRESETS: Record<string, Params> = {
     titleText: "Pacific",
     titlePosition: "top-right",
     titleSize: 32,
+    titleColor: "#ffffff",
   },
 };
 
@@ -120,6 +125,7 @@ function randomParams(prev: Params): Params {
       POSITION_GRID[Math.floor(Math.random() * POSITION_GRID.length)] ??
       "bottom-left",
     titleSize: 24 + Math.floor(Math.random() * 40),
+    titleColor: prev.titleColor,
   };
 }
 
@@ -211,6 +217,12 @@ export default function FeaturedMeshGradientDemo() {
               onChange={(v) => setParams({ ...params, titleSize: v })}
               step={1}
               value={params.titleSize}
+            />
+
+            <ColorField
+              label="Color"
+              onChange={(v) => setParams({ ...params, titleColor: v })}
+              value={params.titleColor}
             />
           </div>
 

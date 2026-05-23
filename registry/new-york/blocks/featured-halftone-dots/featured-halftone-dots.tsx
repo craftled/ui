@@ -37,6 +37,8 @@ export type FeaturedHalftoneDotsProps = {
   titlePosition?: TitlePosition;
   /** Title font size in px. Eyebrow scales proportionally. Default 30. */
   titleSize?: number;
+  /** Inline color for the title + eyebrow. Overrides titleClassName color. */
+  titleColor?: string;
   titleClassName?: string;
   /** Dot rendering style. */
   type?: "classic" | "gooey" | "holes" | "soft";
@@ -73,6 +75,7 @@ export function FeaturedHalftoneDots({
   eyebrow,
   titlePosition = "bottom-left",
   titleSize = 30,
+  titleColor,
   titleClassName = "text-stone-900",
   type = "gooey",
   grid = "hex",
@@ -133,7 +136,7 @@ export function FeaturedHalftoneDots({
             {eyebrow ? (
               <span
                 className={cn("font-medium opacity-80", titleClassName)}
-                style={{ fontSize: `${eyebrowSize}px` }}
+                style={{ fontSize: `${eyebrowSize}px`, color: titleColor }}
               >
                 {eyebrow}
               </span>
@@ -144,7 +147,7 @@ export function FeaturedHalftoneDots({
                   "font-bold leading-tight tracking-tight",
                   titleClassName
                 )}
-                style={{ fontSize: `${titleSize}px` }}
+                style={{ fontSize: `${titleSize}px`, color: titleColor }}
               >
                 {title}
               </h3>

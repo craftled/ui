@@ -56,6 +56,7 @@ function randomParams(prev: Params): Params {
       POSITION_GRID[Math.floor(Math.random() * POSITION_GRID.length)] ??
       "bottom-left",
     titleSize: 24 + Math.floor(Math.random() * 40),
+    titleColor: prev.titleColor,
   };
 }
 
@@ -75,12 +76,14 @@ type Params = {
   titleText: string;
   titlePosition: TitlePosition;
   titleSize: number;
+  titleColor: string;
 };
 
 const TEXT_DEFAULTS = {
   titleText: "Halftone dots",
   titlePosition: "bottom-left" as TitlePosition,
   titleSize: 30,
+  titleColor: "#1c1917",
 };
 
 const PRESETS: Record<string, Params> = {
@@ -186,6 +189,8 @@ export default function FeaturedHalftoneDotsDemo() {
           </div>
 
           <TextControls
+            color={params.titleColor}
+            onColorChange={(v) => setParams({ ...params, titleColor: v })}
             onPositionChange={(v) => setParams({ ...params, titlePosition: v })}
             onSizeChange={(v) => setParams({ ...params, titleSize: v })}
             onTextChange={(v) => setParams({ ...params, titleText: v })}
@@ -386,16 +391,20 @@ function TextControls({
   text,
   position,
   size,
+  color,
   onTextChange,
   onPositionChange,
   onSizeChange,
+  onColorChange,
 }: {
   text: string;
   position: TitlePosition;
   size: number;
+  color: string;
   onTextChange: (v: string) => void;
   onPositionChange: (v: TitlePosition) => void;
   onSizeChange: (v: number) => void;
+  onColorChange: (v: string) => void;
 }) {
   return (
     <div className="space-y-1.5 border-border border-t pt-3">
@@ -443,6 +452,7 @@ function TextControls({
         step={1}
         value={size}
       />
+      <ColorField label="Color" onChange={onColorChange} value={color} />
     </div>
   );
 }

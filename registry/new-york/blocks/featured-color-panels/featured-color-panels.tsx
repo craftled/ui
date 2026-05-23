@@ -67,6 +67,8 @@ export type FeaturedColorPanelsProps = {
   titlePosition?: TitlePosition;
   /** Title font size in px. Eyebrow scales proportionally. Default 30. */
   titleSize?: number;
+  /** Inline color for the title + eyebrow. Overrides titleClassName color. */
+  titleColor?: string;
   titleClassName?: string;
   children?: React.ReactNode;
   aspectRatio?: string;
@@ -104,6 +106,7 @@ export function FeaturedColorPanels({
   eyebrow,
   titlePosition = "bottom-left",
   titleSize = 30,
+  titleColor,
   titleClassName = "text-white",
   children,
   aspectRatio = "16/9",
@@ -160,7 +163,7 @@ export function FeaturedColorPanels({
             {eyebrow ? (
               <span
                 className={cn("font-medium opacity-80", titleClassName)}
-                style={{ fontSize: `${eyebrowSize}px` }}
+                style={{ fontSize: `${eyebrowSize}px`, color: titleColor }}
               >
                 {eyebrow}
               </span>
@@ -171,7 +174,7 @@ export function FeaturedColorPanels({
                   "font-bold leading-tight tracking-tight",
                   titleClassName
                 )}
-                style={{ fontSize: `${titleSize}px` }}
+                style={{ fontSize: `${titleSize}px`, color: titleColor }}
               >
                 {title}
               </h3>

@@ -37,6 +37,8 @@ export type FeaturedDitheringProps = {
   titlePosition?: TitlePosition;
   /** Title font size in px. Eyebrow scales proportionally. Default 30. */
   titleSize?: number;
+  /** Inline color for the title + eyebrow. Overrides titleClassName color. */
+  titleColor?: string;
   titleClassName?: string;
   /** Dithering pattern. */
   type?: "random" | "2x2" | "4x4" | "8x8";
@@ -65,6 +67,7 @@ export function FeaturedDithering({
   eyebrow,
   titlePosition = "bottom-left",
   titleSize = 30,
+  titleColor,
   titleClassName = "text-white",
   type = "8x8",
   size = 2,
@@ -117,7 +120,7 @@ export function FeaturedDithering({
             {eyebrow ? (
               <span
                 className={cn("font-medium opacity-80", titleClassName)}
-                style={{ fontSize: `${eyebrowSize}px` }}
+                style={{ fontSize: `${eyebrowSize}px`, color: titleColor }}
               >
                 {eyebrow}
               </span>
@@ -128,7 +131,7 @@ export function FeaturedDithering({
                   "font-bold leading-tight tracking-tight",
                   titleClassName
                 )}
-                style={{ fontSize: `${titleSize}px` }}
+                style={{ fontSize: `${titleSize}px`, color: titleColor }}
               >
                 {title}
               </h3>

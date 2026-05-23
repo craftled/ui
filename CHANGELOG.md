@@ -4,6 +4,22 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.4] - 2026-05-23
+
+### Added
+
+- **`titleColor` prop across all 7 shader/gradient featured blocks.**
+  `featured-mesh-gradient`, `featured-halftone`, `featured-halftone-dots`,
+  `featured-dithering`, `featured-fluted-glass`, `featured-grain-gradient`,
+  `featured-color-panels` each accept an optional `titleColor` hex string.
+  When set, the value is applied as an inline `style={{ color }}` on both
+  the eyebrow and title, so it wins over any `titleClassName` color via
+  CSS specificity. Omit the prop to keep the block's stock text color.
+- Each demo's Text section gets a swatch-style **Color** field directly
+  under the size slider. Randomize preserves the user's chosen color
+  (alongside the typed text), so cycling through randomized variants
+  doesn't surprise-reset the type treatment.
+
 ## [0.3.3] - 2026-05-23
 
 ### Added

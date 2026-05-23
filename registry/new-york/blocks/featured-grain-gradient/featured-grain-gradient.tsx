@@ -62,6 +62,8 @@ export type FeaturedGrainGradientProps = {
   titlePosition?: TitlePosition;
   /** Title font size in px. Eyebrow scales proportionally. Default 30. */
   titleSize?: number;
+  /** Inline color for the title + eyebrow. Overrides titleClassName color. */
+  titleColor?: string;
   titleClassName?: string;
   /** Optional arbitrary content rendered over the gradient. */
   children?: React.ReactNode;
@@ -86,6 +88,7 @@ export function FeaturedGrainGradient({
   eyebrow,
   titlePosition = "bottom-left",
   titleSize = 30,
+  titleColor,
   titleClassName = "text-white",
   children,
   aspectRatio = "16/9",
@@ -135,7 +138,7 @@ export function FeaturedGrainGradient({
             {eyebrow ? (
               <span
                 className={cn("font-medium opacity-80", titleClassName)}
-                style={{ fontSize: `${eyebrowSize}px` }}
+                style={{ fontSize: `${eyebrowSize}px`, color: titleColor }}
               >
                 {eyebrow}
               </span>
@@ -146,7 +149,7 @@ export function FeaturedGrainGradient({
                   "font-bold leading-tight tracking-tight",
                   titleClassName
                 )}
-                style={{ fontSize: `${titleSize}px` }}
+                style={{ fontSize: `${titleSize}px`, color: titleColor }}
               >
                 {title}
               </h3>

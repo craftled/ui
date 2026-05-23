@@ -12,10 +12,10 @@ export function SiteSidebar() {
   return (
     <aside className="hidden w-56 shrink-0 md:block">
       <div className="sticky top-14 h-[calc(100svh-3.5rem)] overflow-y-auto py-8 pr-4">
-        <nav className="flex flex-col gap-6">
+        <nav aria-label="Components" className="space-y-3 text-left">
           {groups.map((group) => (
-            <div className="flex flex-col gap-1" key={group.title}>
-              <h4 className="mb-1 px-2 font-semibold text-foreground text-sm">
+            <div className="space-y-0.5" key={group.title}>
+              <h4 className="flex items-center gap-1.5 px-2 pb-1 font-medium text-[13px] text-muted-foreground">
                 {group.title}
               </h4>
               {group.links.map((link) => {
@@ -23,15 +23,15 @@ export function SiteSidebar() {
                 return (
                   <Link
                     className={cn(
-                      "rounded-md px-2 py-1.5 text-sm transition-colors",
+                      "flex min-w-0 items-center gap-1.5 rounded-md px-2 py-1 text-[13px] transition-all",
                       isActive
                         ? "bg-muted font-medium text-foreground"
-                        : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                        : "text-muted-foreground hover:text-foreground"
                     )}
                     href={link.href}
                     key={link.href}
                   >
-                    {link.title}
+                    <span className="truncate">{link.title}</span>
                   </Link>
                 );
               })}

@@ -17,7 +17,11 @@ const buttonVariants = cva(
           "hover:bg-primary/90"
         ),
         destructive: cn(
-          "bg-destructive text-white shadow-md hover:bg-destructive/90",
+          "bg-destructive text-white",
+          "border-[0.5px] border-white/25 shadow-md shadow-black/20",
+          "ring-1 ring-(--ring-color) [--ring-color:color-mix(in_oklab,var(--color-foreground)_15%,var(--color-destructive))]",
+          "not-in-data-[theme=dark]:text-shadow-sm [&_svg]:drop-shadow-sm",
+          "hover:bg-destructive/90",
           "focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40"
         ),
         outline: cn(

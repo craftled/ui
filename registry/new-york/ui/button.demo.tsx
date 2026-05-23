@@ -18,7 +18,6 @@ export default function ButtonDemo() {
       </Group>
 
       <Group label="Sizes">
-        <Button size="xs">xs</Button>
         <Button size="sm">sm</Button>
         <Button size="default">default</Button>
         <Button size="lg">lg</Button>
@@ -40,16 +39,7 @@ export default function ButtonDemo() {
       </Group>
 
       <Group label="Icon-only">
-        <Button size="icon-xs" variant="outline" aria-label="Delete">
-          <Trash2 />
-        </Button>
-        <Button size="icon-sm" variant="outline" aria-label="Delete">
-          <Trash2 />
-        </Button>
         <Button size="icon" variant="outline" aria-label="Delete">
-          <Trash2 />
-        </Button>
-        <Button size="icon-lg" variant="outline" aria-label="Delete">
           <Trash2 />
         </Button>
       </Group>

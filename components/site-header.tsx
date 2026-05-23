@@ -1,38 +1,50 @@
 import Link from "next/link";
 
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Navbar } from "@/registry/new-york/blocks/navbar/navbar";
 
+/**
+ * Site-wide top navigation. Dogfoods the Navbar block from our own
+ * registry so every page is a live demo of the component visitors can
+ * install. The trailing slot carries the GitHub icon link + theme toggle.
+ */
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-sm">
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-6">
-        <Link
-          className="flex items-center gap-2 font-semibold text-sm tracking-tight"
-          href="/"
-        >
-          <span className="flex size-5 items-center justify-center rounded-sm bg-foreground font-mono text-[10px] text-background">
-            C
-          </span>
-          Craftled UI
-        </Link>
-        <nav className="ml-auto flex items-center gap-4 text-muted-foreground text-sm">
-          <Link className="transition-colors hover:text-foreground" href="/">
-            Components
-          </Link>
-          <a
+    <Navbar
+      brand={<BrandMark />}
+      brandHref="/"
+      brandLabel="Craftled UI home"
+      links={[
+        { label: "Components", href: "/" },
+        { label: "Compose", href: "/compose" },
+      ]}
+      position="sticky"
+      trailing={
+        <>
+          <Link
             aria-label="GitHub"
-            className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+            className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:text-foreground"
             href="https://github.com/craftled/ui"
             rel="noreferrer"
             target="_blank"
           >
             <GithubMark className="size-4" />
-            <span className="hidden sm:inline">GitHub</span>
-          </a>
+          </Link>
           <ThemeToggle />
-        </nav>
-      </div>
-    </header>
+        </>
+      }
+    />
+  );
+}
+
+function BrandMark() {
+  return (
+    <span className="flex items-center gap-2 font-semibold text-sm tracking-tight">
+      <span className="flex size-5 items-center justify-center rounded-sm bg-foreground font-mono text-[10px] text-background">
+        C
+      </span>
+      Craftled UI
+    </span>
   );
 }
 

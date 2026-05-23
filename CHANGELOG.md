@@ -4,6 +4,22 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.2] - 2026-05-23
+
+### Added
+
+- **`featured-mesh-gradient` text controls.** Two new props on the block:
+  - `titlePosition` (9 values: `top-left` / `top-center` / `top-right` /
+    `center-left` / `center` / `center-right` / `bottom-left` /
+    `bottom-center` / `bottom-right`). Defaults to `bottom-left` so
+    existing usage is unchanged.
+  - `titleSize` (px number). The eyebrow scales proportionally
+    (`max(11, titleSize * 0.4)`).
+- The mesh gradient demo's right rail now has a Text section with:
+  text input, 3×3 position grid, and a size slider (12–80px). Each
+  preset (Default / 1960s / Sunset / Sea) ships its own coordinated
+  text + position + size combination.
+
 ## [0.3.1] - 2026-05-23
 
 ### Fixed

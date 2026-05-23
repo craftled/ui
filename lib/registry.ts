@@ -19,6 +19,7 @@ import FeaturedGrainGradientDemo from "@/registry/new-york/blocks/featured-grain
 import FeaturedHalftoneDemo from "@/registry/new-york/blocks/featured-halftone/featured-halftone.demo"
 import FeaturedHalftoneDotsDemo from "@/registry/new-york/blocks/featured-halftone-dots/featured-halftone-dots.demo"
 import FeaturedIntegrationsDemo from "@/registry/new-york/blocks/featured-integrations/featured-integrations.demo"
+import FeaturedLogoSpotlightDemo from "@/registry/new-york/blocks/featured-logo-spotlight/featured-logo-spotlight.demo"
 import FeaturedMeshGradientDemo from "@/registry/new-york/blocks/featured-mesh-gradient/featured-mesh-gradient.demo"
 import FeaturedStoryDemo from "@/registry/new-york/blocks/featured-story/featured-story.demo"
 import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo"
@@ -54,6 +55,7 @@ export const demos: Record<string, ComponentType> = {
   "featured-halftone": FeaturedHalftoneDemo,
   "featured-halftone-dots": FeaturedHalftoneDotsDemo,
   "featured-integrations": FeaturedIntegrationsDemo,
+  "featured-logo-spotlight": FeaturedLogoSpotlightDemo,
   "featured-mesh-gradient": FeaturedMeshGradientDemo,
   "featured-story": FeaturedStoryDemo,
   "testimonial-video": TestimonialVideoDemo,

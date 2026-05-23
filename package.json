@@ -37,7 +37,29 @@
     "check": "ultracite check",
     "fix": "ultracite fix"
   },
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
-  "description": "Craftled UI — a parasitic, shadcn-native component library."
+  "description": "Craftled UI — a craft-led, shadcn-native component library. Charts, blocks, shaders, and primitives, distributed via the shadcn CLI.",
+  "homepage": "https://ui.craftled.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/craftled/ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/craftled/ui/issues"
+  },
+  "license": "MIT",
+  "author": "Craftled <hi@craftled.com> (https://craftled.com)",
+  "keywords": [
+    "shadcn",
+    "shadcn-ui",
+    "components",
+    "registry",
+    "tailwindcss",
+    "react",
+    "nextjs",
+    "ui-library",
+    "design-system",
+    "craftled"
+  ]
 }

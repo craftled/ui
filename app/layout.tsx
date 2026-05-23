@@ -25,9 +25,30 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Craftled UI",
+  metadataBase: new URL("https://ui.craftled.com"),
+  title: {
+    default: "Craftled UI",
+    template: "%s · Craftled UI",
+  },
   description:
-    "A craft-led, shadcn-native component library. Install via the shadcn CLI.",
+    "A craft-led, shadcn-native component library. Charts, blocks, shaders, and primitives — copy/paste with the shadcn CLI.",
+  openGraph: {
+    title: "Craftled UI",
+    description:
+      "A craft-led, shadcn-native component library. Charts, blocks, shaders, and primitives — copy/paste with the shadcn CLI.",
+    url: "https://ui.craftled.com",
+    siteName: "Craftled UI",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Craftled UI",
+    description:
+      "A craft-led, shadcn-native component library. Charts, blocks, shaders, and primitives — copy/paste with the shadcn CLI.",
+    creator: "@tomaslau",
+    site: "@craftled_",
+  },
 };
 
 export default function RootLayout({

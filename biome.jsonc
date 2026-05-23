@@ -1,6 +1,9 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "extends": ["ultracite/biome/core"],
+  "files": {
+    "includes": ["!public/r", "!tsconfig.json", "!.next", "!node_modules"]
+  },
   "linter": {
     "rules": {
       "performance": {

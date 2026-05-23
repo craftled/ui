@@ -18,6 +18,19 @@
       "categories": ["primitive"]
     },
     {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "shadcn's latest Card primitive — Card + CardHeader + CardTitle + CardDescription + CardAction + CardContent + CardFooter. Uses container queries on the header so CardAction auto-positions to the right when present. data-slot=* on every sub-component for downstream styling hooks.",
+      "files": [
+        {
+          "path": "registry/new-york/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",

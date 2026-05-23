@@ -53,7 +53,10 @@ export default function RootLayout({
               <main className="w-full min-w-0 max-w-[700px] py-8">
                 {children}
               </main>
-              <div className="hidden w-56 shrink-0 md:block" aria-hidden />
+              <aside
+                id="controls-rail-mount"
+                className="hidden w-56 shrink-0 py-8 md:block"
+              />
             </div>
           </div>
         </ThemeProvider>

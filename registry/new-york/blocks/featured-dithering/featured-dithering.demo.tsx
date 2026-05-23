@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import { ControlsRail } from "@/components/controls-rail"
 import {
   randomBool,
   randomInRange,
@@ -89,10 +90,11 @@ export default function FeaturedDitheringDemo() {
   const [params, setParams] = React.useState<Params>(PRESETS.Default)
 
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_220px]">
+    <>
       <FeaturedDithering image={IMAGE} title="Image dithering" {...params} />
 
-      <div className="text-foreground/80 flex flex-col gap-3 text-xs">
+      <ControlsRail>
+        <div className="text-foreground/80 flex flex-col gap-3 text-xs">
         <div className="space-y-1.5">
           <div className="text-foreground font-semibold">Presets</div>
           <div className="grid grid-cols-2 gap-1.5">
@@ -173,7 +175,8 @@ export default function FeaturedDitheringDemo() {
           />
         </div>
       </div>
-    </div>
+      </ControlsRail>
+    </>
   )
 }
 

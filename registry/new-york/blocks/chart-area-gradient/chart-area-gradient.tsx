@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import * as React from "react";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
-} from "@/registry/new-york/ui/chart"
+} from "@/registry/new-york/ui/chart";
 
 export type ChartAreaGradientSeries = {
-  key: string
-  label: string
-  color?: string
-}
+  key: string;
+  label: string;
+  color?: string;
+};
 
 export type ChartAreaGradientProps = {
-  data: Record<string, string | number>[]
-  series: ChartAreaGradientSeries[]
-  labelKey?: string
-  stacked?: boolean
-  className?: string
-}
+  data: Record<string, string | number>[];
+  series: ChartAreaGradientSeries[];
+  labelKey?: string;
+  stacked?: boolean;
+  className?: string;
+};
 
 export function ChartAreaGradient({
   data,
@@ -31,35 +31,37 @@ export function ChartAreaGradient({
   stacked = true,
   className,
 }: ChartAreaGradientProps) {
-  const config = React.useMemo<ChartConfig>(() => {
-    return Object.fromEntries(
-      series.map((s, i) => [
-        s.key,
-        {
-          label: s.label,
-          color: s.color ?? `var(--chart-${(i % 5) + 1})`,
-        },
-      ])
-    )
-  }, [series])
+  const config = React.useMemo<ChartConfig>(
+    () =>
+      Object.fromEntries(
+        series.map((s, i) => [
+          s.key,
+          {
+            label: s.label,
+            color: s.color ?? `var(--chart-${(i % 5) + 1})`,
+          },
+        ])
+      ),
+    [series]
+  );
 
-  const gradientId = React.useId().replace(/:/g, "")
+  const gradientId = React.useId().replace(/:/g, "");
 
   return (
-    <ChartContainer config={config} className={className}>
+    <ChartContainer className={className} config={config}>
       <AreaChart
+        accessibilityLayer
         data={data}
         margin={{ left: 12, right: 12, top: 8 }}
-        accessibilityLayer
       >
         <defs>
           {series.map((s) => (
             <linearGradient
-              key={s.key}
               id={`${gradientId}-${s.key}`}
+              key={s.key}
               x1="0"
-              y1="0"
               x2="0"
+              y1="0"
               y2="1"
             >
               <stop
@@ -75,30 +77,30 @@ export function ChartAreaGradient({
             </linearGradient>
           ))}
         </defs>
-        <CartesianGrid vertical={false} strokeDasharray="3 3" />
+        <CartesianGrid strokeDasharray="3 3" vertical={false} />
         <XAxis
+          axisLine={false}
           dataKey={labelKey}
           tickLine={false}
-          axisLine={false}
           tickMargin={8}
         />
-        <YAxis tickLine={false} axisLine={false} tickMargin={8} width={40} />
+        <YAxis axisLine={false} tickLine={false} tickMargin={8} width={40} />
         <ChartTooltip
-          cursor={false}
           content={<ChartTooltipContent indicator="dot" />}
+          cursor={false}
         />
         {series.map((s) => (
           <Area
-            key={s.key}
             dataKey={s.key}
-            type="natural"
+            fill={`url(#${gradientId}-${s.key})`}
+            key={s.key}
+            stackId={stacked && series.length > 1 ? "a" : undefined}
             stroke={`var(--color-${s.key})`}
             strokeWidth={2}
-            fill={`url(#${gradientId}-${s.key})`}
-            stackId={stacked && series.length > 1 ? "a" : undefined}
+            type="natural"
           />
         ))}
       </AreaChart>
     </ChartContainer>
-  )
+  );
 }

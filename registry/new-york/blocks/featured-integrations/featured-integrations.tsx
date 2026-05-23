@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import type * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type FeaturedIntegrationsIcon = {
   /** Anything React — an <img>, an <svg>, a letter monogram, etc. */
-  node: React.ReactNode
+  node: React.ReactNode;
   /** Accessible name for the orbit item. */
-  alt?: string
+  alt?: string;
   /** Override the auto-distributed angle (degrees; 0 = top, clockwise). */
-  angle?: number
-}
+  angle?: number;
+};
 
 export type FeaturedIntegrationsProps = {
   /** Small eyebrow above the title. */
-  label?: React.ReactNode
+  label?: React.ReactNode;
   /** Headline. Pass JSX to mix muted + emphasized weight. */
-  title: React.ReactNode
+  title: React.ReactNode;
   /** Optional subtitle below the headline. */
-  description?: React.ReactNode
+  description?: React.ReactNode;
   /** Icons to orbit. If no angles set, they're evenly distributed starting at top. */
-  icons: FeaturedIntegrationsIcon[]
+  icons: FeaturedIntegrationsIcon[];
   /** Pixel size of each icon card. Default 56. */
-  iconSize?: number
+  iconSize?: number;
   /** Diameter of the orbital circle in pixels. Default 560. */
-  circleDiameter?: number
-  className?: string
-}
+  circleDiameter?: number;
+  className?: string;
+};
 
 export function FeaturedIntegrations({
   label,
@@ -41,7 +41,7 @@ export function FeaturedIntegrations({
   return (
     <article
       className={cn(
-        "bg-background text-foreground relative size-full overflow-hidden",
+        "relative size-full overflow-hidden bg-background text-foreground",
         className
       )}
     >
@@ -50,32 +50,34 @@ export function FeaturedIntegrations({
         style={{ width: circleDiameter, height: circleDiameter }}
       >
         <svg
-          className="text-border absolute inset-0 size-full"
-          viewBox="0 0 100 100"
+          aria-hidden="true"
+          className="absolute inset-0 size-full text-border"
           preserveAspectRatio="xMidYMid meet"
-          aria-hidden
+          viewBox="0 0 100 100"
         >
+          <title>Orbit circle</title>
           <circle
             cx="50"
             cy="50"
-            r="49.5"
             fill="none"
+            r="49.5"
             stroke="currentColor"
-            strokeWidth="0.25"
             strokeDasharray="0.6 0.9"
+            strokeWidth="0.25"
           />
         </svg>
 
         {icons.map((icon, i) => {
-          const angleDeg = icon.angle ?? (i / icons.length) * 360
-          const angleRad = ((angleDeg - 90) * Math.PI) / 180
-          const x = 50 + Math.cos(angleRad) * 50
-          const y = 50 + Math.sin(angleRad) * 50
+          const angleDeg = icon.angle ?? (i / icons.length) * 360;
+          const angleRad = ((angleDeg - 90) * Math.PI) / 180;
+          const x = 50 + Math.cos(angleRad) * 50;
+          const y = 50 + Math.sin(angleRad) * 50;
           return (
             <div
-              key={i}
               aria-label={icon.alt}
-              className="bg-card border-border absolute flex items-center justify-center overflow-hidden rounded-2xl border shadow-sm"
+              className="absolute flex items-center justify-center overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
+              key={i}
+              role="img"
               style={{
                 left: `${x}%`,
                 top: `${y}%`,
@@ -86,23 +88,23 @@ export function FeaturedIntegrations({
             >
               {icon.node}
             </div>
-          )
+          );
         })}
 
         <div className="absolute inset-0 flex flex-col items-center justify-center px-8 text-center">
           {label ? (
-            <p className="text-muted-foreground mb-3 text-xl">{label}</p>
+            <p className="mb-3 text-muted-foreground text-xl">{label}</p>
           ) : null}
-          <div className="text-6xl leading-[1.02] font-bold tracking-tight text-balance">
+          <div className="text-balance font-bold text-6xl leading-[1.02] tracking-tight">
             {title}
           </div>
           {description ? (
-            <p className="text-muted-foreground mt-6 max-w-md text-xl leading-snug text-balance">
+            <p className="mt-6 max-w-md text-balance text-muted-foreground text-xl leading-snug">
               {description}
             </p>
           ) : null}
         </div>
       </div>
     </article>
-  )
+  );
 }

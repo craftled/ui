@@ -1,48 +1,48 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { StaticMeshGradient } from "@paper-design/shaders-react"
+import { StaticMeshGradient } from "@paper-design/shaders-react";
+import type * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type FeaturedMeshGradientProps = {
   /** Up to 10 colors. */
-  colors?: string[]
+  colors?: string[];
   /** Color spot placement seed (0-100). */
-  positions?: number
+  positions?: number;
   /** Sine wave distortion strength along X (0-1). */
-  waveX?: number
+  waveX?: number;
   /** X-axis wave phase offset (0-1). */
-  waveXShift?: number
+  waveXShift?: number;
   /** Sine wave distortion strength along Y (0-1). */
-  waveY?: number
+  waveY?: number;
   /** Y-axis wave phase offset (0-1). */
-  waveYShift?: number
+  waveYShift?: number;
   /** Blending behavior, 0 = hard stripes, 1 = gradual blend (0-1). */
-  mixing?: number
+  mixing?: number;
   /** Grain on shape edges (0-1). */
-  grainMixer?: number
+  grainMixer?: number;
   /** B/W grain overlay (0-1). */
-  grainOverlay?: number
+  grainOverlay?: number;
   /** Animation speed (0 = static). */
-  speed?: number
+  speed?: number;
   /** Zoom (0.01-4). */
-  scale?: number
+  scale?: number;
   /** Rotation (0-360). */
-  rotation?: number
+  rotation?: number;
   /** Horizontal offset (-1 to 1). */
-  offsetX?: number
+  offsetX?: number;
   /** Vertical offset (-1 to 1). */
-  offsetY?: number
-  title?: React.ReactNode
-  eyebrow?: React.ReactNode
-  titleClassName?: string
-  children?: React.ReactNode
-  aspectRatio?: string
-  className?: string
-}
+  offsetY?: number;
+  title?: React.ReactNode;
+  eyebrow?: React.ReactNode;
+  titleClassName?: string;
+  children?: React.ReactNode;
+  aspectRatio?: string;
+  className?: string;
+};
 
-const DEFAULT_COLORS = ["#ffad0a", "#6200ff", "#e2a3ff", "#ff99fd"]
+const DEFAULT_COLORS = ["#ffad0a", "#6200ff", "#e2a3ff", "#ff99fd"];
 
 export function FeaturedMeshGradient({
   colors = DEFAULT_COLORS,
@@ -76,26 +76,26 @@ export function FeaturedMeshGradient({
     >
       <StaticMeshGradient
         colors={colors}
-        positions={positions}
-        waveX={waveX}
-        waveXShift={waveXShift}
-        waveY={waveY}
-        waveYShift={waveYShift}
-        mixing={mixing}
+        fit="cover"
         grainMixer={grainMixer}
         grainOverlay={grainOverlay}
-        speed={speed}
-        scale={scale}
-        rotation={rotation}
+        mixing={mixing}
         offsetX={offsetX}
         offsetY={offsetY}
-        fit="cover"
+        positions={positions}
+        rotation={rotation}
+        scale={scale}
+        speed={speed}
         style={{
           position: "absolute",
           inset: 0,
           width: "100%",
           height: "100%",
         }}
+        waveX={waveX}
+        waveXShift={waveXShift}
+        waveY={waveY}
+        waveYShift={waveYShift}
       />
 
       {children ? (
@@ -106,10 +106,7 @@ export function FeaturedMeshGradient({
         <figcaption className="absolute right-4 bottom-4 left-4 z-10 flex flex-col gap-1">
           {eyebrow ? (
             <span
-              className={cn(
-                "text-xs font-medium opacity-80",
-                titleClassName
-              )}
+              className={cn("font-medium text-xs opacity-80", titleClassName)}
             >
               {eyebrow}
             </span>
@@ -117,7 +114,7 @@ export function FeaturedMeshGradient({
           {title ? (
             <h3
               className={cn(
-                "text-2xl leading-tight font-bold tracking-tight sm:text-3xl",
+                "font-bold text-2xl leading-tight tracking-tight sm:text-3xl",
                 titleClassName
               )}
             >
@@ -127,5 +124,5 @@ export function FeaturedMeshGradient({
         </figcaption>
       ) : null}
     </figure>
-  )
+  );
 }

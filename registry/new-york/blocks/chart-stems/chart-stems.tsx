@@ -1,49 +1,48 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Bar, BarChart, XAxis, YAxis } from "recharts"
-
+import * as React from "react";
+import { Bar, BarChart, XAxis, YAxis } from "recharts";
+import { cn } from "@/lib/utils";
 import {
+  type ChartConfig,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
-} from "@/registry/new-york/ui/chart"
-import { cn } from "@/lib/utils"
+} from "@/registry/new-york/ui/chart";
 
 export type ChartStemsProps = {
-  data: Record<string, string | number>[]
+  data: Record<string, string | number>[];
   /** Numeric key in each row to plot. Default "value". */
-  dataKey?: string
+  dataKey?: string;
   /** Key holding the x-axis label (used by tooltips + axis). Default "label". */
-  labelKey?: string
+  labelKey?: string;
   /** Display label for the series. */
-  label?: string
+  label?: string;
   /** Series color — anything CSS accepts. Default var(--chart-3). */
-  color?: string
+  color?: string;
   /** Stem opacity 0-1. Default 0.4. */
-  stemOpacity?: number
+  stemOpacity?: number;
   /** Dot radius in px. Default 3. */
-  dotRadius?: number
+  dotRadius?: number;
   /** Stem stroke width in px (non-scaling). Default 1. */
-  stemWidth?: number
+  stemWidth?: number;
   /** CSS background. */
-  background?: string
+  background?: string;
   /** Aspect ratio (e.g. "16/5"). Default "16/5". */
-  aspectRatio?: string
+  aspectRatio?: string;
   /** Hover tooltip. Default true. */
-  showTooltip?: boolean
+  showTooltip?: boolean;
   /** Render X + Y axes. Default false (keeps the ambient look). */
-  showAxes?: boolean
+  showAxes?: boolean;
   /** Render legend below. Default false. */
-  showLegend?: boolean
-  className?: string
-}
+  showLegend?: boolean;
+  className?: string;
+};
 
 const DEFAULT_BG =
-  "radial-gradient(ellipse 70% 55% at 50% 55%, rgba(253,186,116,0.55), transparent 70%), linear-gradient(180deg, #dbeafe 0%, #fed7aa 50%, #dbeafe 100%)"
+  "radial-gradient(ellipse 70% 55% at 50% 55%, rgba(253,186,116,0.55), transparent 70%), linear-gradient(180deg, #dbeafe 0%, #fed7aa 50%, #dbeafe 100%)";
 
 export function ChartStems({
   data,
@@ -66,7 +65,7 @@ export function ChartStems({
       [dataKey]: { label: label ?? dataKey, color },
     }),
     [dataKey, label, color]
-  )
+  );
 
   return (
     <div
@@ -74,10 +73,11 @@ export function ChartStems({
       style={{ background, aspectRatio }}
     >
       <ChartContainer
-        config={config}
         className="!aspect-auto absolute inset-0 size-full"
+        config={config}
       >
         <BarChart
+          accessibilityLayer
           data={data}
           margin={{
             top: 12,
@@ -85,73 +85,69 @@ export function ChartStems({
             left: showAxes ? 0 : 4,
             bottom: showAxes ? 4 : 4,
           }}
-          accessibilityLayer
         >
           {showAxes ? (
             <>
               <XAxis
-                dataKey={labelKey}
-                tickLine={false}
                 axisLine={false}
-                tickMargin={8}
+                dataKey={labelKey}
                 interval="preserveStartEnd"
                 minTickGap={32}
                 tick={{ fill: "currentColor", fillOpacity: 0.55, fontSize: 11 }}
+                tickLine={false}
+                tickMargin={8}
               />
               <YAxis
-                tickLine={false}
                 axisLine={false}
+                tick={{ fill: "currentColor", fillOpacity: 0.55, fontSize: 11 }}
+                tickLine={false}
                 tickMargin={6}
                 width={32}
-                tick={{ fill: "currentColor", fillOpacity: 0.55, fontSize: 11 }}
               />
             </>
           ) : null}
 
           {showTooltip ? (
             <ChartTooltip
-              cursor={false}
               content={
-                <ChartTooltipContent
-                  indicator="dot"
-                  labelKey={labelKey}
-                />
+                <ChartTooltipContent indicator="dot" labelKey={labelKey} />
               }
+              cursor={false}
             />
           ) : null}
 
           <Bar
             dataKey={dataKey}
             fill={`var(--color-${dataKey})`}
+            isAnimationActive={false}
             shape={(props) => {
               const p = props as unknown as {
-                x?: number
-                y?: number
-                width?: number
-                height?: number
-                fill?: string
-              }
+                x?: number;
+                y?: number;
+                width?: number;
+                height?: number;
+                fill?: string;
+              };
               return (
                 <StemShape
-                  x={p.x}
-                  y={p.y}
-                  width={p.width}
-                  height={p.height}
+                  dotRadius={dotRadius}
                   fill={p.fill}
+                  height={p.height}
                   stemOpacity={stemOpacity}
                   stemWidth={stemWidth}
-                  dotRadius={dotRadius}
+                  width={p.width}
+                  x={p.x}
+                  y={p.y}
                 />
-              )
+              );
             }}
-            isAnimationActive={false}
           />
 
           {showLegend ? <ChartLegend content={<ChartLegendContent />} /> : null}
         </BarChart>
       </ChartContainer>
     </div>
-  )
+  );
 }
 
 function StemShape({
@@ -164,30 +160,30 @@ function StemShape({
   stemWidth,
   dotRadius,
 }: {
-  x?: number
-  y?: number
-  width?: number
-  height?: number
-  fill?: string
-  stemOpacity: number
-  stemWidth: number
-  dotRadius: number
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+  fill?: string;
+  stemOpacity: number;
+  stemWidth: number;
+  dotRadius: number;
 }) {
-  const cx = x + width / 2
-  const baseline = y + height
+  const cx = x + width / 2;
+  const baseline = y + height;
   return (
     <g>
       <line
-        x1={cx}
-        y1={y}
-        x2={cx}
-        y2={baseline}
         stroke={fill}
-        strokeWidth={stemWidth}
         strokeOpacity={stemOpacity}
+        strokeWidth={stemWidth}
         vectorEffect="non-scaling-stroke"
+        x1={cx}
+        x2={cx}
+        y1={y}
+        y2={baseline}
       />
-      <circle cx={cx} cy={y} r={dotRadius} fill={fill} />
+      <circle cx={cx} cy={y} fill={fill} r={dotRadius} />
     </g>
-  )
+  );
 }

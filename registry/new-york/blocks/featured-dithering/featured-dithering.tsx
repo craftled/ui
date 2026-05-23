@@ -1,35 +1,35 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ImageDithering } from "@paper-design/shaders-react"
+import { ImageDithering } from "@paper-design/shaders-react";
+import type * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type FeaturedDitheringProps = {
-  image: string
-  imageAlt?: string
-  title?: React.ReactNode
-  eyebrow?: React.ReactNode
-  titleClassName?: string
+  image: string;
+  imageAlt?: string;
+  title?: React.ReactNode;
+  eyebrow?: React.ReactNode;
+  titleClassName?: string;
   /** Dithering pattern. */
-  type?: "random" | "2x2" | "4x4" | "8x8"
+  type?: "random" | "2x2" | "4x4" | "8x8";
   /** Pixel grid size, 0.5–20. */
-  size?: number
+  size?: number;
   /** Number of palette colors, 1–7. */
-  colorSteps?: number
+  colorSteps?: number;
   /** Background color (paper). */
-  colorBack?: string
+  colorBack?: string;
   /** Foreground color (ink). */
-  colorFront?: string
+  colorFront?: string;
   /** Secondary foreground (set to colorFront for classic 2-color dithering). */
-  colorHighlight?: string
+  colorHighlight?: string;
   /** Use the image's actual colors instead of the palette. */
-  originalColors?: boolean
+  originalColors?: boolean;
   /** Invert the image luminance. */
-  inverted?: boolean
-  aspectRatio?: string
-  className?: string
-}
+  inverted?: boolean;
+  aspectRatio?: string;
+  className?: string;
+};
 
 export function FeaturedDithering({
   image,
@@ -57,32 +57,29 @@ export function FeaturedDithering({
       style={{ aspectRatio }}
     >
       <ImageDithering
-        image={image}
-        type={type}
-        size={size}
-        colorSteps={colorSteps}
         colorBack={colorBack}
         colorFront={colorFront}
         colorHighlight={colorHighlight}
-        originalColors={originalColors}
-        inverted={inverted}
+        colorSteps={colorSteps}
         fit="cover"
+        image={image}
+        inverted={inverted}
+        originalColors={originalColors}
+        size={size}
         style={{
           position: "absolute",
           inset: 0,
           width: "100%",
           height: "100%",
         }}
+        type={type}
       />
 
       {title || eyebrow ? (
         <figcaption className="absolute right-4 bottom-4 left-4 flex flex-col gap-1">
           {eyebrow ? (
             <span
-              className={cn(
-                "text-xs font-medium opacity-80",
-                titleClassName
-              )}
+              className={cn("font-medium text-xs opacity-80", titleClassName)}
             >
               {eyebrow}
             </span>
@@ -90,7 +87,7 @@ export function FeaturedDithering({
           {title ? (
             <h3
               className={cn(
-                "text-2xl leading-tight font-bold tracking-tight sm:text-3xl",
+                "font-bold text-2xl leading-tight tracking-tight sm:text-3xl",
                 titleClassName
               )}
             >
@@ -100,5 +97,5 @@ export function FeaturedDithering({
         </figcaption>
       ) : null}
     </figure>
-  )
+  );
 }

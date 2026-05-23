@@ -1,28 +1,27 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { AtSign } from "lucide-react"
-
-import { Input } from "@/registry/new-york/ui/input"
-import { cn } from "@/lib/utils"
+import { AtSign } from "lucide-react";
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Input } from "@/registry/new-york/ui/input";
 
 export type CtaEbookProps = {
   /** Small icon inside the eyebrow tag. */
-  tagIcon?: React.ReactNode
+  tagIcon?: React.ReactNode;
   /** Eyebrow text. Omit to hide the tag entirely. */
-  tagLabel?: string
-  title: string
-  description?: string
-  inputPlaceholder?: string
-  ctaLabel?: string
+  tagLabel?: string;
+  title: string;
+  description?: string;
+  inputPlaceholder?: string;
+  ctaLabel?: string;
   /** Right-side slot — pass a book mockup, illustration, or any node. */
-  decoration?: React.ReactNode
+  decoration?: React.ReactNode;
   /** Tailwind color stem for the accent (tag + button). Default "rose". */
-  accent?: "rose" | "violet" | "blue" | "emerald" | "amber"
-  onSubmit?: (email: string) => void | Promise<void>
-  action?: string
-  className?: string
-}
+  accent?: "rose" | "violet" | "blue" | "emerald" | "amber";
+  onSubmit?: (email: string) => void | Promise<void>;
+  action?: string;
+  className?: string;
+};
 
 const ACCENT_CLASSES = {
   rose: {
@@ -48,7 +47,7 @@ const ACCENT_CLASSES = {
     button:
       "bg-amber-500 hover:bg-amber-500/90 focus-visible:ring-amber-400/40",
   },
-} as const
+} as const;
 
 export function CtaEbook({
   tagIcon,
@@ -63,21 +62,23 @@ export function CtaEbook({
   action,
   className,
 }: CtaEbookProps) {
-  const [email, setEmail] = React.useState("")
-  const [submitting, setSubmitting] = React.useState(false)
-  const tone = ACCENT_CLASSES[accent]
+  const [email, setEmail] = React.useState("");
+  const [submitting, setSubmitting] = React.useState(false);
+  const tone = ACCENT_CLASSES[accent];
 
   const handleSubmit = async (e: React.FormEvent) => {
-    if (!onSubmit) return
-    e.preventDefault()
-    setSubmitting(true)
-    try {
-      await onSubmit(email)
-      setEmail("")
-    } finally {
-      setSubmitting(false)
+    if (!onSubmit) {
+      return;
     }
-  }
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await onSubmit(email);
+      setEmail("");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <section
@@ -91,7 +92,7 @@ export function CtaEbook({
           {tagLabel ? (
             <span
               className={cn(
-                "inline-flex items-center gap-1.5 self-start rounded-md border px-2 py-1 text-xs font-medium",
+                "inline-flex items-center gap-1.5 self-start rounded-md border px-2 py-1 font-medium text-xs",
                 tone.tag
               )}
             >
@@ -99,40 +100,40 @@ export function CtaEbook({
               {tagLabel}
             </span>
           ) : null}
-          <h2 className="text-3xl leading-[1.05] font-bold tracking-tight text-balance sm:text-4xl">
+          <h2 className="text-balance font-bold text-3xl leading-[1.05] tracking-tight sm:text-4xl">
             {title}
           </h2>
           {description ? (
-            <p className="text-base leading-relaxed text-white/60 text-balance">
+            <p className="text-balance text-base text-white/60 leading-relaxed">
               {description}
             </p>
           ) : null}
           <form
             action={action}
-            onSubmit={handleSubmit}
             className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/[0.03] p-1.5 sm:flex-row sm:items-center"
+            onSubmit={handleSubmit}
           >
             <div className="relative flex-1">
               <AtSign className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-white/40" />
               <Input
-                type="email"
-                name="email"
-                required
-                placeholder={inputPlaceholder}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
                 className="h-auto border-transparent bg-transparent py-2.5 pl-9 text-white shadow-none ring-0 placeholder:text-white/40 focus-visible:border-transparent focus-visible:ring-0"
+                name="email"
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={inputPlaceholder}
+                required
+                type="email"
+                value={email}
               />
             </div>
             <button
-              type="submit"
-              disabled={submitting}
               className={cn(
-                "rounded-xl px-5 py-2.5 text-sm font-semibold whitespace-nowrap text-white",
+                "whitespace-nowrap rounded-xl px-5 py-2.5 font-semibold text-sm text-white",
                 "transition-colors disabled:opacity-50",
-                "focus-visible:ring-2 focus-visible:outline-none",
+                "focus-visible:outline-none focus-visible:ring-2",
                 tone.button
               )}
+              disabled={submitting}
+              type="submit"
             >
               {submitting ? "…" : ctaLabel}
             </button>
@@ -149,5 +150,5 @@ export function CtaEbook({
         ) : null}
       </div>
     </section>
-  )
+  );
 }

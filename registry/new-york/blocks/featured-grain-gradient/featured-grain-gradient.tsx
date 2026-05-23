@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { GrainGradient } from "@paper-design/shaders-react"
+import { GrainGradient } from "@paper-design/shaders-react";
+import type * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type FeaturedGrainGradientProps = {
   /** Up to 7 colors. */
-  colors?: string[]
+  colors?: string[];
   /** Background color. */
-  colorBack?: string
+  colorBack?: string;
   /** Shape variant. */
   shape?:
     | "wave"
@@ -18,32 +18,32 @@ export type FeaturedGrainGradientProps = {
     | "corners"
     | "ripple"
     | "blob"
-    | "sphere"
+    | "sphere";
   /** Color transition smoothness, 0-1. */
-  softness?: number
+  softness?: number;
   /** Distortion strength, 0-1. */
-  intensity?: number
+  intensity?: number;
   /** Grain noise overlay, 0-1. */
-  noise?: number
+  noise?: number;
   /** Animation speed multiplier. 0 = static. */
-  speed?: number
+  speed?: number;
   /** Zoom, 0.01-4. */
-  scale?: number
+  scale?: number;
   /** Rotation in degrees, 0-360. */
-  rotation?: number
+  rotation?: number;
   /** Title overlay (bottom-left). */
-  title?: React.ReactNode
+  title?: React.ReactNode;
   /** Small label above title. */
-  eyebrow?: React.ReactNode
-  titleClassName?: string
+  eyebrow?: React.ReactNode;
+  titleClassName?: string;
   /** Optional arbitrary content rendered over the gradient. */
-  children?: React.ReactNode
+  children?: React.ReactNode;
   /** Aspect ratio, default "16/9". */
-  aspectRatio?: string
-  className?: string
-}
+  aspectRatio?: string;
+  className?: string;
+};
 
-const DEFAULT_COLORS = ["#7300ff", "#eba8ff", "#00bfff", "#2a00ff"]
+const DEFAULT_COLORS = ["#7300ff", "#eba8ff", "#00bfff", "#2a00ff"];
 
 export function FeaturedGrainGradient({
   colors = DEFAULT_COLORS,
@@ -71,16 +71,16 @@ export function FeaturedGrainGradient({
       style={{ aspectRatio }}
     >
       <GrainGradient
-        colors={colors}
         colorBack={colorBack}
-        shape={shape}
-        softness={softness}
+        colors={colors}
+        fit="cover"
         intensity={intensity}
         noise={noise}
-        speed={speed}
-        scale={scale}
         rotation={rotation}
-        fit="cover"
+        scale={scale}
+        shape={shape}
+        softness={softness}
+        speed={speed}
         style={{
           position: "absolute",
           inset: 0,
@@ -97,10 +97,7 @@ export function FeaturedGrainGradient({
         <figcaption className="absolute right-4 bottom-4 left-4 z-10 flex flex-col gap-1">
           {eyebrow ? (
             <span
-              className={cn(
-                "text-xs font-medium opacity-80",
-                titleClassName
-              )}
+              className={cn("font-medium text-xs opacity-80", titleClassName)}
             >
               {eyebrow}
             </span>
@@ -108,7 +105,7 @@ export function FeaturedGrainGradient({
           {title ? (
             <h3
               className={cn(
-                "text-2xl leading-tight font-bold tracking-tight sm:text-3xl",
+                "font-bold text-2xl leading-tight tracking-tight sm:text-3xl",
                 titleClassName
               )}
             >
@@ -118,5 +115,5 @@ export function FeaturedGrainGradient({
         </figcaption>
       ) : null}
     </figure>
-  )
+  );
 }

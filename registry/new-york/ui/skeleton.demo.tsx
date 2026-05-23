@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Skeleton } from "./skeleton"
+import { Skeleton } from "./skeleton";
 
 export default function SkeletonDemo() {
   return (
@@ -28,7 +28,7 @@ export default function SkeletonDemo() {
       </Group>
 
       <Group label="Card placeholder">
-        <div className="bg-card flex w-full max-w-sm flex-col gap-4 rounded-xl border p-6 shadow-sm">
+        <div className="flex w-full max-w-sm flex-col gap-4 rounded-xl border bg-card p-6 shadow-sm">
           <Skeleton className="aspect-video w-full" />
           <div className="space-y-2">
             <Skeleton className="h-5 w-2/3" />
@@ -46,8 +46,8 @@ export default function SkeletonDemo() {
         <div className="grid w-full max-w-md grid-cols-3 gap-3">
           {Array.from({ length: 3 }, (_, i) => (
             <div
+              className="flex flex-col gap-2 rounded-md border bg-card p-4 shadow-sm"
               key={i}
-              className="bg-card flex flex-col gap-2 rounded-md border p-4 shadow-sm"
             >
               <Skeleton className="h-3 w-16" />
               <Skeleton className="h-6 w-20" />
@@ -56,22 +56,22 @@ export default function SkeletonDemo() {
         </div>
       </Group>
     </div>
-  )
+  );
 }
 
 function Group({
   label,
   children,
 }: {
-  label: string
-  children: React.ReactNode
+  label: string;
+  children: React.ReactNode;
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+      <span className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
         {label}
       </span>
       {children}
     </div>
-  )
+  );
 }

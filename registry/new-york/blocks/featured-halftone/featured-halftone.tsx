@@ -1,42 +1,42 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { HalftoneCmyk } from "@paper-design/shaders-react"
+import { HalftoneCmyk } from "@paper-design/shaders-react";
+import type * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type FeaturedHalftoneProps = {
-  image: string
-  imageAlt?: string
+  image: string;
+  imageAlt?: string;
   /** Bottom-left title overlay. */
-  title?: React.ReactNode
+  title?: React.ReactNode;
   /** Small label above the title. */
-  eyebrow?: React.ReactNode
+  eyebrow?: React.ReactNode;
   /** Class for the title text — color, weight overrides. */
-  titleClassName?: string
+  titleClassName?: string;
   /** Dot rendering style. Default "dots". */
-  type?: "dots" | "ink" | "sharp"
+  type?: "dots" | "ink" | "sharp";
   /** Halftone cell size, 0-1. Default 0.18. */
-  size?: number
+  size?: number;
   /** Dot edge softness, 0-1. Default 0.5. */
-  softness?: number
+  softness?: number;
   /** Image contrast, 0-2. Default 1. */
-  contrast?: number
+  contrast?: number;
   /** Paper / background color. */
-  colorBack?: string
+  colorBack?: string;
   /** CMYK ink colors. */
-  colorC?: string
-  colorM?: string
-  colorY?: string
-  colorK?: string
+  colorC?: string;
+  colorM?: string;
+  colorY?: string;
+  colorK?: string;
   /** Grain overlay strength, 0-1. */
-  grainOverlay?: number
+  grainOverlay?: number;
   /** Grain mixer strength, 0-1. */
-  grainMixer?: number
+  grainMixer?: number;
   /** Aspect ratio. Default "1/1". */
-  aspectRatio?: string
-  className?: string
-}
+  aspectRatio?: string;
+  className?: string;
+};
 
 export function FeaturedHalftone({
   image,
@@ -67,35 +67,32 @@ export function FeaturedHalftone({
       style={{ aspectRatio }}
     >
       <HalftoneCmyk
-        image={image}
-        type={type}
-        size={size}
-        softness={softness}
-        contrast={contrast}
         colorBack={colorBack}
         colorC={colorC}
+        colorK={colorK}
         colorM={colorM}
         colorY={colorY}
-        colorK={colorK}
-        grainOverlay={grainOverlay}
-        grainMixer={grainMixer}
+        contrast={contrast}
         fit="cover"
+        grainMixer={grainMixer}
+        grainOverlay={grainOverlay}
+        image={image}
+        size={size}
+        softness={softness}
         style={{
           position: "absolute",
           inset: 0,
           width: "100%",
           height: "100%",
         }}
+        type={type}
       />
 
       {title || eyebrow ? (
         <figcaption className="absolute right-4 bottom-4 left-4 flex flex-col gap-1">
           {eyebrow ? (
             <span
-              className={cn(
-                "text-xs font-medium opacity-80",
-                titleClassName
-              )}
+              className={cn("font-medium text-xs opacity-80", titleClassName)}
             >
               {eyebrow}
             </span>
@@ -103,7 +100,7 @@ export function FeaturedHalftone({
           {title ? (
             <h3
               className={cn(
-                "text-2xl leading-tight font-bold tracking-tight sm:text-3xl",
+                "font-bold text-2xl leading-tight tracking-tight sm:text-3xl",
                 titleClassName
               )}
             >
@@ -113,5 +110,5 @@ export function FeaturedHalftone({
         </figcaption>
       ) : null}
     </figure>
-  )
+  );
 }

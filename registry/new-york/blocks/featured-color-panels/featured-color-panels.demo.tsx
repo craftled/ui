@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { ControlsRail } from "@/components/controls-rail"
+import { ControlsRail } from "@/components/controls-rail";
 import {
   hslToHex,
   randomBool,
   randomInRange,
   randomPalette,
-} from "@/lib/random-palette"
-import { cn } from "@/lib/utils"
+} from "@/lib/random-palette";
+import { cn } from "@/lib/utils";
 
-import { FeaturedColorPanels } from "./featured-color-panels"
+import { FeaturedColorPanels } from "./featured-color-panels";
 
 function randomParams(): Params {
   return {
@@ -33,27 +33,27 @@ function randomParams(): Params {
     rotation: Math.floor(Math.random() * 360),
     offsetX: randomInRange(-0.3, 0.3),
     offsetY: randomInRange(-0.3, 0.3),
-  }
+  };
 }
 
 type Params = {
-  colors: string[]
-  colorBack: string
-  density: number
-  angle1: number
-  angle2: number
-  length: number
-  edges: boolean
-  blur: number
-  fadeIn: number
-  fadeOut: number
-  gradient: number
-  speed: number
-  scale: number
-  rotation: number
-  offsetX: number
-  offsetY: number
-}
+  colors: string[];
+  colorBack: string;
+  density: number;
+  angle1: number;
+  angle2: number;
+  length: number;
+  edges: boolean;
+  blur: number;
+  fadeIn: number;
+  fadeOut: number;
+  gradient: number;
+  speed: number;
+  scale: number;
+  rotation: number;
+  offsetX: number;
+  offsetY: number;
+};
 
 const PRESETS: Record<string, Params> = {
   Default: {
@@ -136,134 +136,134 @@ const PRESETS: Record<string, Params> = {
     offsetX: -0.3,
     offsetY: 0.6,
   },
-}
+};
 
 export default function FeaturedColorPanelsDemo() {
-  const [params, setParams] = React.useState<Params>(PRESETS.Default)
+  const [params, setParams] = React.useState<Params>(PRESETS.Default);
 
   const setColor = (idx: number, value: string) => {
-    const next = [...params.colors]
-    next[idx] = value
-    setParams({ ...params, colors: next })
-  }
+    const next = [...params.colors];
+    next[idx] = value;
+    setParams({ ...params, colors: next });
+  };
 
   return (
     <>
       <FeaturedColorPanels title="Color panels" {...params} />
 
       <ControlsRail>
-        <div className="text-foreground/80 flex flex-col gap-3 text-xs">
-        <div className="space-y-1.5">
-          <div className="text-foreground font-semibold">Presets</div>
-          <div className="grid grid-cols-2 gap-1.5">
-            {Object.keys(PRESETS).map((name) => (
-              <button
-                key={name}
-                type="button"
-                onClick={() => setParams(PRESETS[name])}
-                className="border-border hover:bg-muted rounded-md border px-2 py-1.5 transition-colors"
-              >
-                {name}
-              </button>
+        <div className="flex flex-col gap-3 text-foreground/80 text-xs">
+          <div className="space-y-1.5">
+            <div className="font-semibold text-foreground">Presets</div>
+            <div className="grid grid-cols-2 gap-1.5">
+              {Object.keys(PRESETS).map((name) => (
+                <button
+                  className="rounded-md border border-border px-2 py-1.5 transition-colors hover:bg-muted"
+                  key={name}
+                  onClick={() => setParams(PRESETS[name])}
+                  type="button"
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
+            <button
+              className="mt-1 w-full rounded-md bg-foreground px-2 py-1.5 font-medium text-background transition-colors hover:bg-foreground/90"
+              onClick={() => setParams(randomParams())}
+              type="button"
+            >
+              🎲 Randomize
+            </button>
+          </div>
+
+          <Slider
+            label="Density"
+            max={7}
+            min={0.25}
+            onChange={(v) => setParams({ ...params, density: v })}
+            step={0.05}
+            value={params.density}
+          />
+          <Slider
+            label="Angle 1"
+            max={1}
+            min={-1}
+            onChange={(v) => setParams({ ...params, angle1: v })}
+            step={0.01}
+            value={params.angle1}
+          />
+          <Slider
+            label="Angle 2"
+            max={1}
+            min={-1}
+            onChange={(v) => setParams({ ...params, angle2: v })}
+            step={0.01}
+            value={params.angle2}
+          />
+          <Slider
+            label="Length"
+            max={3}
+            onChange={(v) => setParams({ ...params, length: v })}
+            step={0.01}
+            value={params.length}
+          />
+          <Slider
+            label="Blur"
+            max={0.5}
+            onChange={(v) => setParams({ ...params, blur: v })}
+            value={params.blur}
+          />
+          <Slider
+            label="Fade in"
+            max={1}
+            onChange={(v) => setParams({ ...params, fadeIn: v })}
+            value={params.fadeIn}
+          />
+          <Slider
+            label="Fade out"
+            max={1}
+            onChange={(v) => setParams({ ...params, fadeOut: v })}
+            value={params.fadeOut}
+          />
+          <Slider
+            label="Gradient"
+            max={1}
+            onChange={(v) => setParams({ ...params, gradient: v })}
+            value={params.gradient}
+          />
+          <Slider
+            label="Speed"
+            max={3}
+            onChange={(v) => setParams({ ...params, speed: v })}
+            step={0.05}
+            value={params.speed}
+          />
+
+          <Toggle
+            label="Edges"
+            onChange={(v) => setParams({ ...params, edges: v })}
+            value={params.edges}
+          />
+
+          <div className="mt-2 space-y-1.5">
+            <ColorField
+              label="Back"
+              onChange={(v) => setParams({ ...params, colorBack: v })}
+              value={params.colorBack}
+            />
+            {params.colors.map((c, i) => (
+              <ColorField
+                key={i}
+                label={`Color ${i + 1}`}
+                onChange={(v) => setColor(i, v)}
+                value={c}
+              />
             ))}
           </div>
-          <button
-            type="button"
-            onClick={() => setParams(randomParams())}
-            className="bg-foreground text-background hover:bg-foreground/90 mt-1 w-full rounded-md px-2 py-1.5 font-medium transition-colors"
-          >
-            🎲 Randomize
-          </button>
         </div>
-
-        <Slider
-          label="Density"
-          value={params.density}
-          min={0.25}
-          max={7}
-          step={0.05}
-          onChange={(v) => setParams({ ...params, density: v })}
-        />
-        <Slider
-          label="Angle 1"
-          value={params.angle1}
-          min={-1}
-          max={1}
-          step={0.01}
-          onChange={(v) => setParams({ ...params, angle1: v })}
-        />
-        <Slider
-          label="Angle 2"
-          value={params.angle2}
-          min={-1}
-          max={1}
-          step={0.01}
-          onChange={(v) => setParams({ ...params, angle2: v })}
-        />
-        <Slider
-          label="Length"
-          value={params.length}
-          max={3}
-          step={0.01}
-          onChange={(v) => setParams({ ...params, length: v })}
-        />
-        <Slider
-          label="Blur"
-          value={params.blur}
-          max={0.5}
-          onChange={(v) => setParams({ ...params, blur: v })}
-        />
-        <Slider
-          label="Fade in"
-          value={params.fadeIn}
-          max={1}
-          onChange={(v) => setParams({ ...params, fadeIn: v })}
-        />
-        <Slider
-          label="Fade out"
-          value={params.fadeOut}
-          max={1}
-          onChange={(v) => setParams({ ...params, fadeOut: v })}
-        />
-        <Slider
-          label="Gradient"
-          value={params.gradient}
-          max={1}
-          onChange={(v) => setParams({ ...params, gradient: v })}
-        />
-        <Slider
-          label="Speed"
-          value={params.speed}
-          max={3}
-          step={0.05}
-          onChange={(v) => setParams({ ...params, speed: v })}
-        />
-
-        <Toggle
-          label="Edges"
-          value={params.edges}
-          onChange={(v) => setParams({ ...params, edges: v })}
-        />
-
-        <div className="mt-2 space-y-1.5">
-          <ColorField
-            label="Back"
-            value={params.colorBack}
-            onChange={(v) => setParams({ ...params, colorBack: v })}
-          />
-          {params.colors.map((c, i) => (
-            <ColorField
-              key={i}
-              label={`Color ${i + 1}`}
-              value={c}
-              onChange={(v) => setColor(i, v)}
-            />
-          ))}
-        </div>
-      </div>
       </ControlsRail>
     </>
-  )
+  );
 }
 
 function Slider({
@@ -274,12 +274,12 @@ function Slider({
   max = 1,
   step = 0.01,
 }: {
-  label: string
-  value: number
-  onChange: (v: number) => void
-  min?: number
-  max?: number
-  step?: number
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+  min?: number;
+  max?: number;
+  step?: number;
 }) {
   return (
     <label className="flex flex-col gap-1">
@@ -288,16 +288,16 @@ function Slider({
         <span className="font-mono text-[11px]">{value.toFixed(2)}</span>
       </div>
       <input
-        type="range"
-        min={min}
+        className="h-1 w-full cursor-pointer accent-foreground"
         max={max}
+        min={min}
+        onChange={(e) => onChange(Number.parseFloat(e.target.value))}
         step={step}
+        type="range"
         value={value}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="accent-foreground h-1 w-full cursor-pointer"
       />
     </label>
-  )
+  );
 }
 
 function Toggle({
@@ -305,21 +305,21 @@ function Toggle({
   value,
   onChange,
 }: {
-  label: string
-  value: boolean
-  onChange: (v: boolean) => void
+  label: string;
+  value: boolean;
+  onChange: (v: boolean) => void;
 }) {
   return (
     <label className="flex cursor-pointer items-center justify-between">
       <span className="text-muted-foreground">{label}</span>
       <input
-        type="checkbox"
         checked={value}
+        className="size-4 cursor-pointer accent-foreground"
         onChange={(e) => onChange(e.target.checked)}
-        className="accent-foreground size-4 cursor-pointer"
+        type="checkbox"
       />
     </label>
-  )
+  );
 }
 
 function ColorField({
@@ -327,27 +327,27 @@ function ColorField({
   value,
   onChange,
 }: {
-  label: string
-  value: string
-  onChange: (v: string) => void
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
 }) {
   // color inputs don't accept alpha — render swatch with bg-checker for transparency hint
-  const isTransparent = value === "#ffffff00" || value === "#00000000"
+  const isTransparent = value === "#ffffff00" || value === "#00000000";
   return (
     <label className="flex items-center gap-2">
       <input
-        type="color"
-        value={isTransparent ? "#ffffff" : value}
-        onChange={(e) => onChange(e.target.value)}
         className={cn(
-          "border-border size-7 cursor-pointer rounded border bg-transparent p-0",
+          "size-7 cursor-pointer rounded border border-border bg-transparent p-0",
           "[&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded [&::-webkit-color-swatch]:border-none"
         )}
+        onChange={(e) => onChange(e.target.value)}
+        type="color"
+        value={isTransparent ? "#ffffff" : value}
       />
       <div className="flex flex-1 items-center justify-between">
         <span className="text-muted-foreground">{label}</span>
         <span className="font-mono text-[11px]">{value}</span>
       </div>
     </label>
-  )
+  );
 }

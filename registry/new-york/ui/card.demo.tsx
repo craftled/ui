@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { ArrowUpRight, MoreHorizontal } from "lucide-react"
+import { ArrowUpRight, MoreHorizontal } from "lucide-react";
 
-import { Button } from "./button"
+import { Button } from "./button";
 import {
   Card,
   CardAction,
@@ -11,7 +11,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./card"
+} from "./card";
 
 export default function CardDemo() {
   return (
@@ -23,13 +23,13 @@ export default function CardDemo() {
             <CardDescription>Last 30 days</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-semibold tabular-nums">12,839</div>
-            <p className="text-muted-foreground mt-1 text-sm">
+            <div className="font-semibold text-3xl tabular-nums">12,839</div>
+            <p className="mt-1 text-muted-foreground text-sm">
               <span className="text-emerald-500">+428</span> vs previous period
             </p>
           </CardContent>
           <CardFooter className="border-t pt-6">
-            <Button variant="outline" size="sm" className="w-full">
+            <Button className="w-full" size="sm" variant="outline">
               View report
             </Button>
           </CardFooter>
@@ -42,7 +42,7 @@ export default function CardDemo() {
             <CardTitle>Best Writing</CardTitle>
             <CardDescription>9 unread articles</CardDescription>
             <CardAction>
-              <Button variant="ghost" size="icon" aria-label="More">
+              <Button aria-label="More" size="icon" variant="ghost">
                 <MoreHorizontal />
               </Button>
             </CardAction>
@@ -83,8 +83,8 @@ export default function CardDemo() {
           </CardHeader>
           <CardFooter>
             <a
+              className="inline-flex items-center gap-1 font-medium text-foreground text-sm hover:underline"
               href="#"
-              className="text-foreground inline-flex items-center gap-1 text-sm font-medium hover:underline"
             >
               Learn more <ArrowUpRight className="size-3.5" />
             </a>
@@ -92,22 +92,22 @@ export default function CardDemo() {
         </Card>
       </Group>
     </div>
-  )
+  );
 }
 
 function Group({
   label,
   children,
 }: {
-  label: string
-  children: React.ReactNode
+  label: string;
+  children: React.ReactNode;
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+      <span className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
         {label}
       </span>
       {children}
     </div>
-  )
+  );
 }

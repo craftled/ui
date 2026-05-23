@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { ControlsRail } from "@/components/controls-rail"
-import { randomInRange, randomItem } from "@/lib/random-palette"
-import { cn } from "@/lib/utils"
+import { ControlsRail } from "@/components/controls-rail";
+import { randomInRange, randomItem } from "@/lib/random-palette";
+import { cn } from "@/lib/utils";
 
-import { FeaturedFlutedGlass } from "./featured-fluted-glass"
+import { FeaturedFlutedGlass } from "./featured-fluted-glass";
 
 const SHAPES = [
   "lines",
@@ -14,14 +14,14 @@ const SHAPES = [
   "wave",
   "zigzag",
   "pattern",
-] as const
+] as const;
 const DISTORTION_SHAPES = [
   "prism",
   "lens",
   "contour",
   "cascade",
   "flat",
-] as const
+] as const;
 
 function randomParams(): Params {
   return {
@@ -40,26 +40,26 @@ function randomParams(): Params {
     grainOverlay: 0,
     colorShadow: "#000000",
     colorHighlight: "#ffffff",
-  }
+  };
 }
 
 type Params = {
-  shape: "lines" | "linesIrregular" | "wave" | "zigzag" | "pattern"
-  distortionShape: "prism" | "lens" | "contour" | "cascade" | "flat"
-  size: number
-  angle: number
-  distortion: number
-  shift: number
-  stretch: number
-  blur: number
-  edges: number
-  margin: number
-  shadows: number
-  highlights: number
-  grainOverlay: number
-  colorShadow: string
-  colorHighlight: string
-}
+  shape: "lines" | "linesIrregular" | "wave" | "zigzag" | "pattern";
+  distortionShape: "prism" | "lens" | "contour" | "cascade" | "flat";
+  size: number;
+  angle: number;
+  distortion: number;
+  shift: number;
+  stretch: number;
+  blur: number;
+  edges: number;
+  margin: number;
+  shadows: number;
+  highlights: number;
+  grainOverlay: number;
+  colorShadow: string;
+  colorHighlight: string;
+};
 
 const PRESETS: Record<string, Params> = {
   Default: {
@@ -130,131 +130,131 @@ const PRESETS: Record<string, Params> = {
     colorShadow: "#000000",
     colorHighlight: "#ffffff",
   },
-}
+};
 
 const IMAGE =
-  "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=1400&h=800&fit=crop&q=80"
+  "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=1400&h=800&fit=crop&q=80";
 
 export default function FeaturedFlutedGlassDemo() {
-  const [params, setParams] = React.useState<Params>(PRESETS.Default)
+  const [params, setParams] = React.useState<Params>(PRESETS.Default);
 
   return (
     <>
       <FeaturedFlutedGlass image={IMAGE} title="Fluted glass" {...params} />
 
       <ControlsRail>
-        <div className="text-foreground/80 flex flex-col gap-3 text-xs">
-        <div className="space-y-1.5">
-          <div className="text-foreground font-semibold">Presets</div>
-          <div className="grid grid-cols-2 gap-1.5">
-            {Object.keys(PRESETS).map((name) => (
-              <button
-                key={name}
-                type="button"
-                onClick={() => setParams(PRESETS[name])}
-                className="border-border hover:bg-muted rounded-md border px-2 py-1.5 transition-colors"
-              >
-                {name}
-              </button>
-            ))}
+        <div className="flex flex-col gap-3 text-foreground/80 text-xs">
+          <div className="space-y-1.5">
+            <div className="font-semibold text-foreground">Presets</div>
+            <div className="grid grid-cols-2 gap-1.5">
+              {Object.keys(PRESETS).map((name) => (
+                <button
+                  className="rounded-md border border-border px-2 py-1.5 transition-colors hover:bg-muted"
+                  key={name}
+                  onClick={() => setParams(PRESETS[name])}
+                  type="button"
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
+            <button
+              className="mt-1 w-full rounded-md bg-foreground px-2 py-1.5 font-medium text-background transition-colors hover:bg-foreground/90"
+              onClick={() => setParams(randomParams())}
+              type="button"
+            >
+              🎲 Randomize
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => setParams(randomParams())}
-            className="bg-foreground text-background hover:bg-foreground/90 mt-1 w-full rounded-md px-2 py-1.5 font-medium transition-colors"
-          >
-            🎲 Randomize
-          </button>
-        </div>
 
-        <SelectField
-          label="Shape"
-          value={params.shape}
-          options={["lines", "linesIrregular", "wave", "zigzag", "pattern"]}
-          onChange={(v) =>
-            setParams({ ...params, shape: v as Params["shape"] })
-          }
-        />
-        <SelectField
-          label="Distortion shape"
-          value={params.distortionShape}
-          options={["prism", "lens", "contour", "cascade", "flat"]}
-          onChange={(v) =>
-            setParams({
-              ...params,
-              distortionShape: v as Params["distortionShape"],
-            })
-          }
-        />
-
-        <Slider
-          label="Size"
-          value={params.size}
-          max={1}
-          onChange={(v) => setParams({ ...params, size: v })}
-        />
-        <Slider
-          label="Angle"
-          value={params.angle}
-          min={0}
-          max={180}
-          step={1}
-          format={(v) => `${Math.round(v)}°`}
-          onChange={(v) => setParams({ ...params, angle: v })}
-        />
-        <Slider
-          label="Distortion"
-          value={params.distortion}
-          max={1}
-          onChange={(v) => setParams({ ...params, distortion: v })}
-        />
-        <Slider
-          label="Stretch"
-          value={params.stretch}
-          max={1}
-          onChange={(v) => setParams({ ...params, stretch: v })}
-        />
-        <Slider
-          label="Blur"
-          value={params.blur}
-          max={1}
-          onChange={(v) => setParams({ ...params, blur: v })}
-        />
-        <Slider
-          label="Edges"
-          value={params.edges}
-          max={1}
-          onChange={(v) => setParams({ ...params, edges: v })}
-        />
-        <Slider
-          label="Shadows"
-          value={params.shadows}
-          max={1}
-          onChange={(v) => setParams({ ...params, shadows: v })}
-        />
-        <Slider
-          label="Highlights"
-          value={params.highlights}
-          max={1}
-          onChange={(v) => setParams({ ...params, highlights: v })}
-        />
-
-        <div className="mt-2 space-y-1.5">
-          <ColorField
-            label="Shadow"
-            value={params.colorShadow}
-            onChange={(v) => setParams({ ...params, colorShadow: v })}
+          <SelectField
+            label="Shape"
+            onChange={(v) =>
+              setParams({ ...params, shape: v as Params["shape"] })
+            }
+            options={["lines", "linesIrregular", "wave", "zigzag", "pattern"]}
+            value={params.shape}
           />
-          <ColorField
-            label="Highlight"
-            value={params.colorHighlight}
-            onChange={(v) => setParams({ ...params, colorHighlight: v })}
+          <SelectField
+            label="Distortion shape"
+            onChange={(v) =>
+              setParams({
+                ...params,
+                distortionShape: v as Params["distortionShape"],
+              })
+            }
+            options={["prism", "lens", "contour", "cascade", "flat"]}
+            value={params.distortionShape}
           />
+
+          <Slider
+            label="Size"
+            max={1}
+            onChange={(v) => setParams({ ...params, size: v })}
+            value={params.size}
+          />
+          <Slider
+            format={(v) => `${Math.round(v)}°`}
+            label="Angle"
+            max={180}
+            min={0}
+            onChange={(v) => setParams({ ...params, angle: v })}
+            step={1}
+            value={params.angle}
+          />
+          <Slider
+            label="Distortion"
+            max={1}
+            onChange={(v) => setParams({ ...params, distortion: v })}
+            value={params.distortion}
+          />
+          <Slider
+            label="Stretch"
+            max={1}
+            onChange={(v) => setParams({ ...params, stretch: v })}
+            value={params.stretch}
+          />
+          <Slider
+            label="Blur"
+            max={1}
+            onChange={(v) => setParams({ ...params, blur: v })}
+            value={params.blur}
+          />
+          <Slider
+            label="Edges"
+            max={1}
+            onChange={(v) => setParams({ ...params, edges: v })}
+            value={params.edges}
+          />
+          <Slider
+            label="Shadows"
+            max={1}
+            onChange={(v) => setParams({ ...params, shadows: v })}
+            value={params.shadows}
+          />
+          <Slider
+            label="Highlights"
+            max={1}
+            onChange={(v) => setParams({ ...params, highlights: v })}
+            value={params.highlights}
+          />
+
+          <div className="mt-2 space-y-1.5">
+            <ColorField
+              label="Shadow"
+              onChange={(v) => setParams({ ...params, colorShadow: v })}
+              value={params.colorShadow}
+            />
+            <ColorField
+              label="Highlight"
+              onChange={(v) => setParams({ ...params, colorHighlight: v })}
+              value={params.colorHighlight}
+            />
+          </div>
         </div>
-      </div>
       </ControlsRail>
     </>
-  )
+  );
 }
 
 function Slider({
@@ -266,13 +266,13 @@ function Slider({
   step = 0.01,
   format,
 }: {
-  label: string
-  value: number
-  onChange: (v: number) => void
-  min?: number
-  max?: number
-  step?: number
-  format?: (v: number) => string
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+  min?: number;
+  max?: number;
+  step?: number;
+  format?: (v: number) => string;
 }) {
   return (
     <label className="flex flex-col gap-1">
@@ -283,16 +283,16 @@ function Slider({
         </span>
       </div>
       <input
-        type="range"
-        min={min}
+        className="h-1 w-full cursor-pointer accent-foreground"
         max={max}
+        min={min}
+        onChange={(e) => onChange(Number.parseFloat(e.target.value))}
         step={step}
+        type="range"
         value={value}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="accent-foreground h-1 w-full cursor-pointer"
       />
     </label>
-  )
+  );
 }
 
 function SelectField({
@@ -301,21 +301,21 @@ function SelectField({
   options,
   onChange,
 }: {
-  label: string
-  value: string
-  options: string[]
-  onChange: (v: string) => void
+  label: string;
+  value: string;
+  options: string[];
+  onChange: (v: string) => void;
 }) {
   return (
     <label className="flex flex-col gap-1">
       <span className="text-muted-foreground">{label}</span>
       <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
         className={cn(
-          "border-border bg-background rounded-md border px-2 py-1.5",
-          "focus:ring-ring focus:ring-2 focus:outline-none"
+          "rounded-md border border-border bg-background px-2 py-1.5",
+          "focus:outline-none focus:ring-2 focus:ring-ring"
         )}
+        onChange={(e) => onChange(e.target.value)}
+        value={value}
       >
         {options.map((opt) => (
           <option key={opt} value={opt}>
@@ -324,7 +324,7 @@ function SelectField({
         ))}
       </select>
     </label>
-  )
+  );
 }
 
 function ColorField({
@@ -332,22 +332,22 @@ function ColorField({
   value,
   onChange,
 }: {
-  label: string
-  value: string
-  onChange: (v: string) => void
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
 }) {
   return (
     <label className="flex items-center gap-2">
       <input
+        className="size-7 cursor-pointer rounded border border-border bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded [&::-webkit-color-swatch]:border-none"
+        onChange={(e) => onChange(e.target.value)}
         type="color"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="border-border size-7 cursor-pointer rounded border bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded [&::-webkit-color-swatch]:border-none"
       />
       <div className="flex flex-1 items-center justify-between">
         <span className="text-muted-foreground">{label}</span>
         <span className="font-mono text-[11px]">{value}</span>
       </div>
     </label>
-  )
+  );
 }

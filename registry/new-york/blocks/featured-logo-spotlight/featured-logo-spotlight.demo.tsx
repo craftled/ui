@@ -1,29 +1,25 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { ControlsRail } from "@/components/controls-rail"
-import {
-  hslToHex,
-  randomInRange,
-  randomPalette,
-} from "@/lib/random-palette"
-import { cn } from "@/lib/utils"
+import { ControlsRail } from "@/components/controls-rail";
+import { hslToHex, randomPalette } from "@/lib/random-palette";
+import { cn } from "@/lib/utils";
 
-import { FeaturedLogoSpotlight } from "./featured-logo-spotlight"
+import { FeaturedLogoSpotlight } from "./featured-logo-spotlight";
 
 type Params = {
-  colors: string[]
-  positions: number
-  waveX: number
-  waveXShift: number
-  waveY: number
-  waveYShift: number
-  mixing: number
-  rotation: number
-  logoColor: string
-  haloPadding: number
-}
+  colors: string[];
+  positions: number;
+  waveX: number;
+  waveXShift: number;
+  waveY: number;
+  waveYShift: number;
+  mixing: number;
+  rotation: number;
+  logoColor: string;
+  haloPadding: number;
+};
 
 const PRESETS: Record<string, Params> = {
   Default: {
@@ -74,7 +70,7 @@ const PRESETS: Record<string, Params> = {
     logoColor: "#fbbf24",
     haloPadding: 16,
   },
-}
+};
 
 function randomParams(): Params {
   return {
@@ -92,132 +88,132 @@ function randomParams(): Params {
       50 + Math.random() * 20
     ),
     haloPadding: 12 + Math.floor(Math.random() * 12),
-  }
+  };
 }
 
 export default function FeaturedLogoSpotlightDemo() {
-  const [params, setParams] = React.useState<Params>(PRESETS.Default)
+  const [params, setParams] = React.useState<Params>(PRESETS.Default);
 
   const setColor = (idx: number, value: string) => {
-    const next = [...params.colors]
-    next[idx] = value
-    setParams({ ...params, colors: next })
-  }
+    const next = [...params.colors];
+    next[idx] = value;
+    setParams({ ...params, colors: next });
+  };
 
   return (
     <>
       <FeaturedLogoSpotlight
-        title="Best Writing"
+        colors={params.colors}
         eyebrow="In the spotlight"
         haloPadding={params.haloPadding}
-        colors={params.colors}
-        positions={params.positions}
-        waveX={params.waveX}
-        waveXShift={params.waveXShift}
-        waveY={params.waveY}
-        waveYShift={params.waveYShift}
-        mixing={params.mixing}
-        rotation={params.rotation}
         logo={
           <div
-            className="flex size-full items-center justify-center text-4xl font-bold text-white"
+            className="flex size-full items-center justify-center font-bold text-4xl text-white"
             style={{ backgroundColor: params.logoColor }}
           >
             B
           </div>
         }
+        mixing={params.mixing}
+        positions={params.positions}
+        rotation={params.rotation}
+        title="Best Writing"
+        waveX={params.waveX}
+        waveXShift={params.waveXShift}
+        waveY={params.waveY}
+        waveYShift={params.waveYShift}
       />
 
       <ControlsRail>
-        <div className="text-foreground/80 flex flex-col gap-3 text-xs">
-        <div className="space-y-1.5">
-          <div className="text-foreground font-semibold">Presets</div>
-          <div className="grid grid-cols-2 gap-1.5">
-            {Object.keys(PRESETS).map((name) => (
-              <button
-                key={name}
-                type="button"
-                onClick={() => setParams(PRESETS[name])}
-                className="border-border hover:bg-muted rounded-md border px-2 py-1.5 transition-colors"
-              >
-                {name}
-              </button>
+        <div className="flex flex-col gap-3 text-foreground/80 text-xs">
+          <div className="space-y-1.5">
+            <div className="font-semibold text-foreground">Presets</div>
+            <div className="grid grid-cols-2 gap-1.5">
+              {Object.keys(PRESETS).map((name) => (
+                <button
+                  className="rounded-md border border-border px-2 py-1.5 transition-colors hover:bg-muted"
+                  key={name}
+                  onClick={() => setParams(PRESETS[name])}
+                  type="button"
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
+            <button
+              className="mt-1 w-full rounded-md bg-foreground px-2 py-1.5 font-medium text-background transition-colors hover:bg-foreground/90"
+              onClick={() => setParams(randomParams())}
+              type="button"
+            >
+              🎲 Randomize
+            </button>
+          </div>
+
+          <Slider
+            format={(v) => `${Math.round(v)}px`}
+            label="Halo padding"
+            max={40}
+            min={0}
+            onChange={(v) => setParams({ ...params, haloPadding: v })}
+            step={1}
+            value={params.haloPadding}
+          />
+          <Slider
+            format={(v) => String(Math.round(v))}
+            label="Positions"
+            max={100}
+            min={0}
+            onChange={(v) => setParams({ ...params, positions: v })}
+            step={1}
+            value={params.positions}
+          />
+          <Slider
+            label="Wave X"
+            max={1}
+            onChange={(v) => setParams({ ...params, waveX: v })}
+            value={params.waveX}
+          />
+          <Slider
+            label="Wave Y"
+            max={1}
+            onChange={(v) => setParams({ ...params, waveY: v })}
+            value={params.waveY}
+          />
+          <Slider
+            label="Mixing"
+            max={1}
+            onChange={(v) => setParams({ ...params, mixing: v })}
+            value={params.mixing}
+          />
+          <Slider
+            format={(v) => `${Math.round(v)}°`}
+            label="Rotation"
+            max={360}
+            min={0}
+            onChange={(v) => setParams({ ...params, rotation: v })}
+            step={1}
+            value={params.rotation}
+          />
+
+          <div className="mt-2 space-y-1.5">
+            <ColorField
+              label="Logo"
+              onChange={(v) => setParams({ ...params, logoColor: v })}
+              value={params.logoColor}
+            />
+            {params.colors.map((c, i) => (
+              <ColorField
+                key={i}
+                label={`Mesh ${i + 1}`}
+                onChange={(v) => setColor(i, v)}
+                value={c}
+              />
             ))}
           </div>
-          <button
-            type="button"
-            onClick={() => setParams(randomParams())}
-            className="bg-foreground text-background hover:bg-foreground/90 mt-1 w-full rounded-md px-2 py-1.5 font-medium transition-colors"
-          >
-            🎲 Randomize
-          </button>
         </div>
-
-        <Slider
-          label="Halo padding"
-          value={params.haloPadding}
-          min={0}
-          max={40}
-          step={1}
-          format={(v) => `${Math.round(v)}px`}
-          onChange={(v) => setParams({ ...params, haloPadding: v })}
-        />
-        <Slider
-          label="Positions"
-          value={params.positions}
-          min={0}
-          max={100}
-          step={1}
-          format={(v) => String(Math.round(v))}
-          onChange={(v) => setParams({ ...params, positions: v })}
-        />
-        <Slider
-          label="Wave X"
-          value={params.waveX}
-          max={1}
-          onChange={(v) => setParams({ ...params, waveX: v })}
-        />
-        <Slider
-          label="Wave Y"
-          value={params.waveY}
-          max={1}
-          onChange={(v) => setParams({ ...params, waveY: v })}
-        />
-        <Slider
-          label="Mixing"
-          value={params.mixing}
-          max={1}
-          onChange={(v) => setParams({ ...params, mixing: v })}
-        />
-        <Slider
-          label="Rotation"
-          value={params.rotation}
-          min={0}
-          max={360}
-          step={1}
-          format={(v) => `${Math.round(v)}°`}
-          onChange={(v) => setParams({ ...params, rotation: v })}
-        />
-
-        <div className="mt-2 space-y-1.5">
-          <ColorField
-            label="Logo"
-            value={params.logoColor}
-            onChange={(v) => setParams({ ...params, logoColor: v })}
-          />
-          {params.colors.map((c, i) => (
-            <ColorField
-              key={i}
-              label={`Mesh ${i + 1}`}
-              value={c}
-              onChange={(v) => setColor(i, v)}
-            />
-          ))}
-        </div>
-      </div>
       </ControlsRail>
     </>
-  )
+  );
 }
 
 function Slider({
@@ -229,13 +225,13 @@ function Slider({
   step = 0.01,
   format,
 }: {
-  label: string
-  value: number
-  onChange: (v: number) => void
-  min?: number
-  max?: number
-  step?: number
-  format?: (v: number) => string
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+  min?: number;
+  max?: number;
+  step?: number;
+  format?: (v: number) => string;
 }) {
   return (
     <label className="flex flex-col gap-1">
@@ -246,16 +242,16 @@ function Slider({
         </span>
       </div>
       <input
-        type="range"
-        min={min}
+        className="h-1 w-full cursor-pointer accent-foreground"
         max={max}
+        min={min}
+        onChange={(e) => onChange(Number.parseFloat(e.target.value))}
         step={step}
+        type="range"
         value={value}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="accent-foreground h-1 w-full cursor-pointer"
       />
     </label>
-  )
+  );
 }
 
 function ColorField({
@@ -263,25 +259,25 @@ function ColorField({
   value,
   onChange,
 }: {
-  label: string
-  value: string
-  onChange: (v: string) => void
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
 }) {
   return (
     <label className="flex items-center gap-2">
       <input
-        type="color"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
         className={cn(
-          "border-border size-7 cursor-pointer rounded border bg-transparent p-0",
+          "size-7 cursor-pointer rounded border border-border bg-transparent p-0",
           "[&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded [&::-webkit-color-swatch]:border-none"
         )}
+        onChange={(e) => onChange(e.target.value)}
+        type="color"
+        value={value}
       />
       <div className="flex flex-1 items-center justify-between">
         <span className="text-muted-foreground">{label}</span>
         <span className="font-mono text-[11px]">{value}</span>
       </div>
     </label>
-  )
+  );
 }

@@ -1,43 +1,43 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { HalftoneDots } from "@paper-design/shaders-react"
+import { HalftoneDots } from "@paper-design/shaders-react";
+import type * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type FeaturedHalftoneDotsProps = {
-  image: string
-  imageAlt?: string
-  title?: React.ReactNode
-  eyebrow?: React.ReactNode
-  titleClassName?: string
+  image: string;
+  imageAlt?: string;
+  title?: React.ReactNode;
+  eyebrow?: React.ReactNode;
+  titleClassName?: string;
   /** Dot rendering style. */
-  type?: "classic" | "gooey" | "holes" | "soft"
+  type?: "classic" | "gooey" | "holes" | "soft";
   /** Grid pattern. */
-  grid?: "square" | "hex"
+  grid?: "square" | "hex";
   /** Grid size relative to image (0-1). */
-  size?: number
+  size?: number;
   /** Max dot size relative to cell (0-2). */
-  radius?: number
+  radius?: number;
   /** Image contrast (0-1). */
-  contrast?: number
+  contrast?: number;
   /** Paper / background color. */
-  colorBack?: string
+  colorBack?: string;
   /** Dot color. */
-  colorFront?: string
+  colorFront?: string;
   /** Use the image's actual colors instead of colorFront. */
-  originalColors?: boolean
+  originalColors?: boolean;
   /** Invert image luminance. */
-  inverted?: boolean
+  inverted?: boolean;
   /** Grain distortion on dot edges (0-1). */
-  grainMixer?: number
+  grainMixer?: number;
   /** Black/white grain overlay (0-1). */
-  grainOverlay?: number
+  grainOverlay?: number;
   /** Grain scale (0-1). */
-  grainSize?: number
-  aspectRatio?: string
-  className?: string
-}
+  grainSize?: number;
+  aspectRatio?: string;
+  className?: string;
+};
 
 export function FeaturedHalftoneDots({
   image,
@@ -69,36 +69,33 @@ export function FeaturedHalftoneDots({
       style={{ aspectRatio }}
     >
       <HalftoneDots
-        image={image}
-        type={type}
-        grid={grid}
-        size={size}
-        radius={radius}
-        contrast={contrast}
         colorBack={colorBack}
         colorFront={colorFront}
-        originalColors={originalColors}
-        inverted={inverted}
+        contrast={contrast}
+        fit="cover"
         grainMixer={grainMixer}
         grainOverlay={grainOverlay}
         grainSize={grainSize}
-        fit="cover"
+        grid={grid}
+        image={image}
+        inverted={inverted}
+        originalColors={originalColors}
+        radius={radius}
+        size={size}
         style={{
           position: "absolute",
           inset: 0,
           width: "100%",
           height: "100%",
         }}
+        type={type}
       />
 
       {title || eyebrow ? (
         <figcaption className="absolute right-4 bottom-4 left-4 flex flex-col gap-1">
           {eyebrow ? (
             <span
-              className={cn(
-                "text-xs font-medium opacity-80",
-                titleClassName
-              )}
+              className={cn("font-medium text-xs opacity-80", titleClassName)}
             >
               {eyebrow}
             </span>
@@ -106,7 +103,7 @@ export function FeaturedHalftoneDots({
           {title ? (
             <h3
               className={cn(
-                "text-2xl leading-tight font-bold tracking-tight sm:text-3xl",
+                "font-bold text-2xl leading-tight tracking-tight sm:text-3xl",
                 titleClassName
               )}
             >
@@ -116,5 +113,5 @@ export function FeaturedHalftoneDots({
         </figcaption>
       ) : null}
     </figure>
-  )
+  );
 }

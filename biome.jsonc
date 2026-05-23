@@ -1,0 +1,90 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["ultracite/biome/core"],
+  "linter": {
+    "rules": {
+      "performance": {
+        // We deliberately use <img> for paper-design shaders (need DOM access)
+        // and for SVG logos with CSS filter. Next/Image isn't applicable.
+        "noImgElement": "off",
+        // shadcn convention is `import * as React from "react"` — keep it.
+        "noNamespaceImport": "off"
+      },
+      "correctness": {
+        // Same shader / SVG-logo rationale as noImgElement.
+        "useImageSize": "off"
+      },
+      "security": {
+        // carousel-do-dont renders user-editable HTML via contentEditable + onBlur.
+        // The HTML is local-only, never round-trips to a server.
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "style": {
+        // shadcn ships components using both `type` and `interface`. We mirror that.
+        "useConsistentTypeDefinitions": "off"
+      },
+      "suspicious": {
+        // Most index-keyed lists in this repo are static enumerations
+        // (preset rows, color pickers, monogram letters) where index is stable.
+        "noArrayIndexKey": "off"
+      }
+    }
+  },
+  "overrides": [
+    {
+      // shadcn-original chart.tsx ships with a complex tooltip mapper.
+      "includes": ["registry/new-york/ui/chart.tsx"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noExcessiveCognitiveComplexity": "off"
+          }
+        }
+      }
+    },
+    {
+      // Demos use placeholder hash anchors to showcase visual styles only.
+      "includes": ["**/*.demo.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useValidAnchor": "off"
+          }
+        }
+      }
+    },
+    {
+      // carousel-do-dont uses a contentEditable span styled as a textbox —
+      // that's the whole point of the block (inline-editable demo content).
+      "includes": [
+        "registry/new-york/blocks/carousel-do-dont/carousel-do-dont.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useSemanticElements": "off",
+            "useFocusableInteractive": "off"
+          }
+        }
+      }
+    },
+    {
+      // cta-app-stack uses section-level hover handlers for an ambient effect;
+      // featured-story renders a card-as-link with optional onClick. These are
+      // common shadcn-style block patterns — they don't need full button semantics.
+      "includes": [
+        "registry/new-york/blocks/cta-app-stack/cta-app-stack.tsx",
+        "registry/new-york/blocks/featured-story/featured-story.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noNoninteractiveElementInteractions": "off",
+            "noStaticElementInteractions": "off",
+            "useKeyWithClickEvents": "off"
+          }
+        }
+      }
+    }
+  ]
+}

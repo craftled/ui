@@ -1,19 +1,18 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import type * as React from "react";
 
-import { FeaturedEvent } from "./featured-event"
+import { FeaturedEvent } from "./featured-event";
 
-const OG_WIDTH = 1400
-const OG_HEIGHT = 735
+const OG_WIDTH = 1400;
+const OG_HEIGHT = 735;
 
 export default function FeaturedEventDemo() {
   return (
-    <OgFrame width={OG_WIDTH} height={OG_HEIGHT}>
+    <OgFrame height={OG_HEIGHT} width={OG_WIDTH}>
       <FeaturedEvent
         brandName="Epigraph Insider"
         eventType="Webinar"
-        title="How Sarah Chen built Marketful from zero to 50k subscribers"
         participants={[
           {
             name: "Sarah Chen",
@@ -28,9 +27,10 @@ export default function FeaturedEventDemo() {
               "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&q=80",
           },
         ]}
+        title="How Sarah Chen built Marketful from zero to 50k subscribers"
       />
     </OgFrame>
-  )
+  );
 }
 
 /**
@@ -45,9 +45,9 @@ function OgFrame({
   height,
   children,
 }: {
-  width: number
-  height: number
-  children: React.ReactNode
+  width: number;
+  height: number;
+  children: React.ReactNode;
 }) {
   return (
     <div
@@ -66,5 +66,5 @@ function OgFrame({
         {children}
       </div>
     </div>
-  )
+  );
 }

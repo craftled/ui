@@ -1,24 +1,23 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { Button } from "@/registry/new-york/ui/button"
-import { Input } from "@/registry/new-york/ui/input"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/registry/new-york/ui/button";
+import { Input } from "@/registry/new-york/ui/input";
 
 export type CtaNewsletterProps = {
-  title: string
-  description?: string
-  inputPlaceholder?: string
-  ctaLabel?: string
+  title: string;
+  description?: string;
+  inputPlaceholder?: string;
+  ctaLabel?: string;
   /** Right-side decorative slot — pass any React node. */
-  decoration?: React.ReactNode
+  decoration?: React.ReactNode;
   /** Called with the email when the form submits. */
-  onSubmit?: (email: string) => void | Promise<void>
+  onSubmit?: (email: string) => void | Promise<void>;
   /** Form action — for non-JS or server-action setups. */
-  action?: string
-  className?: string
-}
+  action?: string;
+  className?: string;
+};
 
 export function CtaNewsletter({
   title,
@@ -30,20 +29,22 @@ export function CtaNewsletter({
   action,
   className,
 }: CtaNewsletterProps) {
-  const [email, setEmail] = React.useState("")
-  const [submitting, setSubmitting] = React.useState(false)
+  const [email, setEmail] = React.useState("");
+  const [submitting, setSubmitting] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    if (!onSubmit) return
-    e.preventDefault()
-    setSubmitting(true)
-    try {
-      await onSubmit(email)
-      setEmail("")
-    } finally {
-      setSubmitting(false)
+    if (!onSubmit) {
+      return;
     }
-  }
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      await onSubmit(email);
+      setEmail("");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <section
@@ -56,29 +57,29 @@ export function CtaNewsletter({
     >
       <div className="relative grid grid-cols-1 gap-8 p-8 sm:p-12 md:grid-cols-[1.1fr_1fr] md:items-center md:gap-6">
         <div className="flex max-w-md flex-col gap-6">
-          <h2 className="text-foreground text-2xl leading-[1.1] font-bold tracking-tight text-balance sm:text-3xl">
+          <h2 className="text-balance font-bold text-2xl text-foreground leading-[1.1] tracking-tight sm:text-3xl">
             {title}
           </h2>
           {description ? (
-            <p className="text-muted-foreground text-base text-balance">
+            <p className="text-balance text-base text-muted-foreground">
               {description}
             </p>
           ) : null}
           <form
             action={action}
-            onSubmit={handleSubmit}
             className="flex flex-col gap-2 sm:flex-row"
+            onSubmit={handleSubmit}
           >
             <Input
-              type="email"
-              name="email"
-              required
-              placeholder={inputPlaceholder}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               className="flex-1"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={inputPlaceholder}
+              required
+              type="email"
+              value={email}
             />
-            <Button type="submit" disabled={submitting}>
+            <Button disabled={submitting} type="submit">
               {submitting ? "…" : ctaLabel}
             </Button>
           </form>
@@ -93,5 +94,5 @@ export function CtaNewsletter({
         ) : null}
       </div>
     </section>
-  )
+  );
 }

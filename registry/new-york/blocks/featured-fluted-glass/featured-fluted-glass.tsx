@@ -1,50 +1,50 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { FlutedGlass } from "@paper-design/shaders-react"
+import { FlutedGlass } from "@paper-design/shaders-react";
+import type * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type FeaturedFlutedGlassProps = {
-  image: string
-  imageAlt?: string
-  title?: React.ReactNode
-  eyebrow?: React.ReactNode
-  titleClassName?: string
+  image: string;
+  imageAlt?: string;
+  title?: React.ReactNode;
+  eyebrow?: React.ReactNode;
+  titleClassName?: string;
   /** Grid shape. */
-  shape?: "lines" | "linesIrregular" | "wave" | "zigzag" | "pattern"
+  shape?: "lines" | "linesIrregular" | "wave" | "zigzag" | "pattern";
   /** Distortion shape — controls how each stripe refracts the image. */
-  distortionShape?: "prism" | "lens" | "contour" | "cascade" | "flat"
+  distortionShape?: "prism" | "lens" | "contour" | "cascade" | "flat";
   /** Size of distortion grid (0-1). */
-  size?: number
+  size?: number;
   /** Grid angle (0-180). */
-  angle?: number
+  angle?: number;
   /** Distortion strength (0-1). */
-  distortion?: number
+  distortion?: number;
   /** Texture shift opposite to grid (-1 to 1). */
-  shift?: number
+  shift?: number;
   /** Stretch along grid (0-1). */
-  stretch?: number
+  stretch?: number;
   /** Blur (0-1). */
-  blur?: number
+  blur?: number;
   /** Edge softness (0-1). */
-  edges?: number
+  edges?: number;
   /** Margin from container edges (0-1). */
-  margin?: number
+  margin?: number;
   /** Shadow tint strength (0-1). */
-  shadows?: number
+  shadows?: number;
   /** Highlight stroke strength (0-1). */
-  highlights?: number
+  highlights?: number;
   /** Grain mixer (0-1). */
-  grainMixer?: number
+  grainMixer?: number;
   /** Grain overlay (0-1). */
-  grainOverlay?: number
-  colorBack?: string
-  colorShadow?: string
-  colorHighlight?: string
-  aspectRatio?: string
-  className?: string
-}
+  grainOverlay?: number;
+  colorBack?: string;
+  colorShadow?: string;
+  colorHighlight?: string;
+  aspectRatio?: string;
+  className?: string;
+};
 
 export function FeaturedFlutedGlass({
   image,
@@ -81,25 +81,25 @@ export function FeaturedFlutedGlass({
       style={{ aspectRatio }}
     >
       <FlutedGlass
-        image={image}
-        shape={shape}
-        distortionShape={distortionShape}
-        size={size}
         angle={angle}
-        distortion={distortion}
-        shift={shift}
-        stretch={stretch}
         blur={blur}
+        colorBack={colorBack}
+        colorHighlight={colorHighlight}
+        colorShadow={colorShadow}
+        distortion={distortion}
+        distortionShape={distortionShape}
         edges={edges}
-        margin={margin}
-        shadows={shadows}
-        highlights={highlights}
+        fit="cover"
         grainMixer={grainMixer}
         grainOverlay={grainOverlay}
-        colorBack={colorBack}
-        colorShadow={colorShadow}
-        colorHighlight={colorHighlight}
-        fit="cover"
+        highlights={highlights}
+        image={image}
+        margin={margin}
+        shadows={shadows}
+        shape={shape}
+        shift={shift}
+        size={size}
+        stretch={stretch}
         style={{
           position: "absolute",
           inset: 0,
@@ -112,10 +112,7 @@ export function FeaturedFlutedGlass({
         <figcaption className="absolute right-4 bottom-4 left-4 flex flex-col gap-1">
           {eyebrow ? (
             <span
-              className={cn(
-                "text-xs font-medium opacity-80",
-                titleClassName
-              )}
+              className={cn("font-medium text-xs opacity-80", titleClassName)}
             >
               {eyebrow}
             </span>
@@ -123,7 +120,7 @@ export function FeaturedFlutedGlass({
           {title ? (
             <h3
               className={cn(
-                "text-2xl leading-tight font-bold tracking-tight sm:text-3xl",
+                "font-bold text-2xl leading-tight tracking-tight sm:text-3xl",
                 titleClassName
               )}
             >
@@ -133,5 +130,5 @@ export function FeaturedFlutedGlass({
         </figcaption>
       ) : null}
     </figure>
-  )
+  );
 }

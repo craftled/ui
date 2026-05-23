@@ -1,39 +1,39 @@
-import type { Metadata } from "next"
-import { Inter, Geist_Mono, Instrument_Serif } from "next/font/google"
+import type { Metadata } from "next";
+import { Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 
-import { SiteHeader } from "@/components/site-header"
-import { SiteSidebar } from "@/components/site-sidebar"
-import { ThemeProvider } from "@/components/theme-provider"
+import { SiteHeader } from "@/components/site-header";
+import { SiteSidebar } from "@/components/site-sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
 
-import "./globals.css"
+import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-})
+});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-})
+});
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
   weight: "400",
   style: ["normal", "italic"],
   subsets: ["latin"],
-})
+});
 
 export const metadata: Metadata = {
   title: "Craftled UI",
   description:
     "A craft-led, shadcn-native component library. Install via the shadcn CLI.",
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -43,8 +43,8 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem
           disableTransitionOnChange
+          enableSystem
         >
           <div className="flex min-h-svh flex-col">
             <SiteHeader />
@@ -54,13 +54,13 @@ export default function RootLayout({
                 {children}
               </main>
               <aside
-                id="controls-rail-mount"
                 className="hidden w-56 shrink-0 py-8 md:block"
+                id="controls-rail-mount"
               />
             </div>
           </div>
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

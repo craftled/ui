@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Input } from "./input"
-import { Label } from "./label"
+import { Input } from "./input";
+import { Label } from "./label";
 
 export default function LabelDemo() {
   return (
@@ -22,7 +22,7 @@ export default function LabelDemo() {
       <Group label="Pairs with Input">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="email">Work email</Label>
-          <Input id="email" type="email" placeholder="you@company.com" />
+          <Input id="email" placeholder="you@company.com" type="email" />
         </div>
       </Group>
 
@@ -40,31 +40,26 @@ export default function LabelDemo() {
       <Group label="Disabled">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="readonly">Locked field</Label>
-          <Input
-            id="readonly"
-            value="Cannot edit"
-            disabled
-            onChange={() => {}}
-          />
+          <Input defaultValue="Cannot edit" disabled id="readonly" />
         </div>
       </Group>
     </div>
-  )
+  );
 }
 
 function Group({
   label,
   children,
 }: {
-  label: string
-  children: React.ReactNode
+  label: string;
+  children: React.ReactNode;
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+      <span className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
         {label}
       </span>
       <div className="flex w-full max-w-sm flex-col gap-3">{children}</div>
     </div>
-  )
+  );
 }

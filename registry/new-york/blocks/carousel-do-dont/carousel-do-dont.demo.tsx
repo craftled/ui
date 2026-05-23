@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, Copy, RotateCcw } from "lucide-react"
+import { Check, Copy, RotateCcw } from "lucide-react";
+import * as React from "react";
 
-import { Button } from "@/registry/new-york/ui/button"
+import { Button } from "@/registry/new-york/ui/button";
 
-import { CarouselDoDont, type CarouselDoDontData } from "./carousel-do-dont"
+import { CarouselDoDont, type CarouselDoDontData } from "./carousel-do-dont";
 
 const DEFAULT_DATA: CarouselDoDontData = {
   sections: [
@@ -14,8 +14,7 @@ const DEFAULT_DATA: CarouselDoDontData = {
       rows: [
         {
           leftLabel: "The Spend",
-          leftText:
-            '"Blast Meta ads at everyone 18–65 with a credit card."',
+          leftText: '"Blast Meta ads at everyone 18–65 with a credit card."',
           rightLabel: "The Problem",
           rightText:
             "<strong>No signal.</strong> You're paying to interrupt people who never asked to hear from you. Your CAC climbs every quarter. Welcome to the bidding war.",
@@ -75,41 +74,41 @@ const DEFAULT_DATA: CarouselDoDontData = {
     },
   ],
   footer:
-    'more components at <strong>ui.craftled.com</strong> · made by <strong>Craftled</strong>',
-}
+    "more components at <strong>ui.craftled.com</strong> · made by <strong>Craftled</strong>",
+};
 
 export default function CarouselDoDontDemo() {
-  const [data, setData] = React.useState<CarouselDoDontData>(DEFAULT_DATA)
-  const [copied, setCopied] = React.useState(false)
+  const [data, setData] = React.useState<CarouselDoDontData>(DEFAULT_DATA);
+  const [copied, setCopied] = React.useState(false);
 
   const copyJson = async () => {
-    await navigator.clipboard.writeText(JSON.stringify(data, null, 2))
-    setCopied(true)
-    setTimeout(() => setCopied(false), 1500)
-  }
+    await navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
 
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2">
-        <p className="text-muted-foreground mr-auto text-sm">
+        <p className="mr-auto text-muted-foreground text-sm">
           Click any text to edit. ⌘B for bold, Esc to commit.
         </p>
         <Button
+          onClick={() => setData(DEFAULT_DATA)}
           size="sm"
           variant="outline"
-          onClick={() => setData(DEFAULT_DATA)}
         >
           <RotateCcw />
           Reset
         </Button>
-        <Button size="sm" variant="outline" onClick={copyJson}>
+        <Button onClick={copyJson} size="sm" variant="outline">
           {copied ? <Check /> : <Copy />}
           {copied ? "Copied" : "Copy JSON"}
         </Button>
       </div>
       <div className="overflow-hidden rounded-md border">
-        <CarouselDoDont editable data={data} onChange={setData} />
+        <CarouselDoDont data={data} editable onChange={setData} />
       </div>
     </div>
-  )
+  );
 }

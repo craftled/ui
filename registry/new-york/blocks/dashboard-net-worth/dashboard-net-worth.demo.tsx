@@ -1,35 +1,29 @@
-"use client"
+"use client";
 
-import { DashboardNetWorth } from "./dashboard-net-worth"
+import { DashboardNetWorth } from "./dashboard-net-worth";
 
 const trend = [
   { label: "Jan", value: 9500 },
   { label: "Feb", value: 9800 },
   { label: "Mar", value: 9300 },
-  { label: "Apr", value: 11200 },
-  { label: "May", value: 11600 },
-  { label: "Jun", value: 10900 },
-  { label: "Jul", value: 12100 },
-  { label: "Aug", value: 12500 },
-  { label: "Sep", value: 12300 },
-  { label: "Oct", value: 13400 },
-  { label: "Nov", value: 14100 },
-  { label: "Dec", value: 13800 },
-  { label: "Jan", value: 14700 },
-  { label: "Feb", value: 15400 },
-  { label: "Mar", value: 16200 },
-  { label: "Apr", value: 16825 },
-]
+  { label: "Apr", value: 11_200 },
+  { label: "May", value: 11_600 },
+  { label: "Jun", value: 10_900 },
+  { label: "Jul", value: 12_100 },
+  { label: "Aug", value: 12_500 },
+  { label: "Sep", value: 12_300 },
+  { label: "Oct", value: 13_400 },
+  { label: "Nov", value: 14_100 },
+  { label: "Dec", value: 13_800 },
+  { label: "Jan", value: 14_700 },
+  { label: "Feb", value: 15_400 },
+  { label: "Mar", value: 16_200 },
+  { label: "Apr", value: 16_825 },
+];
 
 export default function DashboardNetWorthDemo() {
   return (
     <DashboardNetWorth
-      total="$16,825"
-      totalLabel="total earnings"
-      change={{ value: "2.29%", direction: "up" }}
-      trend={trend}
-      accountsTitle="Publications"
-      accountsAside="3m revenue change"
       accounts={[
         {
           name: "Best Writing",
@@ -56,6 +50,12 @@ export default function DashboardNetWorthDemo() {
           iconClassName: "bg-violet-500",
         },
       ]}
+      accountsAside="3m revenue change"
+      accountsTitle="Publications"
+      change={{ value: "2.29%", direction: "up" }}
+      total="$16,825"
+      totalLabel="total earnings"
+      trend={trend}
     />
-  )
+  );
 }

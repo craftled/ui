@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ArrowRight, Loader2, Trash2 } from "lucide-react"
+import { ArrowRight, Loader2, Trash2 } from "lucide-react";
+import type * as React from "react";
 
-import { Button } from "./button"
+import { Button } from "./button";
 
 export default function ButtonDemo() {
   return (
@@ -39,34 +39,34 @@ export default function ButtonDemo() {
       </Group>
 
       <Group label="Icon-only">
-        <Button size="icon" variant="outline" aria-label="Delete">
+        <Button aria-label="Delete" size="icon" variant="outline">
           <Trash2 />
         </Button>
       </Group>
 
       <Group label="State">
         <Button disabled>Disabled</Button>
-        <Button variant="outline" disabled>
+        <Button disabled variant="outline">
           Disabled outline
         </Button>
       </Group>
     </div>
-  )
+  );
 }
 
 function Group({
   label,
   children,
 }: {
-  label: string
-  children: React.ReactNode
+  label: string;
+  children: React.ReactNode;
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+      <span className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
         {label}
       </span>
       <div className="flex flex-wrap items-center gap-2">{children}</div>
     </div>
-  )
+  );
 }

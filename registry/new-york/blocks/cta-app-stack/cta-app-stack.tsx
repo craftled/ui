@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type CtaAppStackLayer = {
   /** Tailwind class(es) for the card background. */
-  bg: string
+  bg: string;
   /** Anything React — an <img>, an <svg>, a letter, a monogram, etc. */
-  content?: React.ReactNode
-}
+  content?: React.ReactNode;
+};
 
 export type CtaAppStackProps = {
-  tagLabel?: string
-  title: string
-  stats?: React.ReactNode
-  ctaLabel?: string
-  ctaHref?: string
-  onCtaClick?: () => void
+  tagLabel?: string;
+  title: string;
+  stats?: React.ReactNode;
+  ctaLabel?: string;
+  ctaHref?: string;
+  onCtaClick?: () => void;
   /** Top → bottom of the stack. First entry is rendered at the front. */
-  layers: CtaAppStackLayer[]
-  accent?: "rose" | "violet" | "blue" | "emerald" | "amber"
-  className?: string
-}
+  layers: CtaAppStackLayer[];
+  accent?: "rose" | "violet" | "blue" | "emerald" | "amber";
+  className?: string;
+};
 
 const ACCENT_CLASSES = {
   rose: {
@@ -45,12 +45,12 @@ const ACCENT_CLASSES = {
     tag: "border-amber-500/40 bg-amber-500/10 text-amber-300",
     button: "bg-amber-500 hover:bg-amber-500/90",
   },
-} as const
+} as const;
 
-const REST_GAP = 44
-const HOVER_GAP = 56
-const REST_ROTATE = { x: 58, z: -32 }
-const HOVER_ROTATE = { x: 56, z: -28 }
+const REST_GAP = 44;
+const HOVER_GAP = 56;
+const REST_ROTATE = { x: 58, z: -32 };
+const HOVER_ROTATE = { x: 56, z: -28 };
 
 export function CtaAppStack({
   tagLabel,
@@ -63,58 +63,56 @@ export function CtaAppStack({
   accent = "rose",
   className,
 }: CtaAppStackProps) {
-  const [hovered, setHovered] = React.useState(false)
-  const tone = ACCENT_CLASSES[accent]
-  const gap = hovered ? HOVER_GAP : REST_GAP
-  const rot = hovered ? HOVER_ROTATE : REST_ROTATE
+  const [hovered, setHovered] = React.useState(false);
+  const tone = ACCENT_CLASSES[accent];
+  const gap = hovered ? HOVER_GAP : REST_GAP;
+  const rot = hovered ? HOVER_ROTATE : REST_ROTATE;
 
   const cta = (
     <span
       className={cn(
-        "inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-semibold text-white",
+        "inline-flex items-center justify-center rounded-full px-6 py-2.5 font-semibold text-sm text-white",
         "transition-colors",
         tone.button
       )}
     >
       {ctaLabel}
     </span>
-  )
+  );
 
   return (
     <section
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       className={cn(
         "relative isolate overflow-hidden rounded-3xl text-white",
         "bg-[radial-gradient(circle_at_85%_50%,rgba(120,40,80,0.45),transparent_55%),linear-gradient(135deg,#1a0a1f_0%,#0a0a0a_60%)]",
         className
       )}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <div className="grid grid-cols-1 gap-8 p-8 sm:p-12 md:grid-cols-[1fr_1fr] md:items-center md:gap-4">
         <div className="flex flex-col gap-5">
           {tagLabel ? (
             <span
               className={cn(
-                "inline-flex items-center self-start rounded-full border px-3 py-0.5 text-sm font-medium",
+                "inline-flex items-center self-start rounded-full border px-3 py-0.5 font-medium text-sm",
                 tone.tag
               )}
             >
               {tagLabel}
             </span>
           ) : null}
-          <h2 className="text-3xl leading-[1.05] font-bold tracking-tight text-balance sm:text-4xl">
+          <h2 className="text-balance font-bold text-3xl leading-[1.05] tracking-tight sm:text-4xl">
             {title}
           </h2>
-          {stats ? (
-            <p className="text-base text-white/60">{stats}</p>
-          ) : null}
+          {stats ? <p className="text-base text-white/60">{stats}</p> : null}
           <div className="mt-1">
             {ctaHref ? (
-              <a href={ctaHref} onClick={onCtaClick} className="inline-flex">
+              <a className="inline-flex" href={ctaHref} onClick={onCtaClick}>
                 {cta}
               </a>
             ) : (
-              <button type="button" onClick={onCtaClick}>
+              <button onClick={onCtaClick} type="button">
                 {cta}
               </button>
             )}
@@ -134,28 +132,28 @@ export function CtaAppStack({
             }}
           >
             {layers.map((layer, i) => {
-              const fromBottom = layers.length - 1 - i
-              const z = fromBottom * gap
+              const fromBottom = layers.length - 1 - i;
+              const z = fromBottom * gap;
               return (
                 <div
-                  key={i}
                   className={cn(
                     "absolute top-1/2 left-1/2 flex size-36 items-center justify-center overflow-hidden rounded-[22%]",
                     "shadow-[0_30px_60px_-15px_rgba(0,0,0,0.55)]",
                     "transition-transform duration-500 ease-out will-change-transform",
                     layer.bg
                   )}
+                  key={i}
                   style={{
                     transform: `translate(-50%, -50%) translateZ(${z}px)`,
                   }}
                 >
                   {layer.content}
                 </div>
-              )
+              );
             })}
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

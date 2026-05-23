@@ -1,21 +1,13 @@
-"use client"
+"use client";
 
-import { CtaAppStack } from "./cta-app-stack"
+import { CtaAppStack } from "./cta-app-stack";
 
 export default function CtaAppStackDemo() {
   return (
     <CtaAppStack
       accent="rose"
-      tagLabel="New!"
-      title="Small Business"
-      stats={
-        <>
-          <span className="font-semibold text-white">20 apps</span>
-          <span className="text-white/60"> and 18 deals</span>
-        </>
-      }
-      ctaLabel="See Apps Stack"
       ctaHref="#"
+      ctaLabel="See Apps Stack"
       layers={[
         {
           bg: "bg-white",
@@ -34,13 +26,22 @@ export default function CtaAppStackDemo() {
           content: <Bars opacity={0.6} />,
         },
       ]}
+      stats={
+        <>
+          <span className="font-semibold text-white">20 apps</span>
+          <span className="text-white/60"> and 18 deals</span>
+        </>
+      }
+      tagLabel="New!"
+      title="Small Business"
     />
-  )
+  );
 }
 
 function GoogleG() {
   return (
-    <svg viewBox="0 0 24 24" className="size-3/4">
+    <svg aria-hidden="true" className="size-3/4" viewBox="0 0 24 24">
+      <title>Google</title>
       <path
         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
         fill="#4285F4"
@@ -58,7 +59,7 @@ function GoogleG() {
         fill="#EA4335"
       />
     </svg>
-  )
+  );
 }
 
 function ProfileMark() {
@@ -67,7 +68,7 @@ function ProfileMark() {
       <div className="size-7 rounded-full bg-white" />
       <div className="h-3 w-12 rounded-full bg-white" />
     </div>
-  )
+  );
 }
 
 function Bars({ opacity = 1 }: { opacity?: number }) {
@@ -77,5 +78,5 @@ function Bars({ opacity = 1 }: { opacity?: number }) {
       <div className="h-1.5 w-full rounded-full bg-white" />
       <div className="h-1.5 w-1/2 rounded-full bg-white" />
     </div>
-  )
+  );
 }

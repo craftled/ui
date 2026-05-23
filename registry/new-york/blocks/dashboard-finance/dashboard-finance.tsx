@@ -1,19 +1,18 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
-import { MoreVertical } from "lucide-react"
-import type { LucideIcon } from "lucide-react"
-
-import { Button } from "@/registry/new-york/ui/button"
-import { Card } from "@/registry/new-york/ui/card"
+import type { LucideIcon } from "lucide-react";
+import { MoreVertical } from "lucide-react";
+import * as React from "react";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { cn } from "@/lib/utils";
+import { Button } from "@/registry/new-york/ui/button";
+import { Card } from "@/registry/new-york/ui/card";
 import {
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
-} from "@/registry/new-york/ui/chart"
-import { cn } from "@/lib/utils"
+} from "@/registry/new-york/ui/chart";
 
 const TINT_CLASSES = {
   teal: "bg-teal-50 text-teal-600 dark:bg-teal-950/40 dark:text-teal-300",
@@ -25,34 +24,34 @@ const TINT_CLASSES = {
   blue: "bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-300",
   violet:
     "bg-violet-50 text-violet-600 dark:bg-violet-950/40 dark:text-violet-300",
-} as const
+} as const;
 
 export type DashboardFinanceSeries = {
-  key: string
-  label: string
-  color?: string
-}
+  key: string;
+  label: string;
+  color?: string;
+};
 
 export type DashboardFinanceKpi = {
-  label: string
-  value: string
-  icon: LucideIcon
-  tint?: keyof typeof TINT_CLASSES
-}
+  label: string;
+  value: string;
+  icon: LucideIcon;
+  tint?: keyof typeof TINT_CLASSES;
+};
 
 export type DashboardFinanceProps = {
-  title?: string
-  subtitle?: string
-  reportTitle?: string
-  reportSubtitle?: string
-  data: Record<string, string | number>[]
-  labelKey?: string
-  series: DashboardFinanceSeries[]
-  kpis: DashboardFinanceKpi[]
-  ctaLabel?: string
-  onCtaClick?: () => void
-  className?: string
-}
+  title?: string;
+  subtitle?: string;
+  reportTitle?: string;
+  reportSubtitle?: string;
+  data: Record<string, string | number>[];
+  labelKey?: string;
+  series: DashboardFinanceSeries[];
+  kpis: DashboardFinanceKpi[];
+  ctaLabel?: string;
+  onCtaClick?: () => void;
+  className?: string;
+};
 
 export function DashboardFinance({
   title = "Finance",
@@ -67,17 +66,19 @@ export function DashboardFinance({
   onCtaClick,
   className,
 }: DashboardFinanceProps) {
-  const config = React.useMemo<ChartConfig>(() => {
-    return Object.fromEntries(
-      series.map((s, i) => [
-        s.key,
-        {
-          label: s.label,
-          color: s.color ?? `var(--chart-${(i % 5) + 1})`,
-        },
-      ])
-    )
-  }, [series])
+  const config = React.useMemo<ChartConfig>(
+    () =>
+      Object.fromEntries(
+        series.map((s, i) => [
+          s.key,
+          {
+            label: s.label,
+            color: s.color ?? `var(--chart-${(i % 5) + 1})`,
+          },
+        ])
+      ),
+    [series]
+  );
 
   return (
     <Card
@@ -89,53 +90,53 @@ export function DashboardFinance({
       <div className="flex flex-col gap-4 p-6">
         <header className="flex items-start justify-between gap-2">
           <div className="space-y-0.5">
-            <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
+            <h3 className="font-semibold text-lg tracking-tight">{title}</h3>
             {subtitle ? (
               <p className="text-muted-foreground text-sm">{subtitle}</p>
             ) : null}
           </div>
           <button
-            type="button"
             aria-label="More options"
-            className="text-muted-foreground hover:bg-muted hover:text-foreground inline-flex size-8 items-center justify-center rounded-md transition-colors"
+            className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            type="button"
           >
             <MoreVertical className="size-4" />
           </button>
         </header>
-        <ChartContainer config={config} className="aspect-[16/10] w-full">
+        <ChartContainer className="aspect-[16/10] w-full" config={config}>
           <BarChart
+            accessibilityLayer
             data={data}
             margin={{ left: 0, right: 0, top: 8 }}
-            accessibilityLayer
           >
-            <CartesianGrid vertical={false} strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis
+              axisLine={false}
               dataKey={labelKey}
               tickLine={false}
-              axisLine={false}
               tickMargin={8}
             />
             <YAxis
-              tickLine={false}
               axisLine={false}
+              tickLine={false}
               tickMargin={8}
               width={30}
             />
             <ChartTooltip
-              cursor={false}
               content={<ChartTooltipContent indicator="dot" />}
+              cursor={false}
             />
             {series.map((s, i) => {
-              const isTop = i === series.length - 1
+              const isTop = i === series.length - 1;
               return (
                 <Bar
-                  key={s.key}
                   dataKey={s.key}
-                  stackId="a"
                   fill={`var(--color-${s.key})`}
+                  key={s.key}
                   radius={isTop ? [6, 6, 0, 0] : 0}
+                  stackId="a"
                 />
-              )
+              );
             })}
           </BarChart>
         </ChartContainer>
@@ -144,7 +145,7 @@ export function DashboardFinance({
       <div className="flex flex-col gap-5 border-t p-6 sm:border-t-0 sm:border-l">
         <header className="flex items-start justify-between gap-2">
           <div className="space-y-0.5">
-            <h3 className="text-lg font-semibold tracking-tight">
+            <h3 className="font-semibold text-lg tracking-tight">
               {reportTitle}
             </h3>
             {reportSubtitle ? (
@@ -152,16 +153,16 @@ export function DashboardFinance({
             ) : null}
           </div>
           <button
-            type="button"
             aria-label="More options"
-            className="text-muted-foreground hover:text-foreground inline-flex size-8 items-center justify-center rounded-full border transition-colors"
+            className="inline-flex size-8 items-center justify-center rounded-full border text-muted-foreground transition-colors hover:text-foreground"
+            type="button"
           >
             <MoreVertical className="size-4" />
           </button>
         </header>
         <ul className="flex flex-col gap-4">
           {kpis.map((kpi) => (
-            <li key={kpi.label} className="flex items-center gap-3">
+            <li className="flex items-center gap-3" key={kpi.label}>
               <div
                 className={cn(
                   "flex size-9 shrink-0 items-center justify-center rounded-lg",
@@ -174,7 +175,7 @@ export function DashboardFinance({
                 <span className="text-muted-foreground text-xs">
                   {kpi.label}
                 </span>
-                <span className="text-sm font-medium tabular-nums">
+                <span className="font-medium text-sm tabular-nums">
                   {kpi.value}
                 </span>
               </div>
@@ -186,5 +187,5 @@ export function DashboardFinance({
         </Button>
       </div>
     </Card>
-  )
+  );
 }

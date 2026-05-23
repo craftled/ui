@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { createPortal } from "react-dom"
-import { usePathname } from "next/navigation"
+import { usePathname } from "next/navigation";
+import * as React from "react";
+import { createPortal } from "react-dom";
 
 /**
  * Renders its children into the right-rail mount node when the page is a
@@ -10,15 +10,17 @@ import { usePathname } from "next/navigation"
  * so multi-demo pages don't stack 8 control panels into the same slot.
  */
 export function ControlsRail({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-  const [target, setTarget] = React.useState<Element | null>(null)
+  const pathname = usePathname();
+  const [target, setTarget] = React.useState<Element | null>(null);
 
   React.useEffect(() => {
-    setTarget(document.getElementById("controls-rail-mount"))
-  }, [])
+    setTarget(document.getElementById("controls-rail-mount"));
+  }, []);
 
-  const onPreview = pathname?.startsWith("/preview/") ?? false
-  if (!onPreview || !target) return null
+  const onPreview = pathname?.startsWith("/preview/") ?? false;
+  if (!(onPreview && target)) {
+    return null;
+  }
 
-  return createPortal(children, target)
+  return createPortal(children, target);
 }

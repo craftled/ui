@@ -1,29 +1,29 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import type * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 import {
   FeaturedMeshGradient,
   type FeaturedMeshGradientProps,
-} from "@/registry/new-york/blocks/featured-mesh-gradient/featured-mesh-gradient"
+} from "@/registry/new-york/blocks/featured-mesh-gradient/featured-mesh-gradient";
 
 export type FeaturedLogoSpotlightProps = Omit<
   FeaturedMeshGradientProps,
   "children"
 > & {
   /** Logo content — img, svg, monogram, anything. Rendered inside a circular mask. */
-  logo: React.ReactNode
+  logo: React.ReactNode;
   /** Pixel diameter of the logo disc. Default 96. */
-  logoSize?: number
+  logoSize?: number;
   /** Pixel padding around the logo to form the halo. Default 16. */
-  haloPadding?: number
+  haloPadding?: number;
   /** Override the halo container classes. */
-  haloClassName?: string
-}
+  haloClassName?: string;
+};
 
-const SPOTLIGHT_COLORS = ["#0a0a0a", "#5e1de3", "#dc2626", "#1e3a8a"]
+const SPOTLIGHT_COLORS = ["#0a0a0a", "#5e1de3", "#dc2626", "#1e3a8a"];
 
 export function FeaturedLogoSpotlight({
   logo,
@@ -44,16 +44,16 @@ export function FeaturedLogoSpotlight({
 }: FeaturedLogoSpotlightProps) {
   return (
     <FeaturedMeshGradient
+      aspectRatio={aspectRatio}
       colors={colors}
+      mixing={mixing}
       positions={positions}
+      rotation={rotation}
+      speed={speed}
       waveX={waveX}
       waveXShift={waveXShift}
       waveY={waveY}
       waveYShift={waveYShift}
-      mixing={mixing}
-      rotation={rotation}
-      speed={speed}
-      aspectRatio={aspectRatio}
       {...rest}
     >
       <div className="flex size-full items-center justify-center">
@@ -75,5 +75,5 @@ export function FeaturedLogoSpotlight({
         </div>
       </div>
     </FeaturedMeshGradient>
-  )
+  );
 }

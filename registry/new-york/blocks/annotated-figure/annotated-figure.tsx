@@ -1,34 +1,34 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import type * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type AnnotatedFigureAnchor = {
   /** Visible label text. */
-  label: string
+  label: string;
   /** Which side of the object the label sits on. */
-  side: "left" | "right"
+  side: "left" | "right";
   /** Horizontal % of the anchor dot within the object's width. */
-  x: string
+  x: string;
   /** Vertical % of the anchor dot AND label, within the object's height. */
-  y: string
-}
+  y: string;
+};
 
 export type AnnotatedFigureProps = {
   /** Width of the central object. Anything CSS accepts: "60%", "320px", "20rem". */
-  objectWidth?: string
-  annotations: AnnotatedFigureAnchor[]
+  objectWidth?: string;
+  annotations: AnnotatedFigureAnchor[];
   /** Tailwind classes for the dot. */
-  dotClassName?: string
+  dotClassName?: string;
   /** Tailwind classes for the dashed stem line. */
-  lineClassName?: string
+  lineClassName?: string;
   /** Tailwind classes for the label text. */
-  labelClassName?: string
+  labelClassName?: string;
   /** The object being annotated. */
-  children: React.ReactNode
-  className?: string
-}
+  children: React.ReactNode;
+  className?: string;
+};
 
 export function AnnotatedFigure({
   objectWidth = "60%",
@@ -39,8 +39,8 @@ export function AnnotatedFigure({
   children,
   className,
 }: AnnotatedFigureProps) {
-  const left = annotations.filter((a) => a.side === "left")
-  const right = annotations.filter((a) => a.side === "right")
+  const left = annotations.filter((a) => a.side === "left");
+  const right = annotations.filter((a) => a.side === "right");
 
   return (
     <figure
@@ -52,36 +52,36 @@ export function AnnotatedFigure({
     >
       <div className="grid grid-cols-1 items-stretch gap-y-6 sm:grid-cols-[1fr_var(--ow)_1fr] sm:gap-y-0">
         <Gutter
-          side="left"
           annotations={left}
           labelClassName={labelClassName}
           lineClassName={lineClassName}
+          side="left"
         />
 
         <div className="relative">
           <div className="relative">{children}</div>
           {annotations.map((a, i) => (
             <span
-              key={i}
               aria-hidden
               className={cn(
                 "absolute z-10 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full",
                 dotClassName
               )}
+              key={i}
               style={{ left: a.x, top: a.y }}
             />
           ))}
         </div>
 
         <Gutter
-          side="right"
           annotations={right}
           labelClassName={labelClassName}
           lineClassName={lineClassName}
+          side="right"
         />
       </div>
     </figure>
-  )
+  );
 }
 
 function Gutter({
@@ -90,13 +90,13 @@ function Gutter({
   labelClassName,
   lineClassName,
 }: {
-  side: "left" | "right"
-  annotations: AnnotatedFigureAnchor[]
-  labelClassName: string
-  lineClassName: string
+  side: "left" | "right";
+  annotations: AnnotatedFigureAnchor[];
+  labelClassName: string;
+  lineClassName: string;
 }) {
   if (annotations.length === 0) {
-    return <div aria-hidden className="hidden sm:block" />
+    return <div aria-hidden className="hidden sm:block" />;
   }
   return (
     <div
@@ -108,23 +108,20 @@ function Gutter({
     >
       {annotations.map((a, i) => (
         <div
-          key={i}
           className={cn(
             "absolute inset-x-0 flex -translate-y-1/2 items-center gap-3 text-sm",
             side === "right" && "flex-row-reverse",
             labelClassName
           )}
+          key={i}
           style={{ top: a.y }}
         >
           <span className="whitespace-nowrap">{a.label}</span>
           <div
-            className={cn(
-              "h-px flex-1 border-t border-dashed",
-              lineClassName
-            )}
+            className={cn("h-px flex-1 border-t border-dashed", lineClassName)}
           />
         </div>
       ))}
     </div>
-  )
+  );
 }

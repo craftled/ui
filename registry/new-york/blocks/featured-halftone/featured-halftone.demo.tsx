@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { ControlsRail } from "@/components/controls-rail"
+import { ControlsRail } from "@/components/controls-rail";
 import {
   hslToHex,
   randomBool,
   randomInRange,
   randomItem,
   randomPalette,
-} from "@/lib/random-palette"
-import { cn } from "@/lib/utils"
+} from "@/lib/random-palette";
+import { cn } from "@/lib/utils";
 
-import { FeaturedHalftone } from "./featured-halftone"
+import { FeaturedHalftone } from "./featured-halftone";
 
-const TYPES = ["dots", "ink", "sharp"] as const
+const TYPES = ["dots", "ink", "sharp"] as const;
 
 function randomParams(): Params {
-  const palette = randomPalette(4, { minL: 35, maxL: 70 })
+  const palette = randomPalette(4, { minL: 35, maxL: 70 });
   return {
     type: randomItem(TYPES),
     size: randomInRange(0.08, 0.35),
@@ -32,22 +32,22 @@ function randomParams(): Params {
     colorM: palette[1],
     colorY: palette[2],
     colorK: "#1a1a1a",
-  }
+  };
 }
 
 type Params = {
-  type: "dots" | "ink" | "sharp"
-  size: number
-  softness: number
-  contrast: number
-  grainOverlay: number
-  grainMixer: number
-  colorBack: string
-  colorC: string
-  colorM: string
-  colorY: string
-  colorK: string
-}
+  type: "dots" | "ink" | "sharp";
+  size: number;
+  softness: number;
+  contrast: number;
+  grainOverlay: number;
+  grainMixer: number;
+  colorBack: string;
+  colorC: string;
+  colorM: string;
+  colorY: string;
+  colorK: string;
+};
 
 const DEFAULT: Params = {
   type: "ink",
@@ -61,7 +61,7 @@ const DEFAULT: Params = {
   colorM: "#d23a5a",
   colorY: "#e8a334",
   colorK: "#1a1a1a",
-}
+};
 
 const PRESETS: Record<string, Partial<Params>> = {
   Vintage: { ...DEFAULT },
@@ -104,17 +104,17 @@ const PRESETS: Record<string, Partial<Params>> = {
     grainOverlay: 0.4,
     grainMixer: 0.4,
   },
-}
+};
 
 const IMAGE =
-  "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=900&h=900&fit=crop&q=80"
+  "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=900&h=900&fit=crop&q=80";
 
 export default function FeaturedHalftoneDemo() {
-  const [params, setParams] = React.useState<Params>(DEFAULT)
+  const [params, setParams] = React.useState<Params>(DEFAULT);
 
   const applyPreset = (name: string) => {
-    setParams({ ...DEFAULT, ...PRESETS[name] } as Params)
-  }
+    setParams({ ...DEFAULT, ...PRESETS[name] } as Params);
+  };
 
   return (
     <>
@@ -126,95 +126,95 @@ export default function FeaturedHalftoneDemo() {
       />
 
       <ControlsRail>
-        <div className="text-foreground/80 flex flex-col gap-3 text-xs">
-        <div className="space-y-1.5">
-          <div className="text-foreground font-semibold">Presets</div>
-          <div className="grid grid-cols-2 gap-1.5">
-            {Object.keys(PRESETS).map((name) => (
-              <button
-                key={name}
-                type="button"
-                onClick={() => applyPreset(name)}
-                className="border-border hover:bg-muted rounded-md border px-2 py-1.5 transition-colors"
-              >
-                {name}
-              </button>
-            ))}
+        <div className="flex flex-col gap-3 text-foreground/80 text-xs">
+          <div className="space-y-1.5">
+            <div className="font-semibold text-foreground">Presets</div>
+            <div className="grid grid-cols-2 gap-1.5">
+              {Object.keys(PRESETS).map((name) => (
+                <button
+                  className="rounded-md border border-border px-2 py-1.5 transition-colors hover:bg-muted"
+                  key={name}
+                  onClick={() => applyPreset(name)}
+                  type="button"
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
+            <button
+              className="mt-1 w-full rounded-md bg-foreground px-2 py-1.5 font-medium text-background transition-colors hover:bg-foreground/90"
+              onClick={() => setParams(randomParams())}
+              type="button"
+            >
+              🎲 Randomize
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={() => setParams(randomParams())}
-            className="bg-foreground text-background hover:bg-foreground/90 mt-1 w-full rounded-md px-2 py-1.5 font-medium transition-colors"
-          >
-            🎲 Randomize
-          </button>
+
+          <SelectField
+            label="Type"
+            onChange={(v) =>
+              setParams({ ...params, type: v as Params["type"] })
+            }
+            options={["dots", "ink", "sharp"]}
+            value={params.type}
+          />
+
+          <Slider
+            label="Size"
+            max={1}
+            onChange={(v) => setParams({ ...params, size: v })}
+            value={params.size}
+          />
+          <Slider
+            label="Softness"
+            max={1}
+            onChange={(v) => setParams({ ...params, softness: v })}
+            value={params.softness}
+          />
+          <Slider
+            label="Contrast"
+            max={2}
+            onChange={(v) => setParams({ ...params, contrast: v })}
+            value={params.contrast}
+          />
+          <Slider
+            label="Grain"
+            max={1}
+            onChange={(v) => setParams({ ...params, grainOverlay: v })}
+            value={params.grainOverlay}
+          />
+
+          <div className="mt-2 space-y-1.5">
+            <ColorField
+              label="Back"
+              onChange={(v) => setParams({ ...params, colorBack: v })}
+              value={params.colorBack}
+            />
+            <ColorField
+              label="C"
+              onChange={(v) => setParams({ ...params, colorC: v })}
+              value={params.colorC}
+            />
+            <ColorField
+              label="M"
+              onChange={(v) => setParams({ ...params, colorM: v })}
+              value={params.colorM}
+            />
+            <ColorField
+              label="Y"
+              onChange={(v) => setParams({ ...params, colorY: v })}
+              value={params.colorY}
+            />
+            <ColorField
+              label="K"
+              onChange={(v) => setParams({ ...params, colorK: v })}
+              value={params.colorK}
+            />
+          </div>
         </div>
-
-        <SelectField
-          label="Type"
-          value={params.type}
-          options={["dots", "ink", "sharp"]}
-          onChange={(v) =>
-            setParams({ ...params, type: v as Params["type"] })
-          }
-        />
-
-        <Slider
-          label="Size"
-          value={params.size}
-          max={1}
-          onChange={(v) => setParams({ ...params, size: v })}
-        />
-        <Slider
-          label="Softness"
-          value={params.softness}
-          max={1}
-          onChange={(v) => setParams({ ...params, softness: v })}
-        />
-        <Slider
-          label="Contrast"
-          value={params.contrast}
-          max={2}
-          onChange={(v) => setParams({ ...params, contrast: v })}
-        />
-        <Slider
-          label="Grain"
-          value={params.grainOverlay}
-          max={1}
-          onChange={(v) => setParams({ ...params, grainOverlay: v })}
-        />
-
-        <div className="mt-2 space-y-1.5">
-          <ColorField
-            label="Back"
-            value={params.colorBack}
-            onChange={(v) => setParams({ ...params, colorBack: v })}
-          />
-          <ColorField
-            label="C"
-            value={params.colorC}
-            onChange={(v) => setParams({ ...params, colorC: v })}
-          />
-          <ColorField
-            label="M"
-            value={params.colorM}
-            onChange={(v) => setParams({ ...params, colorM: v })}
-          />
-          <ColorField
-            label="Y"
-            value={params.colorY}
-            onChange={(v) => setParams({ ...params, colorY: v })}
-          />
-          <ColorField
-            label="K"
-            value={params.colorK}
-            onChange={(v) => setParams({ ...params, colorK: v })}
-          />
-        </div>
-      </div>
       </ControlsRail>
     </>
-  )
+  );
 }
 
 function Slider({
@@ -225,12 +225,12 @@ function Slider({
   max = 1,
   step = 0.01,
 }: {
-  label: string
-  value: number
-  onChange: (v: number) => void
-  min?: number
-  max?: number
-  step?: number
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+  min?: number;
+  max?: number;
+  step?: number;
 }) {
   return (
     <label className="flex flex-col gap-1">
@@ -239,16 +239,16 @@ function Slider({
         <span className="font-mono text-[11px]">{value.toFixed(2)}</span>
       </div>
       <input
-        type="range"
-        min={min}
+        className="h-1 w-full cursor-pointer accent-foreground"
         max={max}
+        min={min}
+        onChange={(e) => onChange(Number.parseFloat(e.target.value))}
         step={step}
+        type="range"
         value={value}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="accent-foreground h-1 w-full cursor-pointer"
       />
     </label>
-  )
+  );
 }
 
 function SelectField({
@@ -257,21 +257,21 @@ function SelectField({
   options,
   onChange,
 }: {
-  label: string
-  value: string
-  options: string[]
-  onChange: (v: string) => void
+  label: string;
+  value: string;
+  options: string[];
+  onChange: (v: string) => void;
 }) {
   return (
     <label className="flex flex-col gap-1">
       <span className="text-muted-foreground">{label}</span>
       <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
         className={cn(
-          "border-border bg-background rounded-md border px-2 py-1.5",
-          "focus:ring-ring focus:ring-2 focus:outline-none"
+          "rounded-md border border-border bg-background px-2 py-1.5",
+          "focus:outline-none focus:ring-2 focus:ring-ring"
         )}
+        onChange={(e) => onChange(e.target.value)}
+        value={value}
       >
         {options.map((opt) => (
           <option key={opt} value={opt}>
@@ -280,7 +280,7 @@ function SelectField({
         ))}
       </select>
     </label>
-  )
+  );
 }
 
 function ColorField({
@@ -288,22 +288,22 @@ function ColorField({
   value,
   onChange,
 }: {
-  label: string
-  value: string
-  onChange: (v: string) => void
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
 }) {
   return (
     <label className="flex items-center gap-2">
       <input
+        className="size-7 cursor-pointer rounded border border-border bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded [&::-webkit-color-swatch]:border-none"
+        onChange={(e) => onChange(e.target.value)}
         type="color"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="border-border size-7 cursor-pointer rounded border bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded [&::-webkit-color-swatch]:border-none"
       />
       <div className="flex flex-1 items-center justify-between">
         <span className="text-muted-foreground">{label}</span>
         <span className="font-mono text-[11px]">{value}</span>
       </div>
     </label>
-  )
+  );
 }

@@ -4,6 +4,25 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.1] - 2026-05-23
+
+### Fixed
+
+- **Navbar frosted-glass effect** wasn't visibly applying. The Navbar
+  block's scrolled-state classes used the `in-data-scrolled:` Tailwind
+  variant ("ancestor has the attr") but `data-scrolled` was set on the
+  same element after the v0.3.0 sticky-positioning refactor. Switched to
+  `data-[scrolled=true]:` (variant for "element itself"), so scrolling
+  now properly applies `bg-background/85` + `backdrop-blur-md` + a subtle
+  shadow. Also added an always-on baseline (`bg-background/80 +
+  backdrop-blur`) so the navbar reads as a surface even at the top of
+  the page.
+- **`/raw/[name]` was rendering the docs SiteHeader.** Iframe previews
+  showed two stacked navbars. Root cause: `app/raw/layout.tsx` was
+  nested under the root layout. Refactored with Next.js route groups:
+  `app/(docs)/` and `app/(raw)/` now each have their own root layout,
+  so /raw routes get no docs chrome. URL paths are unchanged.
+
 ## [0.3.0] - 2026-05-23
 
 ### Added

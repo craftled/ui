@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "featured-logo-spotlight",
+  "title": "Logo Spotlight Card",
+  "description": "Centered logo on a mesh gradient background, wrapped in a translucent glassy halo (backdrop-blur + ring). Composes the Mesh Gradient Card as the background — all mesh props pass through; logo is any ReactNode (img, svg, monogram).",
+  "registryDependencies": [
+    "featured-mesh-gradient"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/blocks/featured-logo-spotlight/featured-logo-spotlight.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\nimport { cn } from \"@/lib/utils\"\n\nimport {\n  FeaturedMeshGradient,\n  type FeaturedMeshGradientProps,\n} from \"@/registry/new-york/blocks/featured-mesh-gradient/featured-mesh-gradient\"\n\nexport type FeaturedLogoSpotlightProps = Omit<\n  FeaturedMeshGradientProps,\n  \"children\"\n> & {\n  /** Logo content — img, svg, monogram, anything. Rendered inside a circular mask. */\n  logo: React.ReactNode\n  /** Pixel diameter of the logo disc. Default 96. */\n  logoSize?: number\n  /** Pixel padding around the logo to form the halo. Default 16. */\n  haloPadding?: number\n  /** Override the halo container classes. */\n  haloClassName?: string\n}\n\nconst SPOTLIGHT_COLORS = [\"#0a0a0a\", \"#5e1de3\", \"#dc2626\", \"#1e3a8a\"]\n\nexport function FeaturedLogoSpotlight({\n  logo,\n  logoSize = 96,\n  haloPadding = 16,\n  haloClassName,\n  colors = SPOTLIGHT_COLORS,\n  positions = 50,\n  waveX = 1,\n  waveXShift = 0.3,\n  waveY = 1,\n  waveYShift = 0.5,\n  mixing = 0.85,\n  rotation = 30,\n  speed = 0,\n  aspectRatio = \"2/1\",\n  ...rest\n}: FeaturedLogoSpotlightProps) {\n  return (\n    <FeaturedMeshGradient\n      colors={colors}\n      positions={positions}\n      waveX={waveX}\n      waveXShift={waveXShift}\n      waveY={waveY}\n      waveYShift={waveYShift}\n      mixing={mixing}\n      rotation={rotation}\n      speed={speed}\n      aspectRatio={aspectRatio}\n      {...rest}\n    >\n      <div className=\"flex size-full items-center justify-center\">\n        <div\n          className={cn(\n            \"relative inline-flex items-center justify-center rounded-full\",\n            \"bg-black/15 ring-1 ring-white/15 backdrop-blur-[3px]\",\n            \"shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]\",\n            haloClassName\n          )}\n          style={{ padding: haloPadding }}\n        >\n          <div\n            className=\"overflow-hidden rounded-full\"\n            style={{ width: logoSize, height: logoSize }}\n          >\n            {logo}\n          </div>\n        </div>\n      </div>\n    </FeaturedMeshGradient>\n  )\n}\n",
+      "type": "registry:component"
+    }
+  ],
+  "categories": [
+    "featured"
+  ],
+  "type": "registry:block"
+}

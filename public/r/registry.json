@@ -4,6 +4,20 @@
   "homepage": "https://ui.craftled.com",
   "items": [
     {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "shadcn's Button primitive — variants (default/secondary/outline/ghost/link/destructive) and sizes (xs/sm/default/lg + icon variants), shipped under @craftled so blocks can declare it as a registryDependency.",
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
       "name": "chart-area-gradient",
       "type": "registry:block",
       "title": "Area Chart — Gradient",
@@ -250,6 +264,20 @@
       "files": [
         {
           "path": "registry/new-york/blocks/featured-mesh-gradient/featured-mesh-gradient.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
+      "name": "featured-logo-spotlight",
+      "type": "registry:block",
+      "title": "Logo Spotlight Card",
+      "description": "Centered logo on a mesh gradient background, wrapped in a translucent glassy halo (backdrop-blur + ring). Composes the Mesh Gradient Card as the background — all mesh props pass through; logo is any ReactNode (img, svg, monogram).",
+      "registryDependencies": ["featured-mesh-gradient"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-logo-spotlight/featured-logo-spotlight.tsx",
           "type": "registry:component"
         }
       ],

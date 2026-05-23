@@ -23,6 +23,7 @@ import FeaturedLogoSpotlightDemo from "@/registry/new-york/blocks/featured-logo-
 import FeaturedMeshGradientDemo from "@/registry/new-york/blocks/featured-mesh-gradient/featured-mesh-gradient.demo"
 import FeaturedStoryDemo from "@/registry/new-york/blocks/featured-story/featured-story.demo"
 import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo"
+import ButtonDemo from "@/registry/new-york/ui/button.demo"
 
 export type RegistryItem = {
   name: string
@@ -38,6 +39,7 @@ export const items = registry.items as RegistryItem[]
 // with a default export and register it here.
 export const demos: Record<string, ComponentType> = {
   "annotated-figure": AnnotatedFigureDemo,
+  button: ButtonDemo,
   "carousel-do-dont": CarouselDoDontDemo,
   "chart-area-gradient": ChartAreaGradientDemo,
   "chart-stems": ChartStemsDemo,
@@ -76,6 +78,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   featured: "Featured",
   form: "Forms",
   layout: "Layout",
+  primitive: "Primitives",
   "social-proof": "Social Proof",
 }
 

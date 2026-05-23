@@ -23,10 +23,14 @@ import FeaturedStoryDemo from "@/registry/new-york/blocks/featured-story/feature
 import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo";
 import ButtonDemo from "@/registry/new-york/ui/button.demo";
 import CardDemo from "@/registry/new-york/ui/card.demo";
+import DialogDemo from "@/registry/new-york/ui/dialog.demo";
+import DropdownMenuDemo from "@/registry/new-york/ui/dropdown-menu.demo";
 import InputDemo from "@/registry/new-york/ui/input.demo";
 import LabelDemo from "@/registry/new-york/ui/label.demo";
 import SeparatorDemo from "@/registry/new-york/ui/separator.demo";
 import SkeletonDemo from "@/registry/new-york/ui/skeleton.demo";
+import TabsDemo from "@/registry/new-york/ui/tabs.demo";
+import TooltipDemo from "@/registry/new-york/ui/tooltip.demo";
 import registry from "@/registry.json";
 
 export type RegistryItem = {
@@ -54,6 +58,8 @@ export const demos: Record<string, ComponentType> = {
   "cta-newsletter": CtaNewsletterDemo,
   "dashboard-finance": DashboardFinanceDemo,
   "dashboard-net-worth": DashboardNetWorthDemo,
+  dialog: DialogDemo,
+  "dropdown-menu": DropdownMenuDemo,
   "featured-color-panels": FeaturedColorPanelsDemo,
   "featured-dithering": FeaturedDitheringDemo,
   "featured-event": FeaturedEventDemo,
@@ -69,7 +75,9 @@ export const demos: Record<string, ComponentType> = {
   label: LabelDemo,
   separator: SeparatorDemo,
   skeleton: SkeletonDemo,
+  tabs: TabsDemo,
   "testimonial-video": TestimonialVideoDemo,
+  tooltip: TooltipDemo,
 };
 
 export function getItem(name: string): RegistryItem | null {
@@ -105,7 +113,10 @@ export type NavGroup = {
 export const staticNav: NavGroup[] = [
   {
     title: "Get Started",
-    links: [{ name: "introduction", title: "Introduction", href: "/" }],
+    links: [
+      { name: "introduction", title: "Introduction", href: "/" },
+      { name: "compose", title: "Compose", href: "/compose" },
+    ],
   },
 ];
 

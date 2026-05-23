@@ -85,6 +85,62 @@
       "categories": ["primitive"]
     },
     {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Modal dialog built on @radix-ui/react-dialog. Includes overlay, content, header, footer, title, description, and an opt-out closable X. data-slot=* hooks on every sub-component for styling integration.",
+      "dependencies": ["@radix-ui/react-dialog", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "Full dropdown menu surface built on @radix-ui/react-dropdown-menu: items, checkbox items, radio groups, labels, separators, shortcuts, and nested sub-menus. Includes a destructive item variant.",
+      "dependencies": ["@radix-ui/react-dropdown-menu", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Accessible tabs built on @radix-ui/react-tabs. TabsList wraps TabsTrigger pills; active triggers get a bg-background lift with shadow.",
+      "dependencies": ["@radix-ui/react-tabs"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Tooltip built on @radix-ui/react-tooltip. Includes TooltipProvider so you can drop a single root once and use Tooltip + TooltipTrigger + TooltipContent anywhere. Comes with an arrow indicator.",
+      "dependencies": ["@radix-ui/react-tooltip"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
       "name": "chart-area-gradient",
       "type": "registry:block",
       "title": "Area Chart — Gradient",

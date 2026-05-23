@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "featured-dithering",
   "title": "Dithering Photo Card",
-  "description": "Image dithering shader (via @paper-design/shaders-react) — supports random + Bayer 2x2/4x4/8x8 patterns, custom 2-3 color palettes, configurable color steps, and an originalColors mode that samples directly from the image.",
+  "description": "Image dithering shader (via @paper-design/shaders-react) — supports random + Bayer 2x2/4x4/8x8 patterns, custom 2-3 color palettes, configurable color steps, and an originalColors mode that samples directly from the image. Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
   "dependencies": [
     "@paper-design/shaders-react"
   ],

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "featured-fluted-glass",
   "title": "Fluted Glass Photo Card",
-  "description": "Fluted glass shader (via @paper-design/shaders-react) — streaked, ribbed distortions over an image with five grid shapes (lines/linesIrregular/wave/zigzag/pattern) and five distortion shapes (prism/lens/contour/cascade/flat). Looks like looking through textured architectural glass.",
+  "description": "Fluted glass shader (via @paper-design/shaders-react) — streaked, ribbed distortions over an image with five grid shapes (lines/linesIrregular/wave/zigzag/pattern) and five distortion shapes (prism/lens/contour/cascade/flat). Looks like looking through textured architectural glass. Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
   "dependencies": [
     "@paper-design/shaders-react"
   ],

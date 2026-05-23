@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "featured-halftone-dots",
   "title": "Halftone Dots Photo Card",
-  "description": "Single-color halftone dot shader (via @paper-design/shaders-react) — square or hex grids, four dot styles (classic / gooey / holes / soft), grain controls, and an originalColors mode for sampled palettes.",
+  "description": "Single-color halftone dot shader (via @paper-design/shaders-react) — square or hex grids, four dot styles (classic / gooey / holes / soft), grain controls, and an originalColors mode for sampled palettes. Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
   "dependencies": [
     "@paper-design/shaders-react"
   ],

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "featured-grain-gradient",
   "title": "Grain Gradient Card",
-  "description": "Generative grain-gradient shader (via @paper-design/shaders-react) — no image input, just colors + shape. Seven shapes (wave/dots/truchet/corners/ripple/blob/sphere), up to 7 colors, animated by default. Great for hero backgrounds and OG images.",
+  "description": "Generative grain-gradient shader (via @paper-design/shaders-react) — no image input, just colors + shape. Seven shapes (wave/dots/truchet/corners/ripple/blob/sphere), up to 7 colors, animated by default. Great for hero backgrounds and OG images. Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
   "dependencies": [
     "@paper-design/shaders-react"
   ],

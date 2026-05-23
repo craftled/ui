@@ -332,7 +332,7 @@
       "name": "featured-halftone",
       "type": "registry:block",
       "title": "Halftone Photo Card",
-      "description": "Real CMYK halftone shader (via @paper-design/shaders-react) applied to any image. WebGL renders the printing-press look — channel-by-channel ink colors, dot size/softness, grain overlay, three dot styles (dots/ink/sharp).",
+      "description": "Real CMYK halftone shader (via @paper-design/shaders-react) applied to any image. WebGL renders the printing-press look — channel-by-channel ink colors, dot size/softness, grain overlay, three dot styles (dots/ink/sharp). Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor) for hero copy on top of the shader.",
       "dependencies": ["@paper-design/shaders-react"],
       "files": [
         {
@@ -346,7 +346,7 @@
       "name": "featured-dithering",
       "type": "registry:block",
       "title": "Dithering Photo Card",
-      "description": "Image dithering shader (via @paper-design/shaders-react) — supports random + Bayer 2x2/4x4/8x8 patterns, custom 2-3 color palettes, configurable color steps, and an originalColors mode that samples directly from the image.",
+      "description": "Image dithering shader (via @paper-design/shaders-react) — supports random + Bayer 2x2/4x4/8x8 patterns, custom 2-3 color palettes, configurable color steps, and an originalColors mode that samples directly from the image. Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
       "dependencies": ["@paper-design/shaders-react"],
       "files": [
         {
@@ -360,7 +360,7 @@
       "name": "featured-halftone-dots",
       "type": "registry:block",
       "title": "Halftone Dots Photo Card",
-      "description": "Single-color halftone dot shader (via @paper-design/shaders-react) — square or hex grids, four dot styles (classic / gooey / holes / soft), grain controls, and an originalColors mode for sampled palettes.",
+      "description": "Single-color halftone dot shader (via @paper-design/shaders-react) — square or hex grids, four dot styles (classic / gooey / holes / soft), grain controls, and an originalColors mode for sampled palettes. Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
       "dependencies": ["@paper-design/shaders-react"],
       "files": [
         {
@@ -374,7 +374,7 @@
       "name": "featured-fluted-glass",
       "type": "registry:block",
       "title": "Fluted Glass Photo Card",
-      "description": "Fluted glass shader (via @paper-design/shaders-react) — streaked, ribbed distortions over an image with five grid shapes (lines/linesIrregular/wave/zigzag/pattern) and five distortion shapes (prism/lens/contour/cascade/flat). Looks like looking through textured architectural glass.",
+      "description": "Fluted glass shader (via @paper-design/shaders-react) — streaked, ribbed distortions over an image with five grid shapes (lines/linesIrregular/wave/zigzag/pattern) and five distortion shapes (prism/lens/contour/cascade/flat). Looks like looking through textured architectural glass. Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
       "dependencies": ["@paper-design/shaders-react"],
       "files": [
         {
@@ -388,7 +388,7 @@
       "name": "featured-grain-gradient",
       "type": "registry:block",
       "title": "Grain Gradient Card",
-      "description": "Generative grain-gradient shader (via @paper-design/shaders-react) — no image input, just colors + shape. Seven shapes (wave/dots/truchet/corners/ripple/blob/sphere), up to 7 colors, animated by default. Great for hero backgrounds and OG images.",
+      "description": "Generative grain-gradient shader (via @paper-design/shaders-react) — no image input, just colors + shape. Seven shapes (wave/dots/truchet/corners/ripple/blob/sphere), up to 7 colors, animated by default. Great for hero backgrounds and OG images. Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
       "dependencies": ["@paper-design/shaders-react"],
       "files": [
         {
@@ -402,7 +402,7 @@
       "name": "featured-color-panels",
       "type": "registry:block",
       "title": "Color Panels Card",
-      "description": "Pseudo-3D color panels shader (via @paper-design/shaders-react) — semi-transparent slabs rotating around a central axis. Up to 7 colors, density/angle/length/fade/blur/gradient controls. Generative, animated by default.",
+      "description": "Pseudo-3D color panels shader (via @paper-design/shaders-react) — semi-transparent slabs rotating around a central axis. Up to 7 colors, density/angle/length/fade/blur/gradient controls. Generative, animated by default. Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
       "dependencies": ["@paper-design/shaders-react"],
       "files": [
         {
@@ -416,7 +416,7 @@
       "name": "featured-mesh-gradient",
       "type": "registry:block",
       "title": "Mesh Gradient Card",
-      "description": "Static mesh gradient shader (via @paper-design/shaders-react) — up to 10 color spots blended with two-direction sine wave distortion. Adjustable blend sharpness, grain, and positions seed. Generative, static by default (speed=0).",
+      "description": "Static mesh gradient shader (via @paper-design/shaders-react) — up to 10 color spots blended with two-direction sine wave distortion. Adjustable blend sharpness, grain, and positions seed. Generative, static by default (speed=0). Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
       "dependencies": ["@paper-design/shaders-react"],
       "files": [
         {

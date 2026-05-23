@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "featured-halftone",
   "title": "Halftone Photo Card",
-  "description": "Real CMYK halftone shader (via @paper-design/shaders-react) applied to any image. WebGL renders the printing-press look — channel-by-channel ink colors, dot size/softness, grain overlay, three dot styles (dots/ink/sharp).",
+  "description": "Real CMYK halftone shader (via @paper-design/shaders-react) applied to any image. WebGL renders the printing-press look — channel-by-channel ink colors, dot size/softness, grain overlay, three dot styles (dots/ink/sharp). Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor) for hero copy on top of the shader.",
   "dependencies": [
     "@paper-design/shaders-react"
   ],

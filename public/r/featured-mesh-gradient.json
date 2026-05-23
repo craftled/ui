@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "featured-mesh-gradient",
   "title": "Mesh Gradient Card",
-  "description": "Static mesh gradient shader (via @paper-design/shaders-react) — up to 10 color spots blended with two-direction sine wave distortion. Adjustable blend sharpness, grain, and positions seed. Generative, static by default (speed=0).",
+  "description": "Static mesh gradient shader (via @paper-design/shaders-react) — up to 10 color spots blended with two-direction sine wave distortion. Adjustable blend sharpness, grain, and positions seed. Generative, static by default (speed=0). Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
   "dependencies": [
     "@paper-design/shaders-react"
   ],

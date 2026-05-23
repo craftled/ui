@@ -38,11 +38,11 @@ Every component renders standalone at `ui.craftled.com/preview/<name>` — same 
 
 ## What's inside
 
-### Primitives (7)
+### Primitives (13)
 
-`button` · `card` · `chart` · `input` · `label` · `separator` · `skeleton`
+`accordion` · `button` · `card` · `chart` · `dialog` · `dropdown-menu` · `input` · `label` · `navigation-menu` · `separator` · `skeleton` · `tabs` · `tooltip`
 
-Drop-in replacements for the shadcn New York equivalents. The Button is opinionated — a layered ring + shadow treatment lifted from production work — but the rest mirror upstream so you can mix and match without surprises.
+Drop-in replacements for the shadcn New York equivalents. The Button is opinionated — a layered ring + shadow treatment lifted from production work — but the rest mirror upstream so you can mix and match without surprises. Most are thin wrappers over Radix; `chart` resolves to shadcn's upstream chart wrapper.
 
 ### Charts (2)
 
@@ -64,7 +64,18 @@ Production-grade marketing CTAs. Each one ships with a demo that uses real-looki
 
 `featured-halftone` · `featured-halftone-dots` · `featured-dithering` · `featured-fluted-glass` · `featured-grain-gradient` · `featured-mesh-gradient` · `featured-color-panels` · `featured-logo-spotlight`
 
-WebGL shader blocks via [`@paper-design/shaders-react`](https://shaders.paper.design). Each one renders an image with a real shader pass and exposes the right knobs (intensity, scale, color mix). Use them as hero panels, OG images, or as background atmosphere.
+WebGL shader blocks via [`@paper-design/shaders-react`](https://shaders.paper.design). Each one renders an image (or a generative surface, for `mesh-gradient` / `grain-gradient` / `color-panels`) with a real shader pass and exposes the right knobs (intensity, scale, color mix). Use them as hero panels, OG images, or as background atmosphere.
+
+All seven photo + generative shader blocks (everything except `featured-logo-spotlight`, which composes the mesh-gradient) accept a shared text-overlay API for placing a title on top of the shader:
+
+- `titleText` — string drawn over the shader
+- `titlePosition` — one of nine grid positions (`top-left` / `top-center` / `top-right` / `center-left` / `center` / `center-right` / `bottom-left` / `bottom-center` / `bottom-right`), defaults to `bottom-left`
+- `titleSize` — title font size in px; the eyebrow scales as `max(11, titleSize * 0.4)`, defaults to `30`
+- `titleColor` — optional inline hex color that wins over `titleClassName` via CSS specificity
+
+### Navigation (1)
+
+- **`navbar`** — Sticky top navbar with brand mark, center nav using NavigationMenu (flat links + rich icon/description dropdowns), CTA buttons, and a scroll-aware backdrop blur. Mobile menu uses Accordion. Position prop (`fixed` / `absolute` / `sticky` / `static`) so you can drop it on a real page or showcase it inside a card. Dogfooded as the SiteHeader on `ui.craftled.com`.
 
 ### Editorial blocks (6)
 
@@ -86,7 +97,9 @@ bun run check            # ultracite check (biome + opinionated rules)
 bun run fix              # ultracite fix (auto-fix safe issues)
 ```
 
-The `/` route is the gallery; `/preview/[name]` renders any component standalone. Editing a primitive or block hot-reloads everywhere it's used.
+The `/` route is the gallery, `/preview/[name]` renders any component standalone with Preview/Code tabs (Shiki dual-theme), and `/compose` is a kitchen-sink page exercising every primitive together for visual regression checks. Editing a primitive or block hot-reloads everywhere it's used.
+
+`/raw/[name]` is the no-chrome iframe target for the full-bleed preview shell — its own root layout, no SiteHeader. Don't link to it from docs; it exists for the iframe.
 
 ### Add a new component
 
@@ -116,6 +129,10 @@ Craftled UI is shadcn-native, not a fork. We use shadcn's CLI, registry format, 
 2. **Production-quality blocks** assembled from those primitives, written to be deleted from your repo when you outgrow them.
 
 Special thanks to **[@shadcn](https://x.com/shadcn)** for the registry pattern that makes any of this possible, **[Paper Design](https://paper.design)** for the shaders, and **[Recharts](https://recharts.org)** for being the only chart library that survives every React major bump.
+
+## Known issues
+
+The shader blocks emit unhandled rejections in headless browsers without GPU passthrough (Puppeteer / Playwright CI). Real users on any modern desktop or mobile browser are unaffected. See [KNOWN_ISSUES.md](./KNOWN_ISSUES.md) for details and the planned `ShaderErrorBoundary` fix.
 
 ## License
 

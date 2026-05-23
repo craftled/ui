@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "featured-color-panels",
   "title": "Color Panels Card",
-  "description": "Pseudo-3D color panels shader (via @paper-design/shaders-react) — semi-transparent slabs rotating around a central axis. Up to 7 colors, density/angle/length/fade/blur/gradient controls. Generative, animated by default.",
+  "description": "Pseudo-3D color panels shader (via @paper-design/shaders-react) — semi-transparent slabs rotating around a central axis. Up to 7 colors, density/angle/length/fade/blur/gradient controls. Generative, animated by default. Includes the shared title overlay API (titleText/titlePosition/titleSize/titleColor).",
   "dependencies": [
     "@paper-design/shaders-react"
   ],

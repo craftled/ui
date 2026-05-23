@@ -58,6 +58,33 @@
       "categories": ["primitive"]
     },
     {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "Horizontal or vertical divider built on @radix-ui/react-separator. Uses data-orientation to switch axis; decorative by default so screen readers skip it.",
+      "dependencies": ["@radix-ui/react-separator"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Loading placeholder. animate-pulse + bg-accent + rounded-md baked in. Compose any shape by sizing it with width/height/rounded utilities.",
+      "files": [
+        {
+          "path": "registry/new-york/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["primitive"]
+    },
+    {
       "name": "chart-area-gradient",
       "type": "registry:block",
       "title": "Area Chart — Gradient",

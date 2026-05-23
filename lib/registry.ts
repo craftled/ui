@@ -27,6 +27,8 @@ import ButtonDemo from "@/registry/new-york/ui/button.demo"
 import CardDemo from "@/registry/new-york/ui/card.demo"
 import InputDemo from "@/registry/new-york/ui/input.demo"
 import LabelDemo from "@/registry/new-york/ui/label.demo"
+import SeparatorDemo from "@/registry/new-york/ui/separator.demo"
+import SkeletonDemo from "@/registry/new-york/ui/skeleton.demo"
 
 export type RegistryItem = {
   name: string
@@ -66,6 +68,8 @@ export const demos: Record<string, ComponentType> = {
   "featured-story": FeaturedStoryDemo,
   input: InputDemo,
   label: LabelDemo,
+  separator: SeparatorDemo,
+  skeleton: SkeletonDemo,
   "testimonial-video": TestimonialVideoDemo,
 }
 

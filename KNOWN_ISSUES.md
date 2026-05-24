@@ -31,6 +31,31 @@ without GPU passthrough see the rejection.
 catches the WebGL init failure and renders a static `<img>` fallback.
 Tracked for a future minor release. PR welcome.
 
+## Hydration warnings from `data-cursor-ref` in Cursor's embedded browser
+
+**Affects:** Any preview page when opened in Cursor's built-in browser
+(Glass / Simple Browser / agent browse tools). Examples: `/preview/*`,
+`/compose`, any route using `PreviewCodeTabs` or demo sidebars.
+
+**Symptom:** React reports a hydration mismatch on `data-cursor-ref`
+attributes — often surfacing near `TabsTrigger`, `Button`, `h3`, or `p`
+elements. The server HTML does not contain these attributes; Cursor's
+browser automation injects them into the live DOM for element targeting
+before or during hydration.
+
+**Impact:** Development-only noise in Cursor's browser. SSR output is
+clean (verify with `curl` — zero `data-cursor-ref` matches). Normal
+Chrome, Safari, Firefox, and Edge are unaffected.
+
+**Workarounds:**
+
+- Verify previews in an external browser (Chrome, Arc, etc.) when
+  checking for real hydration bugs.
+- Ignore the warning when it only mentions `data-cursor-ref`.
+
+**Not a registry bug:** No app code emits `data-cursor-ref`. Do not add
+`suppressHydrationWarning` to silence this.
+
 ## Anything else?
 
 If you hit something that isn't here, open an issue at

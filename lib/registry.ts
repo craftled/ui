@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import AnnotatedFigureDemo from "@/registry/new-york/blocks/annotated-figure/annotated-figure.demo";
 import CarouselDoDontDemo from "@/registry/new-york/blocks/carousel-do-dont/carousel-do-dont.demo";
 import ChartAreaGradientDemo from "@/registry/new-york/blocks/chart-area-gradient/chart-area-gradient.demo";
+import ChartBarRankedDemo from "@/registry/new-york/blocks/chart-bar-ranked/chart-bar-ranked.demo";
 import ChartStemsDemo from "@/registry/new-york/blocks/chart-stems/chart-stems.demo";
 import CtaAppStackDemo from "@/registry/new-york/blocks/cta-app-stack/cta-app-stack.demo";
 import CtaEbookDemo from "@/registry/new-york/blocks/cta-ebook/cta-ebook.demo";
@@ -63,6 +64,7 @@ export const demos: Record<string, ComponentType> = {
   card: CardDemo,
   "carousel-do-dont": CarouselDoDontDemo,
   "chart-area-gradient": ChartAreaGradientDemo,
+  "chart-bar-ranked": ChartBarRankedDemo,
   "chart-stems": ChartStemsDemo,
   "cta-app-stack": CtaAppStackDemo,
   "cta-ebook": CtaEbookDemo,

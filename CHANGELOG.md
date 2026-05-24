@@ -4,6 +4,26 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.5] - 2026-05-24
+
+### Added
+
+- **`chart-bar-ranked` block** — horizontal ranked bar chart on shadcn's
+  chart primitive + Recharts. Title, subtitle, source line, optional footer
+  branding (text or image + link), currency/number/percent value formatting,
+  USD/EUR/GBP presets plus custom ISO 4217 codes, sort order, and value
+  labels. Install via `npx shadcn@latest add @craftled/chart-bar-ranked`.
+- **Interactive demo** with `ControlsRail`: edit copy, data rows, format,
+  aspect ratio (article 16/9 or OG 1200/630), branding, and **Export JPG**
+  (via `html-to-image`).
+- **`featured-grain-gradient` demo** — OG (1200/630) aspect preset with a
+  title-size cap so headlines fit social cards.
+
+### Changed
+
+- Documented a **Cursor embedded-browser hydration caveat** (`data-cursor-ref`
+  on preview routes) in `KNOWN_ISSUES.md` — agent tooling only, not production.
+
 ## [0.3.4] - 2026-05-23
 
 ### Added

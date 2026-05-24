@@ -203,6 +203,21 @@
       "categories": ["chart"]
     },
     {
+      "name": "chart-bar-ranked",
+      "type": "registry:block",
+      "title": "Ranked Bar Chart",
+      "description": "Horizontal ranked bar chart with title, subtitle, and source — built on shadcn's chart primitive + Recharts (BarChart layout=\"vertical\"). Supports currency/number/percent formatting, sort order, and value labels.",
+      "dependencies": ["recharts"],
+      "registryDependencies": ["chart"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/chart-bar-ranked/chart-bar-ranked.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["chart"]
+    },
+    {
       "name": "dashboard-finance",
       "type": "registry:block",
       "title": "Finance Dashboard",

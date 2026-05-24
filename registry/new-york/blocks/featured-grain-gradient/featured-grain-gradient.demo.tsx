@@ -78,6 +78,8 @@ const TEXT_DEFAULTS = {
   titleColor: "#ffffff",
 };
 
+const OG_TITLE_SIZE_MAX = 28;
+
 const PRESETS: Record<string, Params> = {
   Default: {
     shape: "corners",
@@ -143,6 +145,7 @@ const PRESETS: Record<string, Params> = {
 
 export default function FeaturedGrainGradientDemo() {
   const [params, setParams] = React.useState<Params>(PRESETS.Default);
+  const [aspectRatio, setAspectRatio] = React.useState("16/9");
 
   const setColor = (idx: number, value: string) => {
     const next = [...params.colors];
@@ -152,7 +155,11 @@ export default function FeaturedGrainGradientDemo() {
 
   return (
     <>
-      <FeaturedGrainGradient {...params} title={params.titleText} />
+      <FeaturedGrainGradient
+        {...params}
+        aspectRatio={aspectRatio}
+        title={params.titleText}
+      />
 
       <ControlsRail>
         <div className="flex flex-col gap-3 text-foreground/80 text-xs">
@@ -177,6 +184,42 @@ export default function FeaturedGrainGradientDemo() {
             >
               🎲 Randomize
             </button>
+          </div>
+
+          <div className="space-y-1.5">
+            <div className="font-semibold text-foreground">Format</div>
+            <div className="grid grid-cols-2 gap-1.5">
+              <button
+                className={cn(
+                  "rounded-md border px-2 py-1.5 transition-colors",
+                  aspectRatio === "16/9"
+                    ? "border-foreground bg-foreground text-background"
+                    : "border-border hover:bg-muted"
+                )}
+                onClick={() => setAspectRatio("16/9")}
+                type="button"
+              >
+                Article (16/9)
+              </button>
+              <button
+                className={cn(
+                  "rounded-md border px-2 py-1.5 transition-colors",
+                  aspectRatio === "1200/630"
+                    ? "border-foreground bg-foreground text-background"
+                    : "border-border hover:bg-muted"
+                )}
+                onClick={() => {
+                  setAspectRatio("1200/630");
+                  setParams((prev) => ({
+                    ...prev,
+                    titleSize: Math.min(prev.titleSize, OG_TITLE_SIZE_MAX),
+                  }));
+                }}
+                type="button"
+              >
+                OG (1200/630)
+              </button>
+            </div>
           </div>
 
           <TextControls

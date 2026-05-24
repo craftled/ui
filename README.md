@@ -44,10 +44,17 @@ Every component renders standalone at `ui.craftled.com/preview/<name>` — same 
 
 Drop-in replacements for the shadcn New York equivalents. The Button is opinionated — a layered ring + shadow treatment lifted from production work — but the rest mirror upstream so you can mix and match without surprises. Most are thin wrappers over Radix; `chart` resolves to shadcn's upstream chart wrapper.
 
-### Charts (2)
+### Charts (3)
 
 - **`chart-area-gradient`** — Recharts area chart with gradient fill, themed for both modes.
 - **`chart-stems`** — Sparse stem-and-leaf chart for low-density dashboards.
+- **`chart-bar-ranked`** — Horizontal ranked bar chart on shadcn's chart primitive +
+  Recharts. Title, subtitle, source line, optional footer branding (text or image +
+  link), currency/number/percent formatting with USD/EUR/GBP presets and custom ISO
+  4217 codes, sort order, and value labels. Install via
+  `npx shadcn@latest add @craftled/chart-bar-ranked`. The live demo adds a
+  ControlsRail playground with article (16/9) and OG (1200/630) aspect presets and
+  **Export JPG** (via `html-to-image`).
 
 ### Dashboards (2)
 
@@ -132,7 +139,14 @@ Special thanks to **[@shadcn](https://x.com/shadcn)** for the registry pattern t
 
 ## Known issues
 
-The shader blocks emit unhandled rejections in headless browsers without GPU passthrough (Puppeteer / Playwright CI). Real users on any modern desktop or mobile browser are unaffected. See [KNOWN_ISSUES.md](./KNOWN_ISSUES.md) for details and the planned `ShaderErrorBoundary` fix.
+- **Shader blocks** — unhandled WebGL rejections in headless browsers without GPU
+  passthrough (Puppeteer / Playwright CI). Real users on modern desktop and mobile
+  browsers are unaffected. Planned fix: `ShaderErrorBoundary` with static fallback.
+- **Cursor embedded browser** — hydration warnings from injected `data-cursor-ref`
+  attributes on preview routes. Development-only noise; SSR output is clean. Verify
+  in an external browser when chasing real hydration bugs.
+
+See [KNOWN_ISSUES.md](./KNOWN_ISSUES.md) for symptoms, workarounds, and scope.
 
 ## License
 

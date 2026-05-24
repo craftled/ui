@@ -89,6 +89,9 @@ warm between tasks — restarting costs HMR state and Turbopack cache.
   often outdated.
 - **Paper Shaders WebGL rejection in headless browsers.** Pre-existing
   caveat — see [`KNOWN_ISSUES.md`](./KNOWN_ISSUES.md).
+- **Cursor embedded-browser hydration noise on preview routes.** Injected
+  `data-cursor-ref` attributes cause dev-only mismatches — not a registry bug.
+  See [`KNOWN_ISSUES.md`](./KNOWN_ISSUES.md).
 
 ## Reference docs
 

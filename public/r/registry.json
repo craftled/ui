@@ -456,6 +456,20 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-og-banner",
+      "type": "registry:block",
+      "title": "OG Banner",
+      "description": "Social / OG promo frame (1400×735 design canvas, scales to 1200×630). Mesh gradient or image background, three layered product screenshots, glass center card with cyan→violet gradient stroke, and bottom fade overlay. All content swappable via props — browser/React only, no next/og ImageResponse.",
+      "dependencies": ["@paper-design/shaders-react"],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-og-banner/featured-og-banner.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "featured-story",
       "type": "registry:block",
       "title": "Featured Story",

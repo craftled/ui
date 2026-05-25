@@ -53,7 +53,7 @@ export default async function PreviewPage({
         </header>
 
         <PreviewCodeTabs
-          contentClassName="p-8"
+          contentClassName="p-2"
           files={files}
           preview={<Demo />}
         />

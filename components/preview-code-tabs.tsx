@@ -54,7 +54,7 @@ export function PreviewCodeTabs({
 
       <TabsContent
         className={cn(
-          "mt-3 overflow-hidden rounded-lg border bg-card",
+          "mt-2 overflow-hidden rounded-md border bg-card",
           contentClassName
         )}
         value="preview"
@@ -63,7 +63,7 @@ export function PreviewCodeTabs({
       </TabsContent>
 
       <TabsContent
-        className="mt-3 overflow-hidden rounded-lg border bg-card"
+        className="mt-2 overflow-hidden rounded-md border bg-card"
         value="code"
       >
         {files.length === 1 ? (

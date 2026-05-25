@@ -20,6 +20,7 @@ import FeaturedHalftoneDotsDemo from "@/registry/new-york/blocks/featured-halfto
 import FeaturedIntegrationsDemo from "@/registry/new-york/blocks/featured-integrations/featured-integrations.demo";
 import FeaturedLogoSpotlightDemo from "@/registry/new-york/blocks/featured-logo-spotlight/featured-logo-spotlight.demo";
 import FeaturedMeshGradientDemo from "@/registry/new-york/blocks/featured-mesh-gradient/featured-mesh-gradient.demo";
+import FeaturedOgBannerDemo from "@/registry/new-york/blocks/featured-og-banner/featured-og-banner.demo";
 import FeaturedStoryDemo from "@/registry/new-york/blocks/featured-story/featured-story.demo";
 import NavbarDemo from "@/registry/new-york/blocks/navbar/navbar.demo";
 import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo";
@@ -84,6 +85,7 @@ export const demos: Record<string, ComponentType> = {
   "featured-integrations": FeaturedIntegrationsDemo,
   "featured-logo-spotlight": FeaturedLogoSpotlightDemo,
   "featured-mesh-gradient": FeaturedMeshGradientDemo,
+  "featured-og-banner": FeaturedOgBannerDemo,
   "featured-story": FeaturedStoryDemo,
   input: InputDemo,
   label: LabelDemo,

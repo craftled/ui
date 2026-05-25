@@ -4,6 +4,18 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.6] - 2026-05-25
+
+### Added
+
+- **`featured-og-banner` block** — configurable social/OG promo frame with a
+  mesh gradient or image background, three layered screenshot slots, shared
+  stroke/radius controls, a glass center card, and bottom fade overlay. Install
+  via `npx shadcn@latest add @craftled/featured-og-banner`.
+- **Interactive demo** with `ControlsRail`: upload screenshots, tune the
+  1400×735 design-space layout, switch to the 1200×630 OG aspect ratio, edit
+  mesh/stroke/fade controls, and save/load local template JSON in the browser.
+
 ## [0.3.5] - 2026-05-24
 
 ### Added

@@ -67,9 +67,9 @@ Drop-in replacements for the shadcn New York equivalents. The Button is opiniona
 
 Production-grade marketing CTAs. Each one ships with a demo that uses real-looking content, not lorem ipsum.
 
-### Featured / shader blocks (8)
+### Featured / shader blocks (9)
 
-`featured-halftone` · `featured-halftone-dots` · `featured-dithering` · `featured-fluted-glass` · `featured-grain-gradient` · `featured-mesh-gradient` · `featured-color-panels` · `featured-logo-spotlight`
+`featured-halftone` · `featured-halftone-dots` · `featured-dithering` · `featured-fluted-glass` · `featured-grain-gradient` · `featured-mesh-gradient` · `featured-color-panels` · `featured-logo-spotlight` · `featured-og-banner`
 
 WebGL shader blocks via [`@paper-design/shaders-react`](https://shaders.paper.design). Each one renders an image (or a generative surface, for `mesh-gradient` / `grain-gradient` / `color-panels`) with a real shader pass and exposes the right knobs (intensity, scale, color mix). Use them as hero panels, OG images, or as background atmosphere.
 

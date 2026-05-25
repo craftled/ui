@@ -10,7 +10,7 @@ A craft-led, shadcn-native component library. Charts, blocks, shaders, and primi
 
 Craftled UI sits on top of the shadcn ecosystem. Every primitive is shadcn-style — TSX you own, Tailwind classes you can edit, Radix for the unsexy a11y plumbing. No runtime dependency on a published `@craftled/ui` package. You install components by URL through the shadcn CLI, and they land in your repo as plain files.
 
-The library is opinionated about taste, not architecture. The atomic primitives (`button`, `card`, `input`, `label`, `separator`, `skeleton`, `chart`) mirror shadcn's New York style with a few craft-led tweaks. The blocks on top — dashboards, charts, CTAs, testimonials, paper-design shaders — are the value-add: production-ready compositions you can drop into a site in under a minute.
+The library is opinionated about taste, not architecture. The atomic primitives (`button`, `card`, `input`, `label`, `separator`, `skeleton`) mirror shadcn's New York style with a few craft-led tweaks. The blocks on top — dashboards, charts, CTAs, testimonials, paper-design shaders — are the value-add: production-ready compositions you can drop into a site in under a minute.
 
 ## Install
 
@@ -38,11 +38,11 @@ Every component renders standalone at `ui.craftled.com/preview/<name>` — same 
 
 ## What's inside
 
-### Primitives (13)
+### Primitives (12)
 
-`accordion` · `button` · `card` · `chart` · `dialog` · `dropdown-menu` · `input` · `label` · `navigation-menu` · `separator` · `skeleton` · `tabs` · `tooltip`
+`accordion` · `button` · `card` · `dialog` · `dropdown-menu` · `input` · `label` · `navigation-menu` · `separator` · `skeleton` · `tabs` · `tooltip`
 
-Drop-in replacements for the shadcn New York equivalents. The Button is opinionated — a layered ring + shadow treatment lifted from production work — but the rest mirror upstream so you can mix and match without surprises. Most are thin wrappers over Radix; `chart` resolves to shadcn's upstream chart wrapper.
+Drop-in replacements for the shadcn New York equivalents. The Button is opinionated — a layered ring + shadow treatment lifted from production work — but the rest mirror upstream so you can mix and match without surprises. Most are thin wrappers over Radix; chart blocks use shadcn's upstream chart wrapper through their registry dependencies.
 
 ### Charts (3)
 
@@ -71,9 +71,9 @@ Production-grade marketing CTAs. Each one ships with a demo that uses real-looki
 
 `featured-halftone` · `featured-halftone-dots` · `featured-dithering` · `featured-fluted-glass` · `featured-grain-gradient` · `featured-mesh-gradient` · `featured-color-panels` · `featured-logo-spotlight` · `featured-og-banner`
 
-WebGL shader blocks via [`@paper-design/shaders-react`](https://shaders.paper.design). Each one renders an image (or a generative surface, for `mesh-gradient` / `grain-gradient` / `color-panels`) with a real shader pass and exposes the right knobs (intensity, scale, color mix). Use them as hero panels, OG images, or as background atmosphere.
+WebGL shader blocks via [`@paper-design/shaders-react`](https://shaders.paper.design). Most render an image, a generative surface, or a social/OG promo frame with a real shader pass and expose the right knobs (intensity, scale, color mix, layout, or frame controls). Use them as hero panels, OG images, or as background atmosphere.
 
-All seven photo + generative shader blocks (everything except `featured-logo-spotlight`, which composes the mesh-gradient) accept a shared text-overlay API for placing a title on top of the shader:
+The original seven photo + generative shader blocks accept a shared text-overlay API for placing a title on top of the shader. `featured-logo-spotlight` composes the mesh-gradient, and the OG banner uses its own screenshot/layout API instead.
 
 - `titleText` — string drawn over the shader
 - `titlePosition` — one of nine grid positions (`top-left` / `top-center` / `top-right` / `center-left` / `center` / `center-right` / `bottom-left` / `bottom-center` / `bottom-right`), defaults to `bottom-left`

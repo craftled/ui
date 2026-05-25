@@ -7,7 +7,8 @@ where it bites, and what the fix looks like.
 
 **Affects:** `featured-halftone`, `featured-halftone-dots`, `featured-dithering`,
 `featured-fluted-glass`, `featured-grain-gradient`, `featured-mesh-gradient`,
-`featured-color-panels`, `featured-logo-spotlight` (any block backed by
+`featured-color-panels`, `featured-logo-spotlight`, `featured-og-banner`
+(any block backed by
 [`@paper-design/shaders-react`](https://shaders.paper.design)).
 
 **Symptom:** In headless Chromium / Puppeteer / Playwright runs without a

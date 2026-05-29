@@ -73,11 +73,13 @@
     },
     {
       // cta-app-stack uses section-level hover handlers for an ambient effect;
-      // featured-story renders a card-as-link with optional onClick. These are
+      // featured-story renders a card-as-link with optional onClick;
+      // featured-book-cover straightens on hover in row layout. These are
       // common shadcn-style block patterns — they don't need full button semantics.
       "includes": [
         "registry/new-york/blocks/cta-app-stack/cta-app-stack.tsx",
-        "registry/new-york/blocks/featured-story/featured-story.tsx"
+        "registry/new-york/blocks/featured-story/featured-story.tsx",
+        "registry/new-york/blocks/featured-book-cover/featured-book-cover.tsx"
       ],
       "linter": {
         "rules": {

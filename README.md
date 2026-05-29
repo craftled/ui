@@ -84,8 +84,9 @@ The original seven photo + generative shader blocks accept a shared text-overlay
 
 - **`navbar`** — Sticky top navbar with brand mark, center nav using NavigationMenu (flat links + rich icon/description dropdowns), CTA buttons, and a scroll-aware backdrop blur. Mobile menu uses Accordion. Position prop (`fixed` / `absolute` / `sticky` / `static`) so you can drop it on a real page or showcase it inside a card. Dogfooded as the SiteHeader on `ui.craftled.com`.
 
-### Editorial blocks (6)
+### Editorial blocks (7)
 
+- **`featured-book-cover`** — Parametric 3D book in pure CSS (perspective + rotateX/Y/Z, no library): a single tilted hardcover, a stacked group, or a horizontal shelf, all from one `BookCover` atom. Typographic or image cover, page-block fore-edge, spine, and a theme-aware `solid` / `wireframe` variant. Grab-to-orbit drag (mouse/touch) via `draggable` + `onRotateChange`; the demo doubles as a cover generator with Copy JSON + Export JPG.
 - **`featured-event`** — Highlight reel for events / launches.
 - **`featured-integrations`** — Orbit-style logo carousel for ecosystem pages.
 - **`featured-story`** — Magazine-style story card with optional link wrapping.

@@ -451,6 +451,12 @@ function Section({
   );
 }
 
+const fieldName = (label: string) =>
+  label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 function TextField({
   label,
   value,
@@ -465,6 +471,7 @@ function TextField({
       <span className="text-muted-foreground">{label}</span>
       <input
         className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-foreground text-xs outline-none transition-colors focus:border-foreground/40"
+        name={fieldName(label)}
         onChange={(e) => onChange(e.target.value)}
         type="text"
         value={value}
@@ -503,6 +510,7 @@ function RangeField({
         className="w-full cursor-pointer accent-foreground"
         max={max}
         min={min}
+        name={fieldName(label)}
         onChange={(e) => onChange(Number(e.target.value))}
         step={step}
         type="range"
@@ -537,6 +545,7 @@ function OptionalColor({
             aria-label={`Custom ${label}`}
             checked={custom}
             className="size-4 cursor-pointer accent-foreground"
+            name={`${fieldName(label)}-custom`}
             onChange={(e) => onChange(e.target.checked ? fallback : undefined)}
             type="checkbox"
           />
@@ -566,6 +575,7 @@ function ColorField({
         <input
           aria-label={label}
           className="size-6 cursor-pointer rounded border border-border bg-transparent"
+          name={fieldName(label)}
           onChange={(e) => onChange(e.target.value)}
           type="color"
           value={value}
@@ -590,6 +600,7 @@ function CheckField({
       <input
         checked={checked}
         className="size-4 cursor-pointer accent-foreground"
+        name={fieldName(label)}
         onChange={(e) => onChange(e.target.checked)}
         type="checkbox"
       />

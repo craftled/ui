@@ -4,6 +4,31 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.7] - 2026-05-29
+
+### Added
+
+- **`featured-book-cover` block** — a parametric 3D book rendered in pure CSS
+  (perspective + rotateX/Y/Z, no library). One `BookCover` atom composes into a
+  single tilted hardcover, a stacked group (`BookStack`), or a horizontal shelf
+  (`BookRow`). Typographic or image cover, page-block fore-edge, spine, and
+  `solid` + `wireframe` variants. Install via
+  `npx shadcn@latest add @craftled/featured-book-cover`.
+- **Grab-to-orbit drag** on `BookCover` / `BookStack` (mouse + touch) via the
+  `draggable` prop, with an `onRotateChange` callback so external controls stay
+  in sync with the live rotation.
+- **Interactive demo** with `ControlsRail`: switch layout (single / stack /
+  row), tune geometry sliders (size, depth, rotation, perspective), edit the
+  cover, and Copy JSON / Export JPG — the configurator doubles as a cover
+  generator.
+
+### Changed
+
+- Book wireframe edges/faces and the scene background default to shadcn theme
+  tokens (`var(--foreground)` / `var(--card)`), so the block adapts to light and
+  dark mode out of the box. Solid cover colors stay authored (a book is a
+  physical object, not theme chrome).
+
 ## [0.3.6] - 2026-05-25
 
 ### Added

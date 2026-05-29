@@ -10,6 +10,7 @@ import CtaGradientDemo from "@/registry/new-york/blocks/cta-gradient/cta-gradien
 import CtaNewsletterDemo from "@/registry/new-york/blocks/cta-newsletter/cta-newsletter.demo";
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo";
 import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.demo";
+import FeaturedBookCoverDemo from "@/registry/new-york/blocks/featured-book-cover/featured-book-cover.demo";
 import FeaturedColorPanelsDemo from "@/registry/new-york/blocks/featured-color-panels/featured-color-panels.demo";
 import FeaturedDitheringDemo from "@/registry/new-york/blocks/featured-dithering/featured-dithering.demo";
 import FeaturedEventDemo from "@/registry/new-york/blocks/featured-event/featured-event.demo";
@@ -75,6 +76,7 @@ export const demos: Record<string, ComponentType> = {
   "dashboard-net-worth": DashboardNetWorthDemo,
   dialog: DialogDemo,
   "dropdown-menu": DropdownMenuDemo,
+  "featured-book-cover": FeaturedBookCoverDemo,
   "featured-color-panels": FeaturedColorPanelsDemo,
   "featured-dithering": FeaturedDitheringDemo,
   "featured-event": FeaturedEventDemo,

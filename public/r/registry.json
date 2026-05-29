@@ -470,6 +470,19 @@
       "categories": ["featured"]
     },
     {
+      "name": "featured-book-cover",
+      "type": "registry:block",
+      "title": "Book Cover",
+      "description": "Parametric 3D book — a single tilted hardcover, a stacked group, or a horizontal shelf, all from one BookCover atom. Pure CSS 3D (perspective + rotateX/Y/Z, no library): typographic OR image cover, page-block fore-edge, spine, solid + wireframe variants. Optional grab-to-orbit drag (mouse/touch) with an onRotateChange callback. Wireframe edges/faces and the scene background default to shadcn theme tokens, so it adapts to light/dark. Geometry and colors are all props, so the demo doubles as a cover generator with Copy JSON + Export JPG.",
+      "files": [
+        {
+          "path": "registry/new-york/blocks/featured-book-cover/featured-book-cover.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["featured"]
+    },
+    {
       "name": "featured-story",
       "type": "registry:block",
       "title": "Featured Story",

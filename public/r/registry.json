@@ -85,6 +85,19 @@
       "categories": ["primitive"]
     },
     {
+      "name": "background-pattern",
+      "type": "registry:ui",
+      "title": "Background Pattern",
+      "description": "Zero-dep decorative section backgrounds — seven SVG/CSS variants (dots, grid, vertical-lines, diagonal-lines, vertical-lines-top, vertical-lines-dome, isometric). Theme-aware via currentColor; position with absolute inset-0 on a relative parent.",
+      "files": [
+        {
+          "path": "registry/new-york/ui/background-pattern.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["layout"]
+    },
+    {
       "name": "dialog",
       "type": "registry:ui",
       "title": "Dialog",

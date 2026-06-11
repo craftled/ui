@@ -27,6 +27,13 @@ export type BackgroundPatternProps = React.ComponentProps<"div"> & {
 const VIEW_WIDTH = 960;
 const VIEW_HEIGHT = 540;
 
+function safeSpacing(size: number, fallback = 24): number {
+  if (!Number.isFinite(size) || size <= 0) {
+    return fallback;
+  }
+  return size;
+}
+
 function BackgroundPattern({
   variant,
   size = 24,
@@ -48,17 +55,19 @@ function BackgroundPattern({
     : undefined;
 
   const rootClassName = cn(
-    "aria-hidden pointer-events-none size-full text-foreground/[0.08] dark:text-foreground/[0.12]",
+    "pointer-events-none size-full text-foreground/[0.08] dark:text-foreground/[0.12]",
     className
   );
+  const spacing = safeSpacing(size);
 
   if (variant === "vertical-lines") {
     const lineColor = "currentColor";
     return (
       <div
+        aria-hidden
         className={rootClassName}
         style={{
-          backgroundImage: `repeating-linear-gradient(90deg, ${lineColor} 0, ${lineColor} ${strokeWidth}px, transparent ${strokeWidth}px, transparent ${size}px)`,
+          backgroundImage: `repeating-linear-gradient(90deg, ${lineColor} 0, ${lineColor} ${strokeWidth}px, transparent ${strokeWidth}px, transparent ${spacing}px)`,
           ...fadeStyle,
           ...style,
         }}
@@ -71,9 +80,10 @@ function BackgroundPattern({
     const lineColor = "currentColor";
     return (
       <div
+        aria-hidden
         className={rootClassName}
         style={{
-          backgroundImage: `repeating-linear-gradient(-45deg, ${lineColor} 0, ${lineColor} ${strokeWidth}px, transparent ${strokeWidth}px, transparent ${size}px)`,
+          backgroundImage: `repeating-linear-gradient(-45deg, ${lineColor} 0, ${lineColor} ${strokeWidth}px, transparent ${strokeWidth}px, transparent ${spacing}px)`,
           ...fadeStyle,
           ...style,
         }}
@@ -84,23 +94,24 @@ function BackgroundPattern({
 
   return (
     <div
+      aria-hidden
       className={rootClassName}
       style={{ ...fadeStyle, ...style }}
       {...props}
     >
       {variant === "dots" ? (
-        <DotsPattern id={id} size={size} strokeWidth={strokeWidth} />
+        <DotsPattern id={id} size={spacing} strokeWidth={strokeWidth} />
       ) : null}
       {variant === "grid" ? (
-        <GridPattern id={id} size={size} strokeWidth={strokeWidth} />
+        <GridPattern id={id} size={spacing} strokeWidth={strokeWidth} />
       ) : null}
       {variant === "vertical-lines-top" ? (
-        <VerticalLinesTopPattern size={size} strokeWidth={strokeWidth} />
+        <VerticalLinesTopPattern size={spacing} strokeWidth={strokeWidth} />
       ) : null}
       {variant === "vertical-lines-dome" ? (
         <VerticalLinesDomePattern
           domeStrength={domeStrength}
-          size={size}
+          size={spacing}
           strokeWidth={strokeWidth}
         />
       ) : null}
@@ -178,7 +189,7 @@ function VerticalLinesTopPattern({
   size: number;
   strokeWidth: number;
 }) {
-  const columnCount = Math.ceil(VIEW_WIDTH / size);
+  const columnCount = Math.ceil(VIEW_WIDTH / safeSpacing(size));
   const spacing = VIEW_WIDTH / columnCount;
   const dotRadius = Math.max(strokeWidth * 0.75, 1.5);
   const topY = 24;
@@ -220,7 +231,7 @@ function VerticalLinesDomePattern({
   strokeWidth: number;
   domeStrength: number;
 }) {
-  const columnCount = Math.ceil(VIEW_WIDTH / size);
+  const columnCount = Math.ceil(VIEW_WIDTH / safeSpacing(size));
   const spacing = VIEW_WIDTH / columnCount;
   const dotRadius = Math.max(strokeWidth * 0.75, 1.5);
   const topY = 0;

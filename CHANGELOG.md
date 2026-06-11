@@ -18,6 +18,12 @@ adheres to [Semantic Versioning](https://semver.org/).
   tune size/stroke/opacity/dome strength, pick panel theme and pattern color,
   and toggle edge fade — the same configurator pattern as chart and book blocks.
 
+### Fixed
+
+- **`background-pattern`** — guard invalid `size` values so column variants
+  cannot throw at runtime; set real `aria-hidden` on the decorative wrapper
+  instead of a no-op CSS class.
+
 ## [0.3.7] - 2026-05-29
 
 ### Added

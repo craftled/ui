@@ -44,6 +44,13 @@ Every component renders standalone at `ui.craftled.com/preview/<name>` — same 
 
 Drop-in replacements for the shadcn New York equivalents. The Button is opinionated — a layered ring + shadow treatment lifted from production work — but the rest mirror upstream so you can mix and match without surprises. Most are thin wrappers over Radix; chart blocks use shadcn's upstream chart wrapper through their registry dependencies.
 
+### Layout backgrounds (1)
+
+- **`background-pattern`** — Decorative section fills (dots, grid, line grids,
+  dome curves, isometric wireframe) with no extra deps. Wrap your content in a
+  `relative overflow-hidden` container and absolutely position the pattern behind
+  it. The demo ships a full `ControlsRail` playground.
+
 ### Charts (3)
 
 - **`chart-area-gradient`** — Recharts area chart with gradient fill, themed for both modes.

@@ -26,6 +26,7 @@ import FeaturedStoryDemo from "@/registry/new-york/blocks/featured-story/feature
 import NavbarDemo from "@/registry/new-york/blocks/navbar/navbar.demo";
 import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo";
 import AccordionDemo from "@/registry/new-york/ui/accordion.demo";
+import BackgroundPatternDemo from "@/registry/new-york/ui/background-pattern.demo";
 import ButtonDemo from "@/registry/new-york/ui/button.demo";
 import CardDemo from "@/registry/new-york/ui/card.demo";
 import DialogDemo from "@/registry/new-york/ui/dialog.demo";
@@ -62,6 +63,7 @@ export const items = registry.items as RegistryItem[];
 export const demos: Record<string, ComponentType> = {
   accordion: AccordionDemo,
   "annotated-figure": AnnotatedFigureDemo,
+  "background-pattern": BackgroundPatternDemo,
   button: ButtonDemo,
   card: CardDemo,
   "carousel-do-dont": CarouselDoDontDemo,

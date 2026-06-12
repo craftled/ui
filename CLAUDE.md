@@ -115,9 +115,3 @@ warm between tasks — restarting costs HMR state and Turbopack cache.
   honest about
 - [brands/](./brands/) — brand theme references (`*.brand.md`)
 - [LICENSE](./LICENSE) — MIT
-
-## Release history gaps
-
-- **v0.3.5** is in `CHANGELOG.md` and shipped via PR #1 but has no
-  `v0.3.5` git tag or GitHub release (tags jump `v0.3.4` → `v0.3.6`).
-  Do not recreate retroactively unless explicitly requested.

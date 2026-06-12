@@ -172,8 +172,6 @@ Special thanks to **[@shadcn](https://x.com/shadcn)** for the registry pattern t
   in an external browser when chasing real hydration bugs.
 - **`featured-logo-spotlight` demo** — Variants rail has presets/shuffle only (no
   title/accent `VariantContent` like other shader demos).
-- **v0.3.5 release gap** — chart-bar-ranked shipped in CHANGELOG `0.3.5` but there
-  is no `v0.3.5` GitHub release (tags jump `v0.3.4` → `v0.3.6`).
 
 See [KNOWN_ISSUES.md](./KNOWN_ISSUES.md) for symptoms, workarounds, and scope.
 

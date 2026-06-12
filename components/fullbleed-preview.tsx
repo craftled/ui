@@ -50,18 +50,20 @@ export function FullBleedPreview({
   const viewport = VIEWPORTS.find((v) => v.id === viewportId) ?? VIEWPORTS[3];
 
   return (
-    <div className="flex flex-col gap-6 px-6 py-8">
-      <header className="mx-auto w-full max-w-screen-xl space-y-3">
+    <div className="flex w-full flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+      <header className="w-full max-w-screen-xl space-y-3">
         <div className="space-y-1">
           <h1 className="font-semibold text-3xl tracking-tight">{title}</h1>
-          <p className="text-muted-foreground">{description}</p>
+          <p className="max-w-md text-pretty text-muted-foreground text-sm">
+            {description}
+          </p>
         </div>
         <pre className="w-fit overflow-x-auto rounded-md bg-muted px-3 py-2 font-mono text-sm">
           {installCmd}
         </pre>
       </header>
 
-      <div className="mx-auto w-full max-w-screen-xl">
+      <div className="w-full max-w-screen-xl">
         <PreviewCodeTabs
           files={files}
           preview={

@@ -58,6 +58,10 @@ export type RegistryItem = {
 
 export const items = registry.items as RegistryItem[];
 
+export const themeItems = items.filter((i) => i.type === "registry:theme");
+
+export const previewItems = items.filter((i) => i.type !== "registry:theme");
+
 // Demo map. When you add a new component, add a sibling `<name>.demo.tsx`
 // with a default export and register it here.
 export const demos: Record<string, ComponentType> = {
@@ -120,6 +124,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   navigation: "Navigation",
   primitive: "Primitives",
   "social-proof": "Social Proof",
+  theme: "Themes",
 };
 
 export type NavLink = {
@@ -139,13 +144,14 @@ export const staticNav: NavGroup[] = [
     links: [
       { name: "introduction", title: "Introduction", href: "/" },
       { name: "compose", title: "Compose", href: "/compose" },
+      { name: "themes", title: "Brand themes", href: "/themes" },
     ],
   },
 ];
 
 export const componentNav: NavGroup[] = (() => {
   const groups = new Map<string, RegistryItem[]>();
-  for (const item of items) {
+  for (const item of previewItems) {
     const key = item.categories?.[0] ?? "components";
     const existing = groups.get(key) ?? [];
     existing.push(item);

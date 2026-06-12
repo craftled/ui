@@ -1,5 +1,5 @@
 import { DocsShell } from "@/components/docs-shell";
-import { demos, items } from "@/lib/registry";
+import { demos, previewItems, themeItems } from "@/lib/registry";
 
 export default function Home() {
   return (
@@ -30,11 +30,12 @@ export default function Home() {
               All components
             </h2>
             <span className="text-muted-foreground text-sm">
-              {items.length} component{items.length === 1 ? "" : "s"}
+              {previewItems.length} component
+              {previewItems.length === 1 ? "" : "s"}
             </span>
           </div>
           <div className="grid gap-6">
-            {items.map((item) => {
+            {previewItems.map((item) => {
               const Demo = demos[item.name];
               return (
                 <section
@@ -69,6 +70,43 @@ export default function Home() {
             })}
           </div>
         </section>
+
+        {themeItems.length > 0 ? (
+          <section className="space-y-4">
+            <div className="flex items-baseline justify-between gap-3">
+              <h2 className="font-semibold text-2xl tracking-tight">
+                Brand themes
+              </h2>
+              <a
+                className="text-muted-foreground text-sm hover:text-foreground"
+                href="/themes"
+              >
+                View all
+              </a>
+            </div>
+            <p className="max-w-prose text-muted-foreground text-sm">
+              Switch brands from the sidebar, or install a theme preset into
+              your project. See{" "}
+              <a className="underline hover:text-foreground" href="/themes">
+                Brand themes
+              </a>{" "}
+              for install commands.
+            </p>
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {themeItems.map((item) => (
+                <li
+                  className="rounded-lg border bg-card px-4 py-3 text-sm"
+                  key={item.name}
+                >
+                  <span className="font-medium">{item.title}</span>
+                  <p className="mt-1 text-muted-foreground text-xs">
+                    {item.description}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
       </div>
     </DocsShell>
   );

@@ -4,12 +4,20 @@ import * as React from "react";
 
 import { ControlsRail } from "@/components/controls-rail";
 import {
+  VariantChoice,
+  VariantContent,
+  VariantPresets,
+  VariantSection,
+  VariantShuffle,
+} from "@/components/variant-panel";
+import { useDemoAccentSwatches } from "@/lib/demo-accent-swatches";
+import {
   hslToHex,
   randomInRange,
   randomItem,
   randomPalette,
 } from "@/lib/random-palette";
-import { cn } from "@/lib/utils";
+import { TITLE_SIZE_PX, titleSizeTierFromPx } from "@/lib/variant-tiers";
 
 import {
   FeaturedGrainGradient,
@@ -39,23 +47,7 @@ const SHAPES = [
   "sphere",
 ] as const;
 
-function randomParams(prev: Params): Params {
-  return {
-    shape: randomItem(SHAPES),
-    colors: randomPalette(3 + Math.floor(Math.random() * 3)),
-    colorBack: hslToHex(Math.random() * 360, 30, 4 + Math.random() * 10),
-    softness: Math.random(),
-    intensity: Math.random(),
-    noise: randomInRange(0.1, 0.8),
-    speed: 1,
-    titleText: prev.titleText,
-    titlePosition:
-      POSITION_GRID[Math.floor(Math.random() * POSITION_GRID.length)] ??
-      "bottom-left",
-    titleSize: 24 + Math.floor(Math.random() * 40),
-    titleColor: prev.titleColor,
-  };
-}
+const OG_TITLE_SIZE_MAX = 28;
 
 type Params = {
   shape: NonNullable<FeaturedGrainGradientProps["shape"]>;
@@ -77,8 +69,6 @@ const TEXT_DEFAULTS = {
   titleSize: 30,
   titleColor: "#ffffff",
 };
-
-const OG_TITLE_SIZE_MAX = 28;
 
 const PRESETS: Record<string, Params> = {
   Default: {
@@ -143,15 +133,34 @@ const PRESETS: Record<string, Params> = {
   },
 };
 
+function randomParams(prev: Params): Params {
+  return {
+    shape: randomItem(SHAPES),
+    colors: randomPalette(3 + Math.floor(Math.random() * 3)),
+    colorBack: hslToHex(Math.random() * 360, 30, 4 + Math.random() * 10),
+    softness: Math.random(),
+    intensity: Math.random(),
+    noise: randomInRange(0.1, 0.8),
+    speed: 1,
+    titleText: prev.titleText,
+    titlePosition:
+      POSITION_GRID[Math.floor(Math.random() * POSITION_GRID.length)] ??
+      "bottom-left",
+    titleSize: 24 + Math.floor(Math.random() * 40),
+    titleColor: prev.titleColor,
+  };
+}
+
 export default function FeaturedGrainGradientDemo() {
   const [params, setParams] = React.useState<Params>(PRESETS.Default);
-  const [aspectRatio, setAspectRatio] = React.useState("16/9");
-
-  const setColor = (idx: number, value: string) => {
-    const next = [...params.colors];
-    next[idx] = value;
-    setParams({ ...params, colors: next });
-  };
+  const [aspectRatio, setAspectRatio] = React.useState<"16/9" | "1200/630">(
+    "16/9"
+  );
+  const titleSwatches = useDemoAccentSwatches([
+    ...params.colors,
+    "#ffffff",
+    "#000000",
+  ]);
 
   return (
     <>
@@ -162,302 +171,46 @@ export default function FeaturedGrainGradientDemo() {
       />
 
       <ControlsRail>
-        <div className="flex flex-col gap-3 text-foreground/80 text-xs">
-          <div className="space-y-1.5">
-            <div className="font-semibold text-foreground">Presets</div>
-            <div className="grid grid-cols-2 gap-1.5">
-              {Object.keys(PRESETS).map((name) => (
-                <button
-                  className="rounded-md border border-border px-2 py-1.5 transition-colors hover:bg-muted"
-                  key={name}
-                  onClick={() => setParams(PRESETS[name])}
-                  type="button"
-                >
-                  {name}
-                </button>
-              ))}
-            </div>
-            <button
-              className="mt-1 w-full rounded-md bg-foreground px-2 py-1.5 font-medium text-background transition-colors hover:bg-foreground/90"
-              onClick={() => setParams(randomParams(params))}
-              type="button"
-            >
-              🎲 Randomize
-            </button>
-          </div>
+        <VariantSection title="Variants">
+          <VariantPresets
+            onSelect={(name) => setParams(PRESETS[name])}
+            presets={Object.keys(PRESETS)}
+          />
+          <VariantShuffle onClick={() => setParams(randomParams(params))} />
+        </VariantSection>
 
-          <div className="space-y-1.5">
-            <div className="font-semibold text-foreground">Format</div>
-            <div className="grid grid-cols-2 gap-1.5">
-              <button
-                className={cn(
-                  "rounded-md border px-2 py-1.5 transition-colors",
-                  aspectRatio === "16/9"
-                    ? "border-foreground bg-foreground text-background"
-                    : "border-border hover:bg-muted"
-                )}
-                onClick={() => setAspectRatio("16/9")}
-                type="button"
-              >
-                Article (16/9)
-              </button>
-              <button
-                className={cn(
-                  "rounded-md border px-2 py-1.5 transition-colors",
-                  aspectRatio === "1200/630"
-                    ? "border-foreground bg-foreground text-background"
-                    : "border-border hover:bg-muted"
-                )}
-                onClick={() => {
-                  setAspectRatio("1200/630");
-                  setParams((prev) => ({
-                    ...prev,
-                    titleSize: Math.min(prev.titleSize, OG_TITLE_SIZE_MAX),
-                  }));
-                }}
-                type="button"
-              >
-                OG (1200/630)
-              </button>
-            </div>
-          </div>
+        <VariantSection title="Format">
+          <VariantChoice
+            label="Aspect ratio"
+            onChange={(v) => {
+              setAspectRatio(v);
+              if (v === "1200/630") {
+                setParams((prev) => ({
+                  ...prev,
+                  titleSize: Math.min(prev.titleSize, OG_TITLE_SIZE_MAX),
+                }));
+              }
+            }}
+            options={["16/9", "1200/630"] as const}
+            value={aspectRatio}
+          />
+        </VariantSection>
 
-          <TextControls
-            color={params.titleColor}
-            onColorChange={(v) => setParams({ ...params, titleColor: v })}
-            onPositionChange={(v) => setParams({ ...params, titlePosition: v })}
-            onSizeChange={(v) => setParams({ ...params, titleSize: v })}
-            onTextChange={(v) => setParams({ ...params, titleText: v })}
-            position={params.titlePosition}
-            size={params.titleSize}
-            text={params.titleText}
-          />
-
-          <SelectField
-            label="Shape"
-            onChange={(v) =>
-              setParams({ ...params, shape: v as Params["shape"] })
-            }
-            options={[
-              "wave",
-              "dots",
-              "truchet",
-              "corners",
-              "ripple",
-              "blob",
-              "sphere",
-            ]}
-            value={params.shape}
-          />
-
-          <Slider
-            label="Softness"
-            max={1}
-            onChange={(v) => setParams({ ...params, softness: v })}
-            value={params.softness}
-          />
-          <Slider
-            label="Intensity"
-            max={1}
-            onChange={(v) => setParams({ ...params, intensity: v })}
-            value={params.intensity}
-          />
-          <Slider
-            label="Noise"
-            max={1}
-            onChange={(v) => setParams({ ...params, noise: v })}
-            value={params.noise}
-          />
-          <Slider
-            label="Speed"
-            max={3}
-            onChange={(v) => setParams({ ...params, speed: v })}
-            step={0.05}
-            value={params.speed}
-          />
-
-          <div className="mt-2 space-y-1.5">
-            <ColorField
-              label="Back"
-              onChange={(v) => setParams({ ...params, colorBack: v })}
-              value={params.colorBack}
-            />
-            {params.colors.map((c, i) => (
-              <ColorField
-                key={i}
-                label={`Color ${i + 1}`}
-                onChange={(v) => setColor(i, v)}
-                value={c}
-              />
-            ))}
-          </div>
-        </div>
+        <VariantContent
+          accentSwatches={titleSwatches}
+          color={params.titleColor}
+          onColorChange={(v) => setParams({ ...params, titleColor: v })}
+          onPositionChange={(v) => setParams({ ...params, titlePosition: v })}
+          onSizeTierChange={(t) =>
+            setParams({ ...params, titleSize: TITLE_SIZE_PX[t] })
+          }
+          onTextChange={(v) => setParams({ ...params, titleText: v })}
+          position={params.titlePosition}
+          positions={POSITION_GRID}
+          sizeTier={titleSizeTierFromPx(params.titleSize)}
+          text={params.titleText}
+        />
       </ControlsRail>
     </>
-  );
-}
-
-function Slider({
-  label,
-  value,
-  onChange,
-  min = 0,
-  max = 1,
-  step = 0.01,
-  format,
-}: {
-  label: string;
-  value: number;
-  onChange: (v: number) => void;
-  min?: number;
-  max?: number;
-  step?: number;
-  format?: (v: number) => string;
-}) {
-  return (
-    <label className="flex flex-col gap-1">
-      <div className="flex items-center justify-between">
-        <span className="text-muted-foreground">{label}</span>
-        <span className="font-mono text-[11px]">
-          {format ? format(value) : value.toFixed(2)}
-        </span>
-      </div>
-      <input
-        className="h-1 w-full cursor-pointer accent-foreground"
-        max={max}
-        min={min}
-        onChange={(e) => onChange(Number.parseFloat(e.target.value))}
-        step={step}
-        type="range"
-        value={value}
-      />
-    </label>
-  );
-}
-
-function SelectField({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  options: string[];
-  onChange: (v: string) => void;
-}) {
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="text-muted-foreground">{label}</span>
-      <select
-        className={cn(
-          "rounded-md border border-border bg-background px-2 py-1.5",
-          "focus:outline-none focus:ring-2 focus:ring-ring"
-        )}
-        onChange={(e) => onChange(e.target.value)}
-        value={value}
-      >
-        {options.map((opt) => (
-          <option key={opt} value={opt}>
-            {opt}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
-
-function ColorField({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <label className="flex items-center gap-2">
-      <input
-        className="size-7 cursor-pointer rounded border border-border bg-transparent p-0 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:rounded [&::-webkit-color-swatch]:border-none"
-        onChange={(e) => onChange(e.target.value)}
-        type="color"
-        value={value}
-      />
-      <div className="flex flex-1 items-center justify-between">
-        <span className="text-muted-foreground">{label}</span>
-        <span className="font-mono text-[11px]">{value}</span>
-      </div>
-    </label>
-  );
-}
-
-function TextControls({
-  text,
-  position,
-  size,
-  color,
-  onTextChange,
-  onPositionChange,
-  onSizeChange,
-  onColorChange,
-}: {
-  text: string;
-  position: TitlePosition;
-  size: number;
-  color: string;
-  onTextChange: (v: string) => void;
-  onPositionChange: (v: TitlePosition) => void;
-  onSizeChange: (v: number) => void;
-  onColorChange: (v: string) => void;
-}) {
-  return (
-    <div className="space-y-1.5 border-border border-t pt-3">
-      <div className="font-semibold text-foreground">Text</div>
-      <input
-        className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-foreground text-xs outline-none transition-colors focus:border-foreground/40"
-        onChange={(e) => onTextChange(e.target.value)}
-        placeholder="Title text"
-        type="text"
-        value={text}
-      />
-      <div className="pt-1">
-        <div className="mb-1 text-muted-foreground">Position</div>
-        <div className="grid grid-cols-3 gap-1">
-          {POSITION_GRID.map((pos) => (
-            <button
-              aria-label={`Position ${pos}`}
-              aria-pressed={position === pos}
-              className={cn(
-                "flex aspect-square items-center justify-center rounded-md border transition-colors",
-                position === pos
-                  ? "border-foreground bg-foreground"
-                  : "border-border hover:border-foreground/40"
-              )}
-              key={pos}
-              onClick={() => onPositionChange(pos)}
-              type="button"
-            >
-              <span
-                className={cn(
-                  "block size-1.5 rounded-full transition-colors",
-                  position === pos ? "bg-background" : "bg-muted-foreground/40"
-                )}
-              />
-            </button>
-          ))}
-        </div>
-      </div>
-      <Slider
-        format={(v) => `${Math.round(v)}px`}
-        label="Size"
-        max={80}
-        min={12}
-        onChange={onSizeChange}
-        step={1}
-        value={size}
-      />
-      <ColorField label="Color" onChange={onColorChange} value={color} />
-    </div>
   );
 }

@@ -43,7 +43,7 @@ export default async function PreviewPage({
             <h1 className="font-semibold text-3xl tracking-tight">
               {item.title}
             </h1>
-            <p className="text-base text-muted-foreground">
+            <p className="max-w-md text-pretty text-muted-foreground text-sm">
               {item.description}
             </p>
           </div>

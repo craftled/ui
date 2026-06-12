@@ -4,6 +4,15 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.10] - 2026-06-12
+
+### Changed
+
+- **Safe dependency patches** — Radix primitives (accordion through tooltip,
+  including `react-slot` 1.2.5 React 19 ref fix), React/React DOM 19.2.7, Next.js
+  16.2.9, Lucide 1.17.0, Shiki 4.2.0, Biome 2.4.16, and `@types/react` /
+  `@types/node` (22.x line). Skipped `shadcn`, `ultracite`, and `@types/node@25`.
+
 ## [0.3.9] - 2026-06-12
 
 ### Added

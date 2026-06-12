@@ -4,6 +4,32 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.9] - 2026-06-11
+
+### Added
+
+- **Brand themes** — shadcn-native `registry:theme` presets for **Craftled** (default)
+  and **ElevenLabs** (light-only parchment surfaces, decorative violet/orange
+  swatches). Runtime switch via sidebar dropdown; install in consumer apps with
+  `npx shadcn@latest add @craftled/theme-craftled` or `@craftled/theme-elevenlabs`.
+  Reference docs at `brands/*.brand.md` and `/themes` on the site.
+- **`BrandProvider` + `BrandSwitcher`** — applies theme CSS variables on
+  `:root`, persists choice in `localStorage`, syncs across tabs and iframe
+  previews via `postMessage`.
+- **Variant panel** — opinionated demo controls (`VariantPresets`, `VariantShuffle`,
+  `VariantContent`) replacing the deleted inspector; mounts in the right-rail
+  **Variants** sidebar on `/preview/*`.
+- **Fluid app shell** — `AppShell`, `SiteTopBar`, and three-column docs layout
+  with a dedicated controls rail for preview routes.
+
+### Changed
+
+- **All shader block demos** migrated to the variant-panel API; accent color
+  swatches merge brand decorative colors via `useDemoAccentSwatches()`.
+- **Homepage** lists installable brand themes separately from preview blocks;
+  theme registry items no longer appear in the preview nav.
+- **`theme-toggle`** hides when the active brand is light-only (ElevenLabs).
+
 ## [0.3.8] - 2026-06-11
 
 ### Added

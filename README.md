@@ -36,6 +36,16 @@ bunx shadcn@latest add @craftled/featured-halftone
 
 Every component renders standalone at `ui.craftled.com/preview/<name>` — same component, isolated page, no chrome. Useful for sharing in design reviews.
 
+### Brand themes
+
+Docs ship **shadcn-native `registry:theme` presets** you can switch at runtime from the sidebar (Craftled · ElevenLabs). Each brand is a `cssVars` bundle — same shape as upstream color themes — installable into your app:
+
+```bash
+bunx shadcn@latest add @craftled/theme-elevenlabs
+```
+
+Human/agent references live under [`brands/`](./brands/). Decorative accents (`--brand-violet`, `--brand-orange`) are for shader orbs only; UI chrome stays on semantic tokens.
+
 ## What's inside
 
 ### Primitives (12)

@@ -4,8 +4,15 @@ import { Check, Copy, Download, Plus, RotateCcw, Trash2 } from "lucide-react";
 import * as React from "react";
 
 import { ControlsRail } from "@/components/controls-rail";
+import {
+  VariantCard,
+  VariantChoice,
+  VariantInput,
+  VariantSection,
+  VariantText,
+  VariantToggle,
+} from "@/components/variant-panel";
 import { exportDomAsJpg, exportJpgFilename } from "@/lib/export-dom-as-jpg";
-import { cn } from "@/lib/utils";
 import { Button } from "@/registry/new-york/ui/button";
 
 import {
@@ -125,23 +132,38 @@ export default function ChartBarRankedDemo() {
   return (
     <>
       <div className="space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <p className="mr-auto text-muted-foreground text-sm">
-            BLS wage fixture — edit in the sidebar or copy JSON for agents.
-          </p>
+        <p className="text-muted-foreground text-sm">
+          BLS wage fixture — edit in the sidebar or copy JSON for agents.
+        </p>
+        <div ref={chartRef}>
+          <ChartBarRanked {...props} currency={chartCurrency} />
+        </div>
+      </div>
+
+      <ControlsRail>
+        <VariantSection title="Export">
+          <div className="grid grid-cols-2 gap-1.5">
+            <Button
+              className="h-8 w-full"
+              onClick={() => setProps(DEFAULT_PROPS)}
+              size="sm"
+              variant="outline"
+            >
+              <RotateCcw />
+              Reset
+            </Button>
+            <Button
+              className="h-8 w-full"
+              onClick={copyJson}
+              size="sm"
+              variant="outline"
+            >
+              {copied ? <Check /> : <Copy />}
+              {copied ? "Copied" : "Copy JSON"}
+            </Button>
+          </div>
           <Button
-            onClick={() => setProps(DEFAULT_PROPS)}
-            size="sm"
-            variant="outline"
-          >
-            <RotateCcw />
-            Reset
-          </Button>
-          <Button onClick={copyJson} size="sm" variant="outline">
-            {copied ? <Check /> : <Copy />}
-            {copied ? "Copied" : "Copy JSON"}
-          </Button>
-          <Button
+            className="h-8 w-full"
             disabled={exporting}
             onClick={exportJpg}
             size="sm"
@@ -150,201 +172,130 @@ export default function ChartBarRankedDemo() {
             <Download />
             {exporting ? "Exporting…" : "Export JPG"}
           </Button>
-        </div>
-        <div ref={chartRef}>
-          <ChartBarRanked {...props} currency={chartCurrency} />
-        </div>
-      </div>
+        </VariantSection>
 
-      <ControlsRail>
-        <div className="flex flex-col gap-3 text-foreground/80 text-xs">
-          <div className="space-y-1.5">
-            <div className="font-semibold text-foreground">Format</div>
-            <div className="grid grid-cols-2 gap-1.5">
-              <button
-                className={cn(
-                  "rounded-md border px-2 py-1.5 transition-colors",
-                  props.aspectRatio === "16/9"
-                    ? "border-foreground bg-foreground text-background"
-                    : "border-border hover:bg-muted"
-                )}
-                onClick={() => set({ aspectRatio: "16/9" })}
-                type="button"
-              >
-                Article (16/9)
-              </button>
-              <button
-                className={cn(
-                  "rounded-md border px-2 py-1.5 transition-colors",
-                  props.aspectRatio === "1200/630"
-                    ? "border-foreground bg-foreground text-background"
-                    : "border-border hover:bg-muted"
-                )}
-                onClick={() => set({ aspectRatio: "1200/630" })}
-                type="button"
-              >
-                OG (1200/630)
-              </button>
-            </div>
-          </div>
-
-          <div className="space-y-1.5 border-border border-t pt-3">
-            <div className="font-semibold text-foreground">Copy</div>
-            <TextField
-              label="Title"
-              onChange={(v) => set({ title: v })}
-              value={props.title ?? ""}
-            />
-            <TextField
-              label="Subtitle"
-              onChange={(v) => set({ subtitle: v })}
-              value={props.subtitle ?? ""}
-            />
-            <TextField
-              label="Source"
-              onChange={(v) => set({ source: v })}
-              value={props.source ?? ""}
-            />
-          </div>
-
-          <BrandControls
-            brand={props.brand}
-            onChange={set}
-            setBrand={setBrand}
+        <VariantSection title="Content">
+          <VariantText
+            label="Title"
+            onChange={(v) => set({ title: v })}
+            value={props.title ?? ""}
           />
+          <VariantText
+            label="Subtitle"
+            onChange={(v) => set({ subtitle: v })}
+            value={props.subtitle ?? ""}
+          />
+          <VariantText
+            label="Source"
+            onChange={(v) => set({ source: v })}
+            value={props.source ?? ""}
+          />
+        </VariantSection>
 
-          <div className="space-y-1.5 border-border border-t pt-3">
-            <div className="font-semibold text-foreground">Chart</div>
-            <SelectField
-              label="Value format"
-              onChange={(v) =>
-                set({
-                  valueFormat: v as ChartBarRankedProps["valueFormat"],
-                })
-              }
-              options={["currency", "number", "percent"]}
-              value={props.valueFormat ?? "number"}
-            />
-            {props.valueFormat === "currency" ? (
-              <>
-                <SelectField
-                  label="Currency"
-                  onChange={(v) => set({ currency: v === "Custom" ? "" : v })}
-                  options={[...PRESET_CURRENCIES, "Custom"]}
-                  value={currencySelect}
+        <VariantSection title="Chart">
+          <VariantChoice
+            label="Format"
+            onChange={(v) => set({ aspectRatio: v })}
+            options={["16/9", "1200/630"] as const}
+            value={props.aspectRatio ?? "16/9"}
+          />
+          <VariantChoice
+            label="Value format"
+            onChange={(v) =>
+              set({
+                valueFormat: v as ChartBarRankedProps["valueFormat"],
+              })
+            }
+            options={["currency", "number", "percent"] as const}
+            value={props.valueFormat ?? "number"}
+          />
+          {props.valueFormat === "currency" ? (
+            <>
+              <VariantChoice
+                label="Currency"
+                onChange={(v) => set({ currency: v === "Custom" ? "" : v })}
+                options={[...PRESET_CURRENCIES, "Custom"] as const}
+                value={currencySelect}
+              />
+              {currencySelect === "Custom" ? (
+                <VariantText
+                  label="Currency code (ISO 4217)"
+                  mono
+                  onChange={(v) => set({ currency: v.toUpperCase() })}
+                  placeholder="e.g. CHF"
+                  value={props.currency ?? ""}
                 />
-                {currencySelect === "Custom" ? (
-                  <label className="flex flex-col gap-1">
-                    <span className="text-muted-foreground">
-                      Currency code (ISO 4217)
-                    </span>
-                    <input
-                      className="w-full rounded-md border border-border bg-background px-2 py-1.5 font-mono text-foreground text-xs uppercase outline-none transition-colors focus:border-foreground/40"
-                      onChange={(e) =>
-                        set({ currency: e.target.value.toUpperCase() })
-                      }
-                      placeholder="e.g. CHF"
-                      type="text"
-                      value={props.currency ?? ""}
-                    />
-                    {props.currency?.trim() ? null : (
-                      <span className="text-[10px] text-muted-foreground">
-                        Empty — defaults to USD
-                      </span>
-                    )}
-                  </label>
-                ) : null}
-              </>
-            ) : null}
-            <div className="space-y-1">
-              <span className="text-muted-foreground">Sort</span>
-              <div className="grid grid-cols-3 gap-1.5">
-                {(["desc", "asc", "none"] as const).map((opt) => (
+              ) : null}
+            </>
+          ) : null}
+          <VariantChoice
+            columns={3}
+            label="Sort"
+            onChange={(v) => set({ sort: v })}
+            options={["desc", "asc", "none"] as const}
+            value={props.sort ?? "desc"}
+          />
+          <VariantToggle
+            label="Show values"
+            onChange={(v) => set({ showValues: v })}
+            value={props.showValues ?? true}
+          />
+        </VariantSection>
+
+        <BrandControls brand={props.brand} onChange={set} setBrand={setBrand} />
+
+        <VariantSection
+          action={
+            <button
+              className="flex items-center gap-1 rounded-md border border-border px-2 py-1 text-[11px] transition-colors hover:bg-muted"
+              onClick={addRow}
+              type="button"
+            >
+              <Plus className="size-3" />
+              Add
+            </button>
+          }
+          title="Data"
+        >
+          <div className="flex flex-col gap-2">
+            {props.data.map((row, index) => (
+              <VariantCard key={index}>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] text-muted-foreground">
+                    #{index + 1}
+                  </span>
                   <button
-                    className={cn(
-                      "rounded-md border px-2 py-1.5 transition-colors",
-                      props.sort === opt
-                        ? "border-foreground bg-foreground text-background"
-                        : "border-border hover:bg-muted"
-                    )}
-                    key={opt}
-                    onClick={() => set({ sort: opt })}
+                    aria-label={`Remove row ${index + 1}`}
+                    className="rounded p-0.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-40"
+                    disabled={props.data.length <= 1}
+                    onClick={() => removeRow(index)}
                     type="button"
                   >
-                    {opt}
+                    <Trash2 className="size-3.5" />
                   </button>
-                ))}
-              </div>
-            </div>
-            <label className="flex items-center justify-between gap-2 pt-1">
-              <span className="text-muted-foreground">Show values</span>
-              <input
-                checked={props.showValues ?? true}
-                className="size-4 cursor-pointer accent-foreground"
-                onChange={(e) => set({ showValues: e.target.checked })}
-                type="checkbox"
-              />
-            </label>
-          </div>
-
-          <div className="space-y-1.5 border-border border-t pt-3">
-            <div className="flex items-center justify-between">
-              <div className="font-semibold text-foreground">Data</div>
-              <button
-                className="flex items-center gap-1 rounded-md border border-border px-2 py-1 transition-colors hover:bg-muted"
-                onClick={addRow}
-                type="button"
-              >
-                <Plus className="size-3" />
-                Add
-              </button>
-            </div>
-            <div className="flex flex-col gap-2">
-              {props.data.map((row, index) => (
-                <div
-                  className="space-y-1.5 rounded-md border border-border p-2"
-                  key={index}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-muted-foreground">
-                      #{index + 1}
-                    </span>
-                    <button
-                      aria-label={`Remove row ${index + 1}`}
-                      className="rounded p-0.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-40"
-                      disabled={props.data.length <= 1}
-                      onClick={() => removeRow(index)}
-                      type="button"
-                    >
-                      <Trash2 className="size-3.5" />
-                    </button>
-                  </div>
-                  <input
-                    className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-foreground text-xs outline-none transition-colors focus:border-foreground/40"
-                    onChange={(e) =>
-                      updateRow(index, { label: e.target.value })
-                    }
-                    placeholder="Label"
-                    type="text"
-                    value={row.label}
-                  />
-                  <input
-                    className="w-full rounded-md border border-border bg-background px-2 py-1.5 font-mono text-foreground text-xs outline-none transition-colors focus:border-foreground/40"
-                    onChange={(e) =>
-                      updateRow(index, {
-                        value: Number.parseFloat(e.target.value) || 0,
-                      })
-                    }
-                    placeholder="Value"
-                    step="any"
-                    type="number"
-                    value={row.value}
-                  />
                 </div>
-              ))}
-            </div>
+                <VariantInput
+                  onChange={(e) => updateRow(index, { label: e.target.value })}
+                  placeholder="Label"
+                  type="text"
+                  value={row.label}
+                />
+                <VariantInput
+                  className="font-mono"
+                  onChange={(e) =>
+                    updateRow(index, {
+                      value: Number.parseFloat(e.target.value) || 0,
+                    })
+                  }
+                  placeholder="Value"
+                  step="any"
+                  type="number"
+                  value={row.value}
+                />
+              </VariantCard>
+            ))}
           </div>
-        </div>
+        </VariantSection>
       </ControlsRail>
     </>
   );
@@ -360,132 +311,56 @@ function BrandControls({
   setBrand: (patch: Partial<ChartBarRankedBrand>) => void;
 }) {
   return (
-    <div className="space-y-1.5 border-border border-t pt-3">
-      <div className="font-semibold text-foreground">Branding</div>
-      <label className="flex items-center justify-between gap-2">
-        <span className="text-muted-foreground">Show branding</span>
-        <input
-          checked={brand != null}
-          className="size-4 cursor-pointer accent-foreground"
-          onChange={(e) =>
-            onChange({
-              brand: e.target.checked ? (brand ?? DEFAULT_BRAND) : undefined,
-            })
-          }
-          type="checkbox"
-        />
-      </label>
+    <VariantSection title="Branding">
+      <VariantToggle
+        label="Show branding"
+        onChange={(checked) =>
+          onChange({
+            brand: checked ? (brand ?? DEFAULT_BRAND) : undefined,
+          })
+        }
+        value={brand != null}
+      />
       {brand ? (
         <>
-          <div className="space-y-1">
-            <span className="text-muted-foreground">Type</span>
-            <div className="grid grid-cols-2 gap-1.5">
-              {(["image", "text"] as const).map((opt) => (
-                <button
-                  className={cn(
-                    "rounded-md border px-2 py-1.5 transition-colors",
-                    brand.type === opt
-                      ? "border-foreground bg-foreground text-background"
-                      : "border-border hover:bg-muted"
-                  )}
-                  key={opt}
-                  onClick={() =>
-                    setBrand({
-                      type: opt,
-                      text:
-                        opt === "text"
-                          ? (brand.text ?? "Best Writing")
-                          : brand.text,
-                    })
-                  }
-                  type="button"
-                >
-                  {opt}
-                </button>
-              ))}
-            </div>
-          </div>
+          <VariantChoice
+            onChange={(opt) =>
+              setBrand({
+                type: opt,
+                text:
+                  opt === "text" ? (brand.text ?? "Best Writing") : brand.text,
+              })
+            }
+            options={["image", "text"] as const}
+            value={brand.type}
+          />
           {brand.type === "text" ? (
-            <TextField
+            <VariantText
               label="Brand text"
               onChange={(v) => setBrand({ text: v })}
               value={brand.text ?? ""}
             />
           ) : (
             <>
-              <TextField
+              <VariantText
                 label="Image URL"
                 onChange={(v) => setBrand({ imageSrc: v })}
                 value={brand.imageSrc ?? ""}
               />
-              <TextField
+              <VariantText
                 label="Image alt"
                 onChange={(v) => setBrand({ imageAlt: v })}
                 value={brand.imageAlt ?? ""}
               />
             </>
           )}
-          <TextField
+          <VariantText
             label="Link (optional)"
             onChange={(v) => setBrand({ href: v || undefined })}
             value={brand.href ?? ""}
           />
         </>
       ) : null}
-    </div>
-  );
-}
-
-function TextField({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="text-muted-foreground">{label}</span>
-      <input
-        className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-foreground text-xs outline-none transition-colors focus:border-foreground/40"
-        onChange={(e) => onChange(e.target.value)}
-        type="text"
-        value={value}
-      />
-    </label>
-  );
-}
-
-function SelectField({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  options: string[];
-  onChange: (v: string) => void;
-}) {
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="text-muted-foreground">{label}</span>
-      <select
-        className={cn(
-          "rounded-md border border-border bg-background px-2 py-1.5",
-          "focus:outline-none focus:ring-2 focus:ring-ring"
-        )}
-        onChange={(e) => onChange(e.target.value)}
-        value={value}
-      >
-        {options.map((opt) => (
-          <option key={opt} value={opt}>
-            {opt}
-          </option>
-        ))}
-      </select>
-    </label>
+    </VariantSection>
   );
 }

@@ -4,15 +4,21 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import * as React from "react";
 
+import { useBrandOptional } from "@/components/brand-provider";
 import { cn } from "@/lib/utils";
 
 export function ThemeToggle() {
+  const brandCtx = useBrandOptional();
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
     setMounted(true);
   }, []);
+
+  if (brandCtx?.brand.lightOnly) {
+    return null;
+  }
 
   const next = resolvedTheme === "dark" ? "light" : "dark";
 

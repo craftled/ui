@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 
-import { SiteHeader } from "@/components/site-header";
+import { AppShell } from "@/components/app-shell";
+import { BrandProvider } from "@/components/brand-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import "../globals.css";
@@ -56,9 +57,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html className="h-full overflow-hidden" lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${geistMono.variable} ${instrumentSerif.variable} font-sans antialiased`}
+        className={`${inter.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full overflow-hidden font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -66,10 +67,9 @@ export default function RootLayout({
           disableTransitionOnChange
           enableSystem
         >
-          <div className="flex min-h-svh flex-col pt-14 lg:pt-20">
-            <SiteHeader />
-            {children}
-          </div>
+          <BrandProvider>
+            <AppShell>{children}</AppShell>
+          </BrandProvider>
         </ThemeProvider>
       </body>
     </html>

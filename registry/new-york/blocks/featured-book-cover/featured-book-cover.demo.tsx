@@ -4,8 +4,16 @@ import { Check, Copy, Download, RotateCcw } from "lucide-react";
 import * as React from "react";
 
 import { ControlsRail } from "@/components/controls-rail";
+import {
+  VariantChoice,
+  VariantPresets,
+  VariantSection,
+  VariantShuffle,
+  VariantText,
+  VariantToggle,
+} from "@/components/variant-panel";
 import { exportDomAsJpg, exportJpgFilename } from "@/lib/export-dom-as-jpg";
-import { cn } from "@/lib/utils";
+import { hslToHex, randomBool, randomItem } from "@/lib/random-palette";
 import { Button } from "@/registry/new-york/ui/button";
 
 import {
@@ -47,8 +55,6 @@ const DEFAULT_PROPS: BookCoverProps = {
   pageColor: "#efece3",
   shadow: true,
   faceOpacity: 0.72,
-  // background / edgeColor / faceColor left unset → theme-token defaults
-  // (transparent canvas, var(--foreground) edges, var(--card) faces).
 };
 
 const ROW_SAMPLE: BookRowItem[] = [
@@ -78,15 +84,82 @@ const ROW_SAMPLE: BookRowItem[] = [
   },
 ];
 
+type DemoState = {
+  layout: Layout;
+  stackCount: number;
+  props: BookCoverProps;
+};
+
+const PRESETS: Record<string, DemoState> = {
+  Default: {
+    layout: "single",
+    stackCount: 3,
+    props: DEFAULT_PROPS,
+  },
+  Wireframe: {
+    layout: "single",
+    stackCount: 3,
+    props: {
+      ...DEFAULT_PROPS,
+      variant: "wireframe",
+      title: "Systems Design",
+      author: "Craftled Press",
+    },
+  },
+  Stack: {
+    layout: "stack",
+    stackCount: 4,
+    props: {
+      ...DEFAULT_PROPS,
+      title: "Distributed Systems",
+      cover: {
+        kind: "type",
+        bg: "#1e293b",
+        fg: "#f8fafc",
+        accent: "#38bdf8",
+        frame: true,
+      },
+    },
+  },
+  Shelf: {
+    layout: "row",
+    stackCount: 3,
+    props: DEFAULT_PROPS,
+  },
+};
+
+function randomState(prev: DemoState): DemoState {
+  const hue = Math.random() * 360;
+  return {
+    layout: randomItem(["single", "stack", "row"] as const),
+    stackCount: 1 + Math.floor(Math.random() * 5),
+    props: {
+      ...prev.props,
+      title: prev.props.title,
+      cover: {
+        kind: "type",
+        bg: hslToHex(hue, 25, 12 + Math.random() * 8),
+        fg: "#f3f4f6",
+        accent: hslToHex(hue + 40, 70, 65),
+        frame: randomBool(0.6),
+      },
+      variant: randomBool(0.25) ? "wireframe" : "solid",
+      rotateY: -40 + Math.random() * 30,
+      rotateX: 4 + Math.random() * 10,
+    },
+  };
+}
+
 export default function FeaturedBookCoverDemo() {
-  const [layout, setLayout] = React.useState<Layout>("single");
-  const [props, setProps] = React.useState<BookCoverProps>(DEFAULT_PROPS);
-  const [stackCount, setStackCount] = React.useState(3);
+  const [state, setState] = React.useState<DemoState>(PRESETS.Default);
   const [copied, setCopied] = React.useState(false);
   const [exporting, setExporting] = React.useState(false);
   const canvasRef = React.useRef<HTMLDivElement>(null);
 
-  const set: Patch = (patch) => setProps((prev) => ({ ...prev, ...patch }));
+  const { layout, stackCount, props } = state;
+
+  const set: Patch = (patch) =>
+    setState((prev) => ({ ...prev, props: { ...prev.props, ...patch } }));
 
   const copyJson = async () => {
     const payload =
@@ -109,11 +182,7 @@ export default function FeaturedBookCoverDemo() {
     }
   };
 
-  const reset = () => {
-    setProps(DEFAULT_PROPS);
-    setLayout("single");
-    setStackCount(3);
-  };
+  const reset = () => setState(PRESETS.Default);
 
   return (
     <>
@@ -164,481 +233,71 @@ export default function FeaturedBookCoverDemo() {
       </div>
 
       <ControlsRail>
-        <div className="flex flex-col gap-3 text-foreground/80 text-xs">
-          <Section title="Layout">
-            <ButtonRow
-              cols={3}
-              onChange={(v) => setLayout(v as Layout)}
-              options={["single", "stack", "row"]}
-              value={layout}
-            />
-            {layout === "stack" ? (
-              <RangeField
-                label="Books"
-                max={5}
-                min={1}
-                onChange={setStackCount}
-                value={stackCount}
-              />
-            ) : null}
-          </Section>
+        <VariantSection title="Variants">
+          <VariantPresets
+            onSelect={(name) => setState(PRESETS[name])}
+            presets={Object.keys(PRESETS)}
+          />
+          <VariantShuffle onClick={() => setState(randomState(state))} />
+        </VariantSection>
 
-          {layout === "row" ? (
-            <p className="text-[11px] text-muted-foreground leading-relaxed">
-              Row renders the <code>books[]</code> prop — a small sample shelf
-              is shown here. Switch to <strong>single</strong> to tune one book
-              and the controls below apply.
-            </p>
-          ) : (
-            <>
-              <ContentControls props={props} set={set} />
-              <CoverControls props={props} set={set} />
-              <GeometryControls props={props} set={set} />
-              <AppearanceControls props={props} set={set} />
-            </>
-          )}
-        </div>
+        <VariantSection title="Layout">
+          <VariantChoice
+            columns={3}
+            onChange={(v) =>
+              setState((prev) => ({ ...prev, layout: v as Layout }))
+            }
+            options={["single", "stack", "row"] as const}
+            value={layout}
+          />
+          {layout === "stack" ? (
+            <VariantChoice
+              label="Books in stack"
+              onChange={(v) =>
+                setState((prev) => ({ ...prev, stackCount: Number(v) }))
+              }
+              options={["1", "2", "3", "4", "5"] as const}
+              value={String(stackCount) as "1" | "2" | "3" | "4" | "5"}
+            />
+          ) : null}
+        </VariantSection>
+
+        {layout === "row" ? (
+          <p className="text-[11px] text-muted-foreground leading-relaxed">
+            Row renders the <code>books[]</code> prop — a sample shelf is shown
+            here. Switch to <strong>single</strong> to edit copy below.
+          </p>
+        ) : (
+          <VariantSection title="Content">
+            <VariantText
+              label="Title"
+              onChange={(v) => set({ title: v })}
+              value={props.title}
+            />
+            <VariantText
+              label="Author"
+              onChange={(v) => set({ author: v })}
+              value={props.author ?? ""}
+            />
+            <VariantText
+              label="Footer"
+              onChange={(v) => set({ footer: v })}
+              value={props.footer ?? ""}
+            />
+            <VariantChoice
+              label="Render mode"
+              onChange={(v) => set({ variant: v as BookCoverProps["variant"] })}
+              options={["solid", "wireframe"] as const}
+              value={props.variant ?? "solid"}
+            />
+            <VariantToggle
+              label="Contact shadow"
+              onChange={(v) => set({ shadow: v })}
+              value={props.shadow ?? true}
+            />
+          </VariantSection>
+        )}
       </ControlsRail>
     </>
-  );
-}
-
-// --- Control groups ---------------------------------------------------------
-
-function ContentControls({
-  props,
-  set,
-}: {
-  props: BookCoverProps;
-  set: Patch;
-}) {
-  return (
-    <Section title="Content">
-      <TextField
-        label="Title"
-        onChange={(v) => set({ title: v })}
-        value={props.title}
-      />
-      <TextField
-        label="Author"
-        onChange={(v) => set({ author: v })}
-        value={props.author ?? ""}
-      />
-      <TextField
-        label="Footer"
-        onChange={(v) => set({ footer: v })}
-        value={props.footer ?? ""}
-      />
-    </Section>
-  );
-}
-
-function CoverControls({ props, set }: { props: BookCoverProps; set: Patch }) {
-  const cover = props.cover ?? DEFAULT_COVER;
-  const setTypeCover = (patch: Partial<TypeCover>) => {
-    const current = props.cover ?? DEFAULT_COVER;
-    if (current.kind !== "type") {
-      return;
-    }
-    set({ cover: { ...current, ...patch } });
-  };
-
-  return (
-    <Section title="Cover">
-      <ButtonRow
-        cols={2}
-        onChange={(kind) =>
-          set({
-            cover:
-              kind === "image"
-                ? { kind: "image", src: "", alt: props.title }
-                : DEFAULT_COVER,
-          })
-        }
-        options={["type", "image"]}
-        value={cover.kind}
-      />
-      {cover.kind === "type" ? (
-        <>
-          <ColorField
-            label="Cover bg"
-            onChange={(v) => setTypeCover({ bg: v })}
-            value={cover.bg}
-          />
-          <ColorField
-            label="Text"
-            onChange={(v) => setTypeCover({ fg: v })}
-            value={cover.fg}
-          />
-          <ColorField
-            label="Accent"
-            onChange={(v) => setTypeCover({ accent: v })}
-            value={cover.accent ?? cover.fg}
-          />
-          <CheckField
-            checked={cover.frame ?? false}
-            label="Inset frame"
-            onChange={(v) => setTypeCover({ frame: v })}
-          />
-        </>
-      ) : (
-        <TextField
-          label="Image URL"
-          onChange={(v) =>
-            set({ cover: { kind: "image", src: v, alt: props.title } })
-          }
-          value={cover.src}
-        />
-      )}
-    </Section>
-  );
-}
-
-function GeometryControls({
-  props,
-  set,
-}: {
-  props: BookCoverProps;
-  set: Patch;
-}) {
-  return (
-    <Section title="Geometry">
-      <RangeField
-        label="Width"
-        max={420}
-        min={120}
-        onChange={(v) => set({ width: v })}
-        value={props.width ?? 300}
-      />
-      <RangeField
-        label="Height"
-        max={620}
-        min={160}
-        onChange={(v) => set({ height: v })}
-        value={props.height ?? 440}
-      />
-      <RangeField
-        label="Depth"
-        max={90}
-        min={8}
-        onChange={(v) => set({ depth: v })}
-        value={props.depth ?? 42}
-      />
-      <RangeField
-        label="Rotate X"
-        max={85}
-        min={-85}
-        onChange={(v) => set({ rotateX: v })}
-        suffix="°"
-        value={props.rotateX ?? 6}
-      />
-      <RangeField
-        label="Rotate Y"
-        max={180}
-        min={-180}
-        onChange={(v) => set({ rotateY: v })}
-        suffix="°"
-        value={props.rotateY ?? -28}
-      />
-      <RangeField
-        label="Rotate Z"
-        max={30}
-        min={-30}
-        onChange={(v) => set({ rotateZ: v })}
-        suffix="°"
-        value={props.rotateZ ?? 0}
-      />
-      <RangeField
-        label="Perspective"
-        max={3000}
-        min={600}
-        onChange={(v) => set({ perspective: v })}
-        step={50}
-        value={props.perspective ?? 1800}
-      />
-      <RangeField
-        label="Radius"
-        max={24}
-        min={0}
-        onChange={(v) => set({ radius: v })}
-        value={props.radius ?? 4}
-      />
-    </Section>
-  );
-}
-
-function AppearanceControls({
-  props,
-  set,
-}: {
-  props: BookCoverProps;
-  set: Patch;
-}) {
-  return (
-    <Section title="Appearance">
-      <ButtonRow
-        cols={2}
-        onChange={(v) => set({ variant: v as BookCoverProps["variant"] })}
-        options={["solid", "wireframe"]}
-        value={props.variant ?? "solid"}
-      />
-      <OptionalColor
-        fallback="#0b0b0c"
-        label="Background"
-        onChange={(v) => set({ background: v })}
-        value={props.background}
-      />
-      {props.variant === "wireframe" ? (
-        <>
-          <OptionalColor
-            fallback="#1a1d24"
-            label="Face color"
-            onChange={(v) => set({ faceColor: v })}
-            value={props.faceColor}
-          />
-          <RangeField
-            label="Face opacity"
-            max={100}
-            min={0}
-            onChange={(v) => set({ faceOpacity: v / 100 })}
-            suffix="%"
-            value={Math.round((props.faceOpacity ?? 0.72) * 100)}
-          />
-          <OptionalColor
-            fallback="#ffffff"
-            label="Edge color"
-            onChange={(v) => set({ edgeColor: v })}
-            value={props.edgeColor}
-          />
-        </>
-      ) : (
-        <>
-          <ColorField
-            label="Spine"
-            onChange={(v) => set({ spineColor: v })}
-            value={props.spineColor ?? "#12151b"}
-          />
-          <ColorField
-            label="Pages"
-            onChange={(v) => set({ pageColor: v })}
-            value={props.pageColor ?? "#efece3"}
-          />
-          <CheckField
-            checked={props.shadow ?? true}
-            label="Contact shadow"
-            onChange={(v) => set({ shadow: v })}
-          />
-        </>
-      )}
-    </Section>
-  );
-}
-
-// --- Control primitives -----------------------------------------------------
-
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="space-y-1.5 border-border border-t pt-3 first:border-t-0 first:pt-0">
-      <div className="font-semibold text-foreground">{title}</div>
-      {children}
-    </div>
-  );
-}
-
-const fieldName = (label: string) =>
-  label
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
-function TextField({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="text-muted-foreground">{label}</span>
-      <input
-        className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-foreground text-xs outline-none transition-colors focus:border-foreground/40"
-        name={fieldName(label)}
-        onChange={(e) => onChange(e.target.value)}
-        type="text"
-        value={value}
-      />
-    </label>
-  );
-}
-
-function RangeField({
-  label,
-  value,
-  min,
-  max,
-  step = 1,
-  suffix = "",
-  onChange,
-}: {
-  label: string;
-  value: number;
-  min: number;
-  max: number;
-  step?: number;
-  suffix?: string;
-  onChange: (v: number) => void;
-}) {
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="flex items-center justify-between">
-        <span className="text-muted-foreground">{label}</span>
-        <span className="font-mono text-[11px] text-foreground tabular-nums">
-          {value}
-          {suffix}
-        </span>
-      </span>
-      <input
-        className="w-full cursor-pointer accent-foreground"
-        max={max}
-        min={min}
-        name={fieldName(label)}
-        onChange={(e) => onChange(Number(e.target.value))}
-        step={step}
-        type="range"
-        value={value}
-      />
-    </label>
-  );
-}
-
-/** Themed-by-default (undefined) with an opt-in custom hex swatch. */
-function OptionalColor({
-  label,
-  value,
-  fallback,
-  onChange,
-}: {
-  label: string;
-  value: string | undefined;
-  fallback: string;
-  onChange: (v: string | undefined) => void;
-}) {
-  const custom = value != null;
-  return (
-    <div className="space-y-1.5">
-      <label className="flex items-center justify-between gap-2">
-        <span className="text-muted-foreground">{label}</span>
-        <span className="flex items-center gap-2">
-          <span className="text-[11px] text-muted-foreground">
-            {custom ? "Custom" : "Themed"}
-          </span>
-          <input
-            aria-label={`Custom ${label}`}
-            checked={custom}
-            className="size-4 cursor-pointer accent-foreground"
-            name={`${fieldName(label)}-custom`}
-            onChange={(e) => onChange(e.target.checked ? fallback : undefined)}
-            type="checkbox"
-          />
-        </span>
-      </label>
-      {custom ? (
-        <ColorField label={label} onChange={onChange} value={value} />
-      ) : null}
-    </div>
-  );
-}
-
-function ColorField({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <label className="flex items-center justify-between gap-2">
-      <span className="text-muted-foreground">{label}</span>
-      <span className="flex items-center gap-2">
-        <span className="font-mono text-[11px] text-foreground">{value}</span>
-        <input
-          aria-label={label}
-          className="size-6 cursor-pointer rounded border border-border bg-transparent"
-          name={fieldName(label)}
-          onChange={(e) => onChange(e.target.value)}
-          type="color"
-          value={value}
-        />
-      </span>
-    </label>
-  );
-}
-
-function CheckField({
-  label,
-  checked,
-  onChange,
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (v: boolean) => void;
-}) {
-  return (
-    <label className="flex items-center justify-between gap-2 pt-1">
-      <span className="text-muted-foreground">{label}</span>
-      <input
-        checked={checked}
-        className="size-4 cursor-pointer accent-foreground"
-        name={fieldName(label)}
-        onChange={(e) => onChange(e.target.checked)}
-        type="checkbox"
-      />
-    </label>
-  );
-}
-
-function ButtonRow({
-  options,
-  value,
-  cols,
-  onChange,
-}: {
-  options: string[];
-  value: string;
-  cols: number;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div
-      className="grid gap-1.5"
-      style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
-    >
-      {options.map((opt) => (
-        <button
-          className={cn(
-            "rounded-md border px-2 py-1.5 capitalize transition-colors",
-            value === opt
-              ? "border-foreground bg-foreground text-background"
-              : "border-border hover:bg-muted"
-          )}
-          key={opt}
-          onClick={() => onChange(opt)}
-          type="button"
-        >
-          {opt}
-        </button>
-      ))}
-    </div>
   );
 }

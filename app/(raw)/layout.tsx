@@ -1,6 +1,7 @@
 import { Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 import type * as React from "react";
 
+import { BrandProvider } from "@/components/brand-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import "../globals.css";
@@ -49,7 +50,9 @@ export default function RawRootLayout({
           disableTransitionOnChange
           enableSystem
         >
-          <div className="min-h-svh">{children}</div>
+          <BrandProvider>
+            <div className="min-h-svh">{children}</div>
+          </BrandProvider>
         </ThemeProvider>
       </body>
     </html>

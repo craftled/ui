@@ -39,14 +39,27 @@ under the `craftled` team scope.
    installs a single block in isolation and any cross-block import
    would 404 in the consumer's repo.
 2. **Two root layouts via route groups.** `app/(docs)/layout.tsx`
-   wraps everything that shows the SiteHeader. `app/(raw)/layout.tsx`
-   is a fully independent root used by iframed previews so no chrome
-   leaks in. Don't merge these.
+   wraps the docs gallery in `AppShell` (sidebar, `SiteTopBar`, variant
+   panel rail). `app/(raw)/layout.tsx` is a fully independent root used
+   by iframed previews so no chrome leaks in. Don't merge these.
 3. **`registry.json` is the registry index.** Adding a component means
    adding an entry there plus a TSX file under
    `registry/new-york/{ui,blocks}/`. Then `bun run registry:build`
    regenerates everything under `public/r/`.
-4. **Inline styles win over `titleClassName` for color.** The shader
+4. **Brand themes are `registry:theme` items.** Source of truth is
+   `lib/brand-themes.ts` (plus human refs in `brands/*.brand.md`). After
+   editing themes, run `bun scripts/sync-registry-themes.ts` then
+   `bun run registry:build`. Theme items are excluded from preview nav
+   (`themeItems` vs `previewItems` in `lib/registry.ts`); docs live at
+   `/themes`. `BrandProvider` applies `cssVars` at runtime; ElevenLabs is
+   light-only (`lightOnly` hides the theme toggle).
+5. **Demo controls use the variant panel.** On `/preview/*`, demos wrap
+   controls in `ControlsRail` (portals into `#variant-panel-mount` in the
+   right **Variants** rail). Use `VariantPresets`, `VariantShuffle`, and
+   `VariantContent` from `components/variant-panel.tsx` — presets and
+   discrete choices only, no free-form hex pickers. Shader accent swatches
+   merge brand colors via `useDemoAccentSwatches()`.
+6. **Inline styles win over `titleClassName` for color.** The shader
    blocks expose `titleColor` as an optional hex; when set, it ships
    as `style={{ color }}` so CSS specificity beats any `text-*`
    utility on `titleClassName`. Leave the prop unset to keep the
@@ -55,12 +68,13 @@ under the `craftled` team scope.
 ## Common commands
 
 ```bash
-bun install                # pulls deps
-bun dev                    # next dev (Turbopack) on :3000  — keep running
-bun run build              # production build
-bun run registry:build     # regenerate public/r/*.json
-bun run check              # ultracite check (lint + format check)
-bun run fix                # ultracite fix
+bun install                          # pulls deps
+bun dev                              # next dev (Turbopack) on :3000 — keep running
+bun run build                        # production build
+bun run registry:build               # regenerate public/r/*.json
+bun scripts/sync-registry-themes.ts  # after editing lib/brand-themes.ts
+bun run check                        # ultracite check (lint + format check)
+bun run fix                          # ultracite fix
 ```
 
 **Do not kill `bun dev` after verifying a change.** The user keeps it
@@ -99,4 +113,11 @@ warm between tasks — restarting costs HMR state and Turbopack cache.
 - [CHANGELOG.md](./CHANGELOG.md) — per-release notes
 - [KNOWN_ISSUES.md](./KNOWN_ISSUES.md) — caveats the docs need to be
   honest about
+- [brands/](./brands/) — brand theme references (`*.brand.md`)
 - [LICENSE](./LICENSE) — MIT
+
+## Release history gaps
+
+- **v0.3.5** is in `CHANGELOG.md` and shipped via PR #1 but has no
+  `v0.3.5` git tag or GitHub release (tags jump `v0.3.4` → `v0.3.6`).
+  Do not recreate retroactively unless explicitly requested.

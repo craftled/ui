@@ -29,7 +29,7 @@ const instrumentSerif = Instrument_Serif({
  * at real viewport widths with their media queries firing correctly.
  *
  * Lives in the (raw) route group so it does NOT inherit the docs site's
- * SiteHeader. Both this and app/(docs)/layout.tsx are root layouts —
+ * AppShell chrome. Both this and app/(docs)/layout.tsx are root layouts —
  * each owns its own <html>/<body> — and Next.js full-page-reloads when
  * switching between them. Acceptable: we only navigate to /raw via
  * iframe src, never via client-side routing.

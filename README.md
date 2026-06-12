@@ -44,7 +44,11 @@ Docs ship **shadcn-native `registry:theme` presets** you can switch at runtime f
 bunx shadcn@latest add @craftled/theme-elevenlabs
 ```
 
-Human/agent references live under [`brands/`](./brands/). Decorative accents (`--brand-violet`, `--brand-orange`) are for shader orbs only; UI chrome stays on semantic tokens.
+Human/agent references live under [`brands/`](./brands/). Decorative accents (`--brand-violet`, `--brand-orange`) are for shader orbs only; UI chrome stays on semantic tokens. See [`/themes`](https://ui.craftled.com/themes) on the live site.
+
+### Brand themes (2)
+
+`theme-craftled` · `theme-elevenlabs` — `registry:theme` presets (not listed in the preview sidebar). ElevenLabs is light-only on the docs site; the theme toggle hides while it is active.
 
 ## What's inside
 
@@ -59,7 +63,8 @@ Drop-in replacements for the shadcn New York equivalents. The Button is opiniona
 - **`background-pattern`** — Decorative section fills (dots, grid, line grids,
   dome curves, isometric wireframe) with no extra deps. Wrap your content in a
   `relative overflow-hidden` container and absolutely position the pattern behind
-  it. The demo ships a full `ControlsRail` playground.
+  it. The demo exposes controls in the **Variants** sidebar via
+  `ControlsRail` (portals into the variant panel).
 
 ### Charts (3)
 
@@ -70,7 +75,7 @@ Drop-in replacements for the shadcn New York equivalents. The Button is opiniona
   link), currency/number/percent formatting with USD/EUR/GBP presets and custom ISO
   4217 codes, sort order, and value labels. Install via
   `npx shadcn@latest add @craftled/chart-bar-ranked`. The live demo adds a
-  ControlsRail playground with article (16/9) and OG (1200/630) aspect presets and
+  Variants sidebar playground with article (16/9) and OG (1200/630) aspect presets and
   **Export JPG** (via `html-to-image`).
 
 ### Dashboards (2)
@@ -99,7 +104,7 @@ The original seven photo + generative shader blocks accept a shared text-overlay
 
 ### Navigation (1)
 
-- **`navbar`** — Sticky top navbar with brand mark, center nav using NavigationMenu (flat links + rich icon/description dropdowns), CTA buttons, and a scroll-aware backdrop blur. Mobile menu uses Accordion. Position prop (`fixed` / `absolute` / `sticky` / `static`) so you can drop it on a real page or showcase it inside a card. Dogfooded as the SiteHeader on `ui.craftled.com`.
+- **`navbar`** — Sticky top navbar with brand mark, center nav using NavigationMenu (flat links + rich icon/description dropdowns), CTA buttons, and a scroll-aware backdrop blur. Mobile menu uses Accordion. Position prop (`fixed` / `absolute` / `sticky` / `static`) so you can drop it on a real page or showcase it inside a card. Full-bleed preview at `/preview/navbar`. The docs shell uses `SiteTopBar` + sidebar nav instead of dogfooding this block.
 
 ### Editorial blocks (7)
 
@@ -122,9 +127,9 @@ bun run check            # ultracite check (biome + opinionated rules)
 bun run fix              # ultracite fix (auto-fix safe issues)
 ```
 
-The `/` route is the gallery, `/preview/[name]` renders any component standalone with Preview/Code tabs (Shiki dual-theme), and `/compose` is a kitchen-sink page exercising every primitive together for visual regression checks. Editing a primitive or block hot-reloads everywhere it's used.
+The `/` route is the gallery, `/themes` documents installable brand themes, `/preview/[name]` renders any component with Preview/Code tabs (Shiki dual-theme) and a **Variants** right rail on preview routes, and `/compose` is a kitchen-sink page exercising every primitive together for visual regression checks. The docs chrome is `AppShell` (sidebar + top bar + optional variant panel). Editing a primitive or block hot-reloads everywhere it's used.
 
-`/raw/[name]` is the no-chrome iframe target for the full-bleed preview shell — its own root layout, no SiteHeader. Don't link to it from docs; it exists for the iframe.
+`/raw/[name]` is the no-chrome iframe target for the full-bleed preview shell — its own root layout, no docs chrome. Don't link to it from docs; it exists for the iframe.
 
 ### Add a new component
 
@@ -132,6 +137,8 @@ The `/` route is the gallery, `/preview/[name]` renders any component standalone
 2. Add a sibling `<name>.demo.tsx` exporting a default demo composition.
 3. Register it in `registry.json` with `registryDependencies` for any shadcn primitives you reuse.
 4. `bun run registry:build` → preview at `/preview/<name>`.
+
+For a new **brand theme**, edit `lib/brand-themes.ts` and `brands/<name>.brand.md`, run `bun scripts/sync-registry-themes.ts`, then `bun run registry:build`.
 
 ## Stack
 
@@ -163,6 +170,10 @@ Special thanks to **[@shadcn](https://x.com/shadcn)** for the registry pattern t
 - **Cursor embedded browser** — hydration warnings from injected `data-cursor-ref`
   attributes on preview routes. Development-only noise; SSR output is clean. Verify
   in an external browser when chasing real hydration bugs.
+- **`featured-logo-spotlight` demo** — Variants rail has presets/shuffle only (no
+  title/accent `VariantContent` like other shader demos).
+- **v0.3.5 release gap** — chart-bar-ranked shipped in CHANGELOG `0.3.5` but there
+  is no `v0.3.5` GitHub release (tags jump `v0.3.4` → `v0.3.6`).
 
 See [KNOWN_ISSUES.md](./KNOWN_ISSUES.md) for symptoms, workarounds, and scope.
 

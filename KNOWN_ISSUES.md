@@ -57,6 +57,57 @@ Chrome, Safari, Firefox, and Edge are unaffected.
 **Not a registry bug:** No app code emits `data-cursor-ref`. Do not add
 `suppressHydrationWarning` to silence this.
 
+## `featured-logo-spotlight` demo — limited variant panel
+
+**Affects:** `/preview/featured-logo-spotlight` only (the block itself is fine).
+
+**Symptom:** The **Variants** rail exposes preset names and shuffle only. Unlike
+other shader demos, there is no `VariantContent` section for title text, accent
+swatches, or position — logo and palette colors live inside each preset.
+
+**Impact:** Cosmetic / DX inconsistency on the docs site. Installable block API
+is unchanged.
+
+**Workaround:** Use preset variants or shuffle; edit `featured-logo-spotlight.demo.tsx`
+if you need the full title-overlay control set.
+
+## Brand theme constraints (docs site)
+
+**Affects:** `theme-elevenlabs`, `BrandProvider`, `ThemeToggle`.
+
+**Behavior:**
+
+- **ElevenLabs** is `lightOnly` — activating it forces light mode and hides the
+  dark/light toggle until you switch back to Craftled.
+- Decorative tokens (`--brand-violet`, `--brand-orange`) are for shader accents
+  in demos, not primary UI chrome. See `brands/*.brand.md`.
+
+**Not a bug:** Intentional product rules for the parchment brand system.
+
+## v0.3.5 — changelog entry without GitHub release
+
+**Affects:** Release archaeology only.
+
+**Symptom:** `CHANGELOG.md` documents `[0.3.5]` (chart-bar-ranked, PR #1) but
+there is no `v0.3.5` git tag or GitHub release. Tags jump `v0.3.4` → `v0.3.6`.
+
+**Impact:** Consumers pinning `@craftled` by GitHub release miss the 0.3.5 label;
+the code is on `main` and documented in the changelog.
+
+**Workaround:** Use `v0.3.6` or later tags, or install `chart-bar-ranked` directly
+from the registry URL.
+
+## Unused `SiteHeader` component
+
+**Affects:** `components/site-header.tsx` (internal docs chrome only).
+
+**Symptom:** The file still exists and wraps the `navbar` block, but nothing
+imports it after the v0.3.9 `AppShell` / `SiteTopBar` migration.
+
+**Impact:** Dead code; confusing if agents grep for "SiteHeader".
+
+**Planned fix:** Remove the file or repurpose it in a follow-up cleanup PR.
+
 ## Anything else?
 
 If you hit something that isn't here, open an issue at

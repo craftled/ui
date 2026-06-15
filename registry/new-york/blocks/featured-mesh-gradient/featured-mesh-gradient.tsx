@@ -55,6 +55,8 @@ export type FeaturedMeshGradientProps = {
   titleColor?: string;
   titleClassName?: string;
   children?: React.ReactNode;
+  /** Forwarded to the WebGL canvas. Pass `{ preserveDrawingBuffer: true }` to allow exporting the canvas to an image. */
+  webGlContextAttributes?: WebGLContextAttributes;
   aspectRatio?: string;
   className?: string;
 };
@@ -95,6 +97,7 @@ export function FeaturedMeshGradient({
   titleColor,
   titleClassName = "text-white",
   children,
+  webGlContextAttributes,
   aspectRatio = "16/9",
   className,
 }: FeaturedMeshGradientProps) {
@@ -129,6 +132,7 @@ export function FeaturedMeshGradient({
         waveXShift={waveXShift}
         waveY={waveY}
         waveYShift={waveYShift}
+        webGlContextAttributes={webGlContextAttributes}
       />
 
       {children ? (

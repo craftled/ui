@@ -71,6 +71,8 @@ export type FeaturedColorPanelsProps = {
   titleColor?: string;
   titleClassName?: string;
   children?: React.ReactNode;
+  /** Forwarded to the WebGL canvas. Pass `{ preserveDrawingBuffer: true }` to allow exporting the canvas to an image. */
+  webGlContextAttributes?: WebGLContextAttributes;
   aspectRatio?: string;
   className?: string;
 };
@@ -109,6 +111,7 @@ export function FeaturedColorPanels({
   titleColor,
   titleClassName = "text-white",
   children,
+  webGlContextAttributes,
   aspectRatio = "16/9",
   className,
 }: FeaturedColorPanelsProps) {
@@ -146,6 +149,7 @@ export function FeaturedColorPanels({
           width: "100%",
           height: "100%",
         }}
+        webGlContextAttributes={webGlContextAttributes}
       />
 
       {children ? (

@@ -71,6 +71,14 @@ export type FeaturedFlutedGlassProps = {
   colorBack?: string;
   colorShadow?: string;
   colorHighlight?: string;
+  /** Zoom level for the source image, 0.01–4. Default 1. */
+  scale?: number;
+  /** Horizontal image pan, -1 to 1. Default 0. */
+  offsetX?: number;
+  /** Vertical image pan, -1 to 1. Default 0. */
+  offsetY?: number;
+  /** Forwarded to the WebGL canvas. Pass `{ preserveDrawingBuffer: true }` to allow exporting the canvas to an image. */
+  webGlContextAttributes?: WebGLContextAttributes;
   aspectRatio?: string;
   className?: string;
 };
@@ -101,6 +109,10 @@ export function FeaturedFlutedGlass({
   colorBack = "#00000000",
   colorShadow = "#000000",
   colorHighlight = "#ffffff",
+  scale = 1,
+  offsetX = 0,
+  offsetY = 0,
+  webGlContextAttributes,
   aspectRatio = "16/9",
   className,
 }: FeaturedFlutedGlassProps) {
@@ -129,6 +141,9 @@ export function FeaturedFlutedGlass({
         highlights={highlights}
         image={image}
         margin={margin}
+        offsetX={offsetX}
+        offsetY={offsetY}
+        scale={scale}
         shadows={shadows}
         shape={shape}
         shift={shift}
@@ -140,6 +155,7 @@ export function FeaturedFlutedGlass({
           width: "100%",
           height: "100%",
         }}
+        webGlContextAttributes={webGlContextAttributes}
       />
 
       {title || eyebrow ? (

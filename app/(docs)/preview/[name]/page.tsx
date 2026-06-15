@@ -1,9 +1,9 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { DocsShell } from "@/components/docs-shell";
 import { FullBleedPreview } from "@/components/fullbleed-preview";
 import { PreviewCodeTabs } from "@/components/preview-code-tabs";
-import { demos, getItem } from "@/lib/registry";
+import { demos, FEATURED_FX_IDS, getItem } from "@/lib/registry";
 import { readRegistryFiles } from "@/lib/source";
 
 export default async function PreviewPage({
@@ -12,6 +12,12 @@ export default async function PreviewPage({
   params: Promise<{ name: string }>;
 }) {
   const { name } = await params;
+
+  // Per-effect pages folded into the unified explorer — keep old links alive.
+  if (FEATURED_FX_IDS.includes(name)) {
+    redirect("/preview/featured-effects");
+  }
+
   const item = getItem(name);
   const Demo = demos[name];
   if (!(item && Demo)) {

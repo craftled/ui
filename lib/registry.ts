@@ -11,16 +11,9 @@ import CtaNewsletterDemo from "@/registry/new-york/blocks/cta-newsletter/cta-new
 import DashboardFinanceDemo from "@/registry/new-york/blocks/dashboard-finance/dashboard-finance.demo";
 import DashboardNetWorthDemo from "@/registry/new-york/blocks/dashboard-net-worth/dashboard-net-worth.demo";
 import FeaturedBookCoverDemo from "@/registry/new-york/blocks/featured-book-cover/featured-book-cover.demo";
-import FeaturedColorPanelsDemo from "@/registry/new-york/blocks/featured-color-panels/featured-color-panels.demo";
-import FeaturedDitheringDemo from "@/registry/new-york/blocks/featured-dithering/featured-dithering.demo";
 import FeaturedEventDemo from "@/registry/new-york/blocks/featured-event/featured-event.demo";
-import FeaturedFlutedGlassDemo from "@/registry/new-york/blocks/featured-fluted-glass/featured-fluted-glass.demo";
-import FeaturedGrainGradientDemo from "@/registry/new-york/blocks/featured-grain-gradient/featured-grain-gradient.demo";
-import FeaturedHalftoneDemo from "@/registry/new-york/blocks/featured-halftone/featured-halftone.demo";
-import FeaturedHalftoneDotsDemo from "@/registry/new-york/blocks/featured-halftone-dots/featured-halftone-dots.demo";
 import FeaturedIntegrationsDemo from "@/registry/new-york/blocks/featured-integrations/featured-integrations.demo";
 import FeaturedLogoSpotlightDemo from "@/registry/new-york/blocks/featured-logo-spotlight/featured-logo-spotlight.demo";
-import FeaturedMeshGradientDemo from "@/registry/new-york/blocks/featured-mesh-gradient/featured-mesh-gradient.demo";
 import FeaturedOgBannerDemo from "@/registry/new-york/blocks/featured-og-banner/featured-og-banner.demo";
 import FeaturedStoryDemo from "@/registry/new-york/blocks/featured-story/featured-story.demo";
 import NavbarDemo from "@/registry/new-york/blocks/navbar/navbar.demo";
@@ -62,6 +55,40 @@ export const themeItems = items.filter((i) => i.type === "registry:theme");
 
 export const previewItems = items.filter((i) => i.type !== "registry:theme");
 
+/**
+ * Shader/effect blocks folded into the unified `/preview/featured-effects`
+ * explorer. They remain real, individually-installable registry items — they
+ * just no longer get their own nav link, gallery card, or preview page (those
+ * redirect to the explorer). Keep this list in sync with `FEATURED_FX_EFFECTS`
+ * in `lib/featured-fx.tsx` (kept separate so server code doesn't pull the
+ * client shader components into its bundle).
+ */
+export const FEATURED_FX_IDS = [
+  "featured-dithering",
+  "featured-halftone",
+  "featured-halftone-dots",
+  "featured-fluted-glass",
+  "featured-color-panels",
+  "featured-grain-gradient",
+  "featured-mesh-gradient",
+];
+
+/** Synthetic nav/gallery entry for the unified explorer (not installable). */
+export const FEATURED_FX_ITEM: RegistryItem = {
+  name: "featured-effects",
+  type: "registry:block",
+  title: "Featured effects",
+  description:
+    "One featured image, seven shader effects — dithering, halftone, fluted glass, color panels, and gradients. Pick an effect in the panel; install any one via the shadcn CLI.",
+  categories: ["featured"],
+};
+
+/** Home-gallery items: folded effects collapsed into the explorer card. */
+export const galleryItems: RegistryItem[] = [
+  FEATURED_FX_ITEM,
+  ...previewItems.filter((i) => !FEATURED_FX_IDS.includes(i.name)),
+];
+
 // Demo map. When you add a new component, add a sibling `<name>.demo.tsx`
 // with a default export and register it here.
 export const demos: Record<string, ComponentType> = {
@@ -83,16 +110,9 @@ export const demos: Record<string, ComponentType> = {
   dialog: DialogDemo,
   "dropdown-menu": DropdownMenuDemo,
   "featured-book-cover": FeaturedBookCoverDemo,
-  "featured-color-panels": FeaturedColorPanelsDemo,
-  "featured-dithering": FeaturedDitheringDemo,
   "featured-event": FeaturedEventDemo,
-  "featured-fluted-glass": FeaturedFlutedGlassDemo,
-  "featured-grain-gradient": FeaturedGrainGradientDemo,
-  "featured-halftone": FeaturedHalftoneDemo,
-  "featured-halftone-dots": FeaturedHalftoneDotsDemo,
   "featured-integrations": FeaturedIntegrationsDemo,
   "featured-logo-spotlight": FeaturedLogoSpotlightDemo,
-  "featured-mesh-gradient": FeaturedMeshGradientDemo,
   "featured-og-banner": FeaturedOgBannerDemo,
   "featured-story": FeaturedStoryDemo,
   input: InputDemo,
@@ -152,11 +172,19 @@ export const staticNav: NavGroup[] = [
 export const componentNav: NavGroup[] = (() => {
   const groups = new Map<string, RegistryItem[]>();
   for (const item of previewItems) {
+    // Folded into the unified explorer — hidden from per-effect nav.
+    if (FEATURED_FX_IDS.includes(item.name)) {
+      continue;
+    }
     const key = item.categories?.[0] ?? "components";
     const existing = groups.get(key) ?? [];
     existing.push(item);
     groups.set(key, existing);
   }
+  // Surface the unified explorer at the top of the Featured group.
+  const featured = groups.get("featured") ?? [];
+  featured.unshift(FEATURED_FX_ITEM);
+  groups.set("featured", featured);
   return Array.from(groups.entries())
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([key, list]) => ({

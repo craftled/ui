@@ -4,6 +4,38 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.3.11] - 2026-06-15
+
+### Added
+
+- **Featured effects explorer** — the seven shader blocks (dithering, halftone
+  CMYK, halftone dots, fluted glass, color panels, grain gradient, mesh gradient)
+  fold into one `/preview/featured-effects` view with an effect switcher, full
+  per-effect controls (sliders, color pickers, editable palettes), a shared
+  featured image, and a shared title overlay that survives effect switches.
+  Source of truth is `lib/featured-fx.tsx`; each effect declares its tuning
+  controls as `controls: FxControl[]`.
+- **Image pan/zoom** — drag the preview to pan and scroll/pinch to zoom the
+  uploaded image, backed by new `scale` / `offsetX` / `offsetY` passthrough
+  props on the four image-effect blocks. Sliders remain for precise control.
+- **OG image export** — quick PNG/JPG export at 1400×735 (OG size) from the
+  explorer, enabled by a new optional `webGlContextAttributes` passthrough on
+  all seven shader blocks (`{ preserveDrawingBuffer: true }`).
+- **`VariantSlider`, `VariantColor`, `VariantColorList`, `VariantSelect`** —
+  generator-style variant-panel controls for continuous + color tuning.
+- **`VariantImageDrop`** — drop or click to upload an image into image-effect demos.
+
+### Changed
+
+- **Featured nav collapsed** — the seven shader blocks no longer get individual
+  nav links, gallery cards, or preview pages; old `/preview/<effect>` URLs
+  redirect to the explorer. The blocks remain individually installable via the
+  shadcn CLI.
+- **Docs content column** capped at 700px, auto-centered.
+- **Variant-panel philosophy relaxed** — generator-style explorers may expose
+  sliders and color pickers; curated presets-only stays the default for blocks
+  that ship opinionated defaults. CLAUDE.md rule #5 updated accordingly.
+
 ## [0.3.10] - 2026-06-12
 
 ### Changed

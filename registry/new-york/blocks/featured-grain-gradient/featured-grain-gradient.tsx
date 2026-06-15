@@ -67,6 +67,8 @@ export type FeaturedGrainGradientProps = {
   titleClassName?: string;
   /** Optional arbitrary content rendered over the gradient. */
   children?: React.ReactNode;
+  /** Forwarded to the WebGL canvas. Pass `{ preserveDrawingBuffer: true }` to allow exporting the canvas to an image. */
+  webGlContextAttributes?: WebGLContextAttributes;
   /** Aspect ratio, default "16/9". */
   aspectRatio?: string;
   className?: string;
@@ -91,6 +93,7 @@ export function FeaturedGrainGradient({
   titleColor,
   titleClassName = "text-white",
   children,
+  webGlContextAttributes,
   aspectRatio = "16/9",
   className,
 }: FeaturedGrainGradientProps) {
@@ -121,6 +124,7 @@ export function FeaturedGrainGradient({
           width: "100%",
           height: "100%",
         }}
+        webGlContextAttributes={webGlContextAttributes}
       />
 
       {children ? (

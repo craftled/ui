@@ -62,6 +62,14 @@ export type FeaturedHalftoneProps = {
   grainOverlay?: number;
   /** Grain mixer strength, 0-1. */
   grainMixer?: number;
+  /** Zoom level for the source image, 0.01–4. Default 1. */
+  scale?: number;
+  /** Horizontal image pan, -1 to 1. Default 0. */
+  offsetX?: number;
+  /** Vertical image pan, -1 to 1. Default 0. */
+  offsetY?: number;
+  /** Forwarded to the WebGL canvas. Pass `{ preserveDrawingBuffer: true }` to allow exporting the canvas to an image. */
+  webGlContextAttributes?: WebGLContextAttributes;
   /** Aspect ratio. Default "1/1". */
   aspectRatio?: string;
   className?: string;
@@ -87,6 +95,10 @@ export function FeaturedHalftone({
   colorK = "#1a1a1a",
   grainOverlay = 0.25,
   grainMixer = 0.15,
+  scale = 1,
+  offsetX = 0,
+  offsetY = 0,
+  webGlContextAttributes,
   aspectRatio = "1/1",
   className,
 }: FeaturedHalftoneProps) {
@@ -111,6 +123,9 @@ export function FeaturedHalftone({
         grainMixer={grainMixer}
         grainOverlay={grainOverlay}
         image={image}
+        offsetX={offsetX}
+        offsetY={offsetY}
+        scale={scale}
         size={size}
         softness={softness}
         style={{
@@ -120,6 +135,7 @@ export function FeaturedHalftone({
           height: "100%",
         }}
         type={type}
+        webGlContextAttributes={webGlContextAttributes}
       />
 
       {title || eyebrow ? (

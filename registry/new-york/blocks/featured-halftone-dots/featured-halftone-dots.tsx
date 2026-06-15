@@ -64,6 +64,14 @@ export type FeaturedHalftoneDotsProps = {
   grainOverlay?: number;
   /** Grain scale (0-1). */
   grainSize?: number;
+  /** Zoom level for the source image, 0.01–4. Default 1. */
+  scale?: number;
+  /** Horizontal image pan, -1 to 1. Default 0. */
+  offsetX?: number;
+  /** Vertical image pan, -1 to 1. Default 0. */
+  offsetY?: number;
+  /** Forwarded to the WebGL canvas. Pass `{ preserveDrawingBuffer: true }` to allow exporting the canvas to an image. */
+  webGlContextAttributes?: WebGLContextAttributes;
   aspectRatio?: string;
   className?: string;
 };
@@ -89,6 +97,10 @@ export function FeaturedHalftoneDots({
   grainMixer = 0.2,
   grainOverlay = 0.2,
   grainSize = 0.5,
+  scale = 1,
+  offsetX = 0,
+  offsetY = 0,
+  webGlContextAttributes,
   aspectRatio = "16/9",
   className,
 }: FeaturedHalftoneDotsProps) {
@@ -113,8 +125,11 @@ export function FeaturedHalftoneDots({
         grid={grid}
         image={image}
         inverted={inverted}
+        offsetX={offsetX}
+        offsetY={offsetY}
         originalColors={originalColors}
         radius={radius}
+        scale={scale}
         size={size}
         style={{
           position: "absolute",
@@ -123,6 +138,7 @@ export function FeaturedHalftoneDots({
           height: "100%",
         }}
         type={type}
+        webGlContextAttributes={webGlContextAttributes}
       />
 
       {title || eyebrow ? (

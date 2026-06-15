@@ -55,11 +55,29 @@ under the `craftled` team scope.
    light-only (`lightOnly` hides the theme toggle).
 5. **Demo controls use the variant panel.** On `/preview/*`, demos wrap
    controls in `ControlsRail` (portals into `#variant-panel-mount` in the
-   right **Variants** rail). Use `VariantPresets`, `VariantShuffle`, and
-   `VariantContent` from `components/variant-panel.tsx` — presets and
-   discrete choices only, no free-form hex pickers. Shader accent swatches
-   merge brand colors via `useDemoAccentSwatches()`.
-6. **Inline styles win over `titleClassName` for color.** The shader
+   right **Variants** rail). Most demos stay curated: `VariantPresets`,
+   `VariantShuffle`, and `VariantContent` from `components/variant-panel.tsx`,
+   with accent swatches merging brand colors via `useDemoAccentSwatches()`.
+   **Generator-style explorers may go further** — `VariantSlider`,
+   `VariantColor`, `VariantColorList`, and `VariantSelect` expose full
+   continuous + color tuning. The unified **featured-effects explorer**
+   (`/preview/featured-effects`) does exactly this: every effect's tunable
+   params are declared as `controls: FxControl[]` in `lib/featured-fx.tsx`
+   and rendered generically. Reach for full controls when the block IS the
+   tool (OG-image generators); keep presets-only when the block ships
+   opinionated defaults.
+6. **The featured-effects explorer is the home for shader effects.** The
+   seven shader blocks (dithering, halftone, halftone-dots, fluted-glass,
+   color-panels, grain-gradient, mesh-gradient) have no individual demo/nav
+   entry — they fold into one explorer with an effect switcher, per-effect
+   controls, image pan/zoom, and PNG/JPG export at OG size (1400×735). They
+   remain individually installable; old `/preview/<effect>` URLs redirect.
+   `FEATURED_FX_IDS` in `lib/registry.ts` (server-safe id list) must stay in
+   sync with `FEATURED_FX_EFFECTS` in `lib/featured-fx.tsx` (client effect
+   registry). Export relies on each effect forwarding `webGlContextAttributes`
+   to the shader (`{ preserveDrawingBuffer: true }`); image pan/zoom relies
+   on the image effects forwarding `scale`/`offsetX`/`offsetY`.
+8. **Inline styles win over `titleClassName` for color.** The shader
    blocks expose `titleColor` as an optional hex; when set, it ships
    as `style={{ color }}` so CSS specificity beats any `text-*`
    utility on `titleClassName`. Leave the prop unset to keep the

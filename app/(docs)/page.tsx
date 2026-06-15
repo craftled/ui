@@ -1,5 +1,5 @@
 import { DocsShell } from "@/components/docs-shell";
-import { demos, previewItems, themeItems } from "@/lib/registry";
+import { demos, galleryItems, themeItems } from "@/lib/registry";
 
 export default function Home() {
   return (
@@ -30,12 +30,12 @@ export default function Home() {
               All components
             </h2>
             <span className="text-muted-foreground text-sm">
-              {previewItems.length} component
-              {previewItems.length === 1 ? "" : "s"}
+              {galleryItems.length} component
+              {galleryItems.length === 1 ? "" : "s"}
             </span>
           </div>
           <div className="grid gap-6">
-            {previewItems.map((item) => {
+            {galleryItems.map((item) => {
               const Demo = demos[item.name];
               return (
                 <section
@@ -54,9 +54,18 @@ export default function Home() {
                         {item.description}
                       </p>
                     </div>
-                    <code className="font-mono text-muted-foreground text-xs">
-                      @craftled/{item.name}
-                    </code>
+                    {Demo ? (
+                      <code className="font-mono text-muted-foreground text-xs">
+                        @craftled/{item.name}
+                      </code>
+                    ) : (
+                      <a
+                        className="font-mono text-muted-foreground text-xs hover:text-foreground"
+                        href={`/preview/${item.name}`}
+                      >
+                        Open explorer →
+                      </a>
+                    )}
                   </div>
                   {Demo ? (
                     <div className="flex min-h-[320px] items-center justify-center rounded-md border bg-background p-6">

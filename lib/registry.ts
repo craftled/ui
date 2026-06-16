@@ -1,5 +1,4 @@
 import type { ComponentType } from "react";
-import AnnotatedFigureDemo from "@/registry/new-york/blocks/annotated-figure/annotated-figure.demo";
 import CarouselDoDontDemo from "@/registry/new-york/blocks/carousel-do-dont/carousel-do-dont.demo";
 import ChartAreaGradientDemo from "@/registry/new-york/blocks/chart-area-gradient/chart-area-gradient.demo";
 import ChartBarRankedDemo from "@/registry/new-york/blocks/chart-bar-ranked/chart-bar-ranked.demo";
@@ -16,21 +15,8 @@ import FeaturedIntegrationsDemo from "@/registry/new-york/blocks/featured-integr
 import FeaturedLogoSpotlightDemo from "@/registry/new-york/blocks/featured-logo-spotlight/featured-logo-spotlight.demo";
 import FeaturedOgBannerDemo from "@/registry/new-york/blocks/featured-og-banner/featured-og-banner.demo";
 import FeaturedStoryDemo from "@/registry/new-york/blocks/featured-story/featured-story.demo";
-import NavbarDemo from "@/registry/new-york/blocks/navbar/navbar.demo";
 import TestimonialVideoDemo from "@/registry/new-york/blocks/testimonial-video/testimonial-video.demo";
-import AccordionDemo from "@/registry/new-york/ui/accordion.demo";
 import BackgroundPatternDemo from "@/registry/new-york/ui/background-pattern.demo";
-import ButtonDemo from "@/registry/new-york/ui/button.demo";
-import CardDemo from "@/registry/new-york/ui/card.demo";
-import DialogDemo from "@/registry/new-york/ui/dialog.demo";
-import DropdownMenuDemo from "@/registry/new-york/ui/dropdown-menu.demo";
-import InputDemo from "@/registry/new-york/ui/input.demo";
-import LabelDemo from "@/registry/new-york/ui/label.demo";
-import NavigationMenuDemo from "@/registry/new-york/ui/navigation-menu.demo";
-import SeparatorDemo from "@/registry/new-york/ui/separator.demo";
-import SkeletonDemo from "@/registry/new-york/ui/skeleton.demo";
-import TabsDemo from "@/registry/new-york/ui/tabs.demo";
-import TooltipDemo from "@/registry/new-york/ui/tooltip.demo";
 import registry from "@/registry.json";
 
 export type RegistryItem = {
@@ -92,11 +78,7 @@ export const galleryItems: RegistryItem[] = [
 // Demo map. When you add a new component, add a sibling `<name>.demo.tsx`
 // with a default export and register it here.
 export const demos: Record<string, ComponentType> = {
-  accordion: AccordionDemo,
-  "annotated-figure": AnnotatedFigureDemo,
   "background-pattern": BackgroundPatternDemo,
-  button: ButtonDemo,
-  card: CardDemo,
   "carousel-do-dont": CarouselDoDontDemo,
   "chart-area-gradient": ChartAreaGradientDemo,
   "chart-bar-ranked": ChartBarRankedDemo,
@@ -107,23 +89,13 @@ export const demos: Record<string, ComponentType> = {
   "cta-newsletter": CtaNewsletterDemo,
   "dashboard-finance": DashboardFinanceDemo,
   "dashboard-net-worth": DashboardNetWorthDemo,
-  dialog: DialogDemo,
-  "dropdown-menu": DropdownMenuDemo,
   "featured-book-cover": FeaturedBookCoverDemo,
   "featured-event": FeaturedEventDemo,
   "featured-integrations": FeaturedIntegrationsDemo,
   "featured-logo-spotlight": FeaturedLogoSpotlightDemo,
   "featured-og-banner": FeaturedOgBannerDemo,
   "featured-story": FeaturedStoryDemo,
-  input: InputDemo,
-  label: LabelDemo,
-  navbar: NavbarDemo,
-  "navigation-menu": NavigationMenuDemo,
-  separator: SeparatorDemo,
-  skeleton: SkeletonDemo,
-  tabs: TabsDemo,
   "testimonial-video": TestimonialVideoDemo,
-  tooltip: TooltipDemo,
 };
 
 export function getItem(name: string): RegistryItem | null {
@@ -137,12 +109,8 @@ const CATEGORY_LABELS: Record<string, string> = {
   chart: "Charts",
   cta: "CTAs",
   dashboard: "Dashboards",
-  explainer: "Explainers",
   featured: "Featured",
-  form: "Forms",
   layout: "Layout",
-  navigation: "Navigation",
-  primitive: "Primitives",
   "social-proof": "Social Proof",
   theme: "Themes",
 };
@@ -163,7 +131,6 @@ export const staticNav: NavGroup[] = [
     title: "Get Started",
     links: [
       { name: "introduction", title: "Introduction", href: "/" },
-      { name: "compose", title: "Compose", href: "/compose" },
       { name: "themes", title: "Brand themes", href: "/themes" },
     ],
   },

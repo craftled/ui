@@ -4,87 +4,6 @@
   "homepage": "https://ui.craftled.com",
   "items": [
     {
-      "name": "button",
-      "type": "registry:ui",
-      "title": "Button",
-      "description": "shadcn's Button primitive — variants (default/secondary/outline/ghost/link/destructive) and sizes (sm/default/lg/icon), with Craftled styling: border + ring + drop shadow for default/destructive, elevated shadow + ring on outline.",
-      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"],
-      "files": [
-        {
-          "path": "registry/new-york/ui/button.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
-      "name": "card",
-      "type": "registry:ui",
-      "title": "Card",
-      "description": "shadcn's latest Card primitive — Card + CardHeader + CardTitle + CardDescription + CardAction + CardContent + CardFooter. Uses container queries on the header so CardAction auto-positions to the right when present. data-slot=* on every sub-component for downstream styling hooks.",
-      "files": [
-        {
-          "path": "registry/new-york/ui/card.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
-      "name": "input",
-      "type": "registry:ui",
-      "title": "Input",
-      "description": "Form input with Craftled treatment: ring-1 ring-foreground/10 + shadow-sm at rest, multi-layer focus ring (border-foreground/35 + ring-ring/25 at 3px), branded selection color, aria-invalid styling.",
-      "files": [
-        {
-          "path": "registry/new-york/ui/input.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
-      "name": "label",
-      "type": "registry:ui",
-      "title": "Label",
-      "description": "Accessible form label built on @radix-ui/react-label. Auto-dims when paired with a disabled peer or inside a disabled group.",
-      "dependencies": ["@radix-ui/react-label"],
-      "files": [
-        {
-          "path": "registry/new-york/ui/label.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
-      "name": "separator",
-      "type": "registry:ui",
-      "title": "Separator",
-      "description": "Horizontal or vertical divider built on @radix-ui/react-separator. Uses data-orientation to switch axis; decorative by default so screen readers skip it.",
-      "dependencies": ["@radix-ui/react-separator"],
-      "files": [
-        {
-          "path": "registry/new-york/ui/separator.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
-      "name": "skeleton",
-      "type": "registry:ui",
-      "title": "Skeleton",
-      "description": "Loading placeholder. animate-pulse + bg-accent + rounded-md baked in. Compose any shape by sizing it with width/height/rounded utilities.",
-      "files": [
-        {
-          "path": "registry/new-york/ui/skeleton.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
       "name": "background-pattern",
       "type": "registry:ui",
       "title": "Background Pattern",
@@ -96,94 +15,6 @@
         }
       ],
       "categories": ["layout"]
-    },
-    {
-      "name": "dialog",
-      "type": "registry:ui",
-      "title": "Dialog",
-      "description": "Modal dialog built on @radix-ui/react-dialog. Includes overlay, content, header, footer, title, description, and an opt-out closable X. data-slot=* hooks on every sub-component for styling integration.",
-      "dependencies": ["@radix-ui/react-dialog", "lucide-react"],
-      "files": [
-        {
-          "path": "registry/new-york/ui/dialog.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
-      "name": "dropdown-menu",
-      "type": "registry:ui",
-      "title": "Dropdown Menu",
-      "description": "Full dropdown menu surface built on @radix-ui/react-dropdown-menu: items, checkbox items, radio groups, labels, separators, shortcuts, and nested sub-menus. Includes a destructive item variant.",
-      "dependencies": ["@radix-ui/react-dropdown-menu", "lucide-react"],
-      "files": [
-        {
-          "path": "registry/new-york/ui/dropdown-menu.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
-      "name": "tabs",
-      "type": "registry:ui",
-      "title": "Tabs",
-      "description": "Accessible tabs built on @radix-ui/react-tabs. TabsList wraps TabsTrigger pills; active triggers get a bg-background lift with shadow.",
-      "dependencies": ["@radix-ui/react-tabs"],
-      "files": [
-        {
-          "path": "registry/new-york/ui/tabs.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
-      "name": "tooltip",
-      "type": "registry:ui",
-      "title": "Tooltip",
-      "description": "Tooltip built on @radix-ui/react-tooltip. Includes TooltipProvider so you can drop a single root once and use Tooltip + TooltipTrigger + TooltipContent anywhere. Comes with an arrow indicator.",
-      "dependencies": ["@radix-ui/react-tooltip"],
-      "files": [
-        {
-          "path": "registry/new-york/ui/tooltip.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
-      "name": "accordion",
-      "type": "registry:ui",
-      "title": "Accordion",
-      "description": "Single or multi-open accordion built on @radix-ui/react-accordion. Pairs with tw-animate-css's accordion-down / accordion-up keyframes for smooth height transitions.",
-      "dependencies": ["@radix-ui/react-accordion", "lucide-react"],
-      "files": [
-        {
-          "path": "registry/new-york/ui/accordion.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
-    },
-    {
-      "name": "navigation-menu",
-      "type": "registry:ui",
-      "title": "Navigation Menu",
-      "description": "Top-bar navigation menu with rich dropdowns, built on @radix-ui/react-navigation-menu. Includes Root, List, Item, Trigger, Content, Link, Viewport, Indicator, and a shared navigationMenuTriggerStyle for flat top-level links.",
-      "dependencies": [
-        "@radix-ui/react-navigation-menu",
-        "class-variance-authority",
-        "lucide-react"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/ui/navigation-menu.tsx",
-          "type": "registry:ui"
-        }
-      ],
-      "categories": ["primitive"]
     },
     {
       "name": "chart-area-gradient",
@@ -510,19 +341,6 @@
       "categories": ["featured"]
     },
     {
-      "name": "annotated-figure",
-      "type": "registry:block",
-      "title": "Annotated Figure",
-      "description": "Wrap any object as children and pin labeled callouts to specific points via { x, y, side } percentages. Dashed stems extend out to the figure edges.",
-      "files": [
-        {
-          "path": "registry/new-york/blocks/annotated-figure/annotated-figure.tsx",
-          "type": "registry:component"
-        }
-      ],
-      "categories": ["explainer"]
-    },
-    {
       "name": "testimonial-video",
       "type": "registry:block",
       "title": "Video Testimonial",
@@ -535,22 +353,6 @@
         }
       ],
       "categories": ["social-proof"]
-    },
-    {
-      "name": "navbar",
-      "type": "registry:block",
-      "title": "Navbar",
-      "description": "Sticky top navbar with brand mark, center nav using NavigationMenu (supports flat links + rich icon/description dropdowns), CTA buttons, and a scroll-aware backdrop blur. Mobile menu uses Accordion. Position prop ('fixed' | 'absolute' | 'sticky' | 'static') so you can drop it on a real page or showcase inside a card.",
-      "dependencies": ["lucide-react"],
-      "registryDependencies": ["accordion", "button", "navigation-menu"],
-      "files": [
-        {
-          "path": "registry/new-york/blocks/navbar/navbar.tsx",
-          "type": "registry:component"
-        }
-      ],
-      "categories": ["navigation"],
-      "layout": "fullwidth"
     },
     {
       "name": "theme-craftled",

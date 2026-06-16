@@ -4,10 +4,14 @@ import * as React from "react";
 
 import { ControlsRail } from "@/components/controls-rail";
 import {
-  VariantNote,
+  VariantChoice,
+  VariantColor,
   VariantPresets,
   VariantSection,
+  VariantSelect,
   VariantShuffle,
+  VariantSlider,
+  VariantToggle,
 } from "@/components/variant-panel";
 import { randomInRange, randomItem } from "@/lib/random-palette";
 import { cn } from "@/lib/utils";
@@ -25,6 +29,16 @@ const VARIANTS: BackgroundPatternVariant[] = [
   "vertical-lines-top",
   "vertical-lines-dome",
   "isometric",
+];
+
+const VARIANT_OPTIONS: { value: BackgroundPatternVariant; label: string }[] = [
+  { value: "dots", label: "Dots" },
+  { value: "grid", label: "Grid" },
+  { value: "vertical-lines", label: "Vertical" },
+  { value: "diagonal-lines", label: "Diagonal" },
+  { value: "vertical-lines-top", label: "Top dots" },
+  { value: "vertical-lines-dome", label: "Dome" },
+  { value: "isometric", label: "Isometric" },
 ];
 
 type Params = {
@@ -129,6 +143,18 @@ export default function BackgroundPatternDemo() {
   const [params, setParams] = React.useState<Params>(PRESETS.Dome);
   const isDark = params.theme === "dark";
 
+  const set = <K extends keyof Params>(key: K, value: Params[K]) =>
+    setParams((p) => ({ ...p, [key]: value }));
+
+  // Switching surface flips the pattern color to a legible default; the color
+  // control can still override it afterward.
+  const setTheme = (theme: "light" | "dark") =>
+    setParams((p) => ({
+      ...p,
+      theme,
+      patternColor: theme === "dark" ? "#ffffff" : "#000000",
+    }));
+
   return (
     <>
       <div
@@ -174,10 +200,66 @@ export default function BackgroundPatternDemo() {
             presets={Object.keys(PRESETS)}
           />
           <VariantShuffle onClick={() => setParams(randomParams())} />
-          <VariantNote>
-            Spacing, opacity, and color are baked into each preset. Adjust via
-            props when you install the block.
-          </VariantNote>
+        </VariantSection>
+
+        <VariantSection title="Pattern">
+          <VariantSelect
+            columns={2}
+            label="Style"
+            onChange={(v) => set("variant", v)}
+            options={VARIANT_OPTIONS}
+            value={params.variant}
+          />
+          <VariantChoice
+            label="Surface"
+            onChange={setTheme}
+            options={["light", "dark"] as const}
+            value={params.theme}
+          />
+          <VariantSlider
+            label="Spacing"
+            max={64}
+            min={8}
+            onChange={(v) => set("size", v)}
+            step={1}
+            value={params.size}
+          />
+          <VariantSlider
+            label="Stroke width"
+            max={4}
+            min={0.5}
+            onChange={(v) => set("strokeWidth", v)}
+            step={0.25}
+            value={params.strokeWidth}
+          />
+          <VariantSlider
+            label="Opacity"
+            max={1}
+            min={0}
+            onChange={(v) => set("opacity", v)}
+            step={0.01}
+            value={params.opacity}
+          />
+          {params.variant === "vertical-lines-dome" ? (
+            <VariantSlider
+              label="Dome strength"
+              max={1}
+              min={0}
+              onChange={(v) => set("domeStrength", v)}
+              step={0.01}
+              value={params.domeStrength}
+            />
+          ) : null}
+          <VariantColor
+            label="Pattern color"
+            onChange={(v) => set("patternColor", v)}
+            value={params.patternColor}
+          />
+          <VariantToggle
+            label="Fade edges"
+            onChange={(v) => set("fade", v)}
+            value={params.fade}
+          />
         </VariantSection>
       </ControlsRail>
     </>

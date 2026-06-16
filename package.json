@@ -38,7 +38,7 @@
     "check": "ultracite check",
     "fix": "ultracite fix"
   },
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "description": "Craftled UI — a craft-led, shadcn-native component library. Charts, blocks, shaders, and primitives, distributed via the shadcn CLI.",
   "homepage": "https://ui.craftled.com",

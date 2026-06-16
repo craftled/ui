@@ -4,6 +4,19 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.5.1] - 2026-06-16
+
+Small follow-up to the featured-effects explorer.
+
+### Added
+
+- **Drop an image straight onto the featured-effects preview** — the preview is
+  now a file drop target (with a ring + "Drop image to replace" overlay) for the
+  image-based effects (Dithering, Halftone, Halftone dots, Fluted glass), not
+  just the sidebar upload. Drag-to-pan and scroll/pinch-to-zoom are unchanged;
+  generative effects without an image stay non-droppable. Docs-explorer only —
+  no registry block changed.
+
 ## [0.5.0] - 2026-06-16
 
 Turned the **OG Banner** block into a full image-composition generator and

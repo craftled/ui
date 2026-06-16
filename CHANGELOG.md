@@ -4,6 +4,39 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.5.0] - 2026-06-16
+
+Turned the **OG Banner** block into a full image-composition generator and
+fixed its PNG/JPG export.
+
+### Added
+
+- **Drop a screenshot straight onto any frame** — each of the three layers
+  (left / center / right) is a native file-drop target with a hover ring, and
+  the sidebar upload still works. Dropping an image selects that layer.
+- **Drag to position the image inside its frame** — frames are now fixed; the
+  mouse pans the dropped image (`object-position`) and a **Zoom** slider scales
+  it. Each screenshot carries a pan/zoom `transform` (`posX` / `posY` / `scale`).
+- **Reference-tuned default** — a blue→violet→magenta diagonal mesh with a
+  center-dominant hero card and two peeking side frames, matching the common
+  social-hero composition.
+- **New block props** — `editable`, `onImagePan`, `onImageDrop`, and an
+  `OgImageTransform` type. Defaults keep shipped banners non-interactive.
+
+### Fixed
+
+- **PNG/JPG export at 1400×735** — forwarded `preserveDrawingBuffer` to the mesh
+  shader so the WebGL gradient rasterizes instead of exporting blank;
+  neutralized `backdrop-filter` during capture (Chrome refuses to rasterize an
+  SVG `foreignObject` that uses it, firing an `error`); and dropped `cacheBust`,
+  which mangled dropped `blob:` image URLs and failed the whole export.
+
+### Changed
+
+- **Per-layer object-URL lifecycle** — dropped images are tracked per slot and
+  revoked deterministically on replace, preset switch, background-mode change,
+  and unmount, so the generator no longer leaks blob URLs across a session.
+
 ## [0.4.1] - 2026-06-16
 
 Dependency maintenance, verified against real changelogs and a full

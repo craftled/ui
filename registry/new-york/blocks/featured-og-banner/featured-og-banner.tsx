@@ -1,9 +1,12 @@
 "use client";
 
 import { StaticMeshGradient } from "@paper-design/shaders-react";
-import type * as React from "react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
+
+/** Layer identifiers for the three product screenshots. */
+export type OgLayerName = "left" | "center" | "right";
 
 /** Design canvas width — stroke and spacing scale from this baseline. */
 export const OG_BANNER_DESIGN_WIDTH = 1400;
@@ -24,6 +27,8 @@ export type OgScreenshot = {
   style?: React.CSSProperties;
   /** Placeholder fill when `src` is omitted. */
   placeholderColor?: string;
+  /** Pan/zoom of the image within the frame (editor sets this via drag). */
+  transform?: OgImageTransform;
 };
 
 export type OgCenterCard = {
@@ -137,6 +142,26 @@ export type FeaturedOgBannerProps = {
   fadeHeight?: number;
   /** Root aspect ratio. Default `1400/735` (design frame). Use `1200/630` for OG export. */
   aspectRatio?: string;
+  /**
+   * Editor affordance — when set, the image inside each frame can be panned by
+   * dragging, and image files can be dropped onto a frame. Frames themselves
+   * stay fixed. Defaults to `false`; shipped banners are non-interactive.
+   */
+  editable?: boolean;
+  /**
+   * Fires while an image is panned within its frame (requires `editable`), with
+   * a delta in object-position percent. The caller clamps and applies it to the
+   * matching screenshot's `transform`.
+   */
+  onImagePan?: (
+    layer: OgLayerName,
+    delta: { dPosX: number; dPosY: number }
+  ) => void;
+  /**
+   * Fires when an image file is dropped directly onto a layer's frame (requires
+   * `editable`). Hands back the raw `File` — the caller owns the object URL.
+   */
+  onImageDrop?: (layer: OgLayerName, file: File) => void;
   className?: string;
 };
 
@@ -266,8 +291,90 @@ function MeshBackground({
         width: "100%",
         height: "100%",
       }}
+      // Keep the WebGL backbuffer readable so html-to-image can rasterize the
+      // gradient on export; without it `toDataURL` comes back blank.
+      webGlContextAttributes={{ preserveDrawingBuffer: true }}
     />
   );
+}
+
+/** How an image is positioned/zoomed within its frame. */
+export type OgImageTransform = {
+  /** Horizontal focal point, 0–100 (50 = centered). */
+  posX?: number;
+  /** Vertical focal point, 0–100 (50 = centered). */
+  posY?: number;
+  /** Zoom, 1 = cover. */
+  scale?: number;
+};
+
+/** `object-fit: cover` image style for a given pan/zoom transform. */
+function imageTransformStyle(
+  transform?: OgImageTransform
+): React.CSSProperties {
+  const posX = transform?.posX ?? 50;
+  const posY = transform?.posY ?? 50;
+  const scale = transform?.scale ?? 1;
+  return {
+    objectPosition: `${posX}% ${posY}%`,
+    transform: scale === 1 ? undefined : `scale(${scale})`,
+    transformOrigin: `${posX}% ${posY}%`,
+  };
+}
+
+/**
+ * Pointer-drag to pan the image *inside* a fixed frame. Reports each move as a
+ * delta in object-position percent (negated so the image follows the cursor);
+ * the parent clamps and applies it. Independent of {@link useImageDropZone}.
+ */
+function useImagePan(
+  enabled: boolean,
+  onPan?: (delta: { dPosX: number; dPosY: number }) => void
+) {
+  const dragging = React.useRef(false);
+  const last = React.useRef({ x: 0, y: 0 });
+
+  if (!(enabled && onPan)) {
+    return { bind: {} };
+  }
+
+  const bind = {
+    onPointerDown: (event: React.PointerEvent) => {
+      dragging.current = true;
+      last.current = { x: event.clientX, y: event.clientY };
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId);
+      } catch {
+        // Pointer capture is a nicety; dragging still works without it.
+      }
+    },
+    onPointerMove: (event: React.PointerEvent) => {
+      if (!dragging.current) {
+        return;
+      }
+      const rect = event.currentTarget.getBoundingClientRect();
+      if (!(rect.width && rect.height)) {
+        return;
+      }
+      const dPosX = (-(event.clientX - last.current.x) / rect.width) * 100;
+      const dPosY = (-(event.clientY - last.current.y) / rect.height) * 100;
+      last.current = { x: event.clientX, y: event.clientY };
+      onPan({ dPosX, dPosY });
+    },
+    onPointerUp: (event: React.PointerEvent) => {
+      dragging.current = false;
+      try {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      } catch {
+        // Already released / never captured — safe to ignore.
+      }
+    },
+    onPointerCancel: () => {
+      dragging.current = false;
+    },
+  };
+
+  return { bind };
 }
 
 function hexWithAlpha(hex: string, alpha: number) {
@@ -287,7 +394,7 @@ function hexWithAlpha(hex: string, alpha: number) {
 
 function renderCenterCardContent(
   card: OgCenterCard,
-  objectPosition = "bottom"
+  transform?: OgImageTransform
 ) {
   if (card.children) {
     return card.children;
@@ -300,7 +407,7 @@ function renderCenterCardContent(
         className="block h-full w-full object-cover"
         draggable={false}
         src={card.imageSrc}
-        style={{ objectPosition }}
+        style={imageTransformStyle(transform)}
       />
     );
   }
@@ -346,6 +453,55 @@ function OgPlaceholderPreview({
   );
 }
 
+/**
+ * Native file drag-and-drop for one layer — drop an image straight onto the
+ * frame. Reports the dropped `File`; the parent owns the object-URL lifecycle.
+ * Independent of {@link useLayerDrag}: pointer events reposition, OS file drags
+ * (DataTransfer) set the image.
+ */
+function useImageDropZone(
+  editable: boolean,
+  onImageDrop?: (file: File) => void
+) {
+  const [over, setOver] = React.useState(false);
+
+  if (!(editable && onImageDrop)) {
+    return { over: false, bind: {} };
+  }
+
+  const isFileDrag = (event: React.DragEvent) =>
+    event.dataTransfer.types.includes("Files");
+
+  const bind = {
+    onDragOver: (event: React.DragEvent) => {
+      if (isFileDrag(event)) {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "copy";
+        setOver(true);
+      }
+    },
+    onDragLeave: (event: React.DragEvent) => {
+      // Ignore the dragleave fired when crossing into a child element.
+      if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+        setOver(false);
+      }
+    },
+    onDrop: (event: React.DragEvent) => {
+      if (!isFileDrag(event)) {
+        return;
+      }
+      event.preventDefault();
+      setOver(false);
+      const file = event.dataTransfer.files?.[0];
+      if (file?.type.startsWith("image/")) {
+        onImageDrop(file);
+      }
+    },
+  };
+
+  return { over, bind };
+}
+
 function OgScreenshotFrame({
   screenshot,
   layout,
@@ -354,6 +510,9 @@ function OgScreenshotFrame({
   strokeTo,
   strokeWidth,
   strokeOpacity,
+  editable = false,
+  onImagePan,
+  onImageDrop,
 }: {
   screenshot: OgScreenshot;
   layout: Required<OgBannerLayerLayout>;
@@ -362,6 +521,9 @@ function OgScreenshotFrame({
   strokeTo: string;
   strokeWidth: number;
   strokeOpacity: number;
+  editable?: boolean;
+  onImagePan?: (delta: { dPosX: number; dPosY: number }) => void;
+  onImageDrop?: (file: File) => void;
 }) {
   const {
     src,
@@ -369,7 +531,11 @@ function OgScreenshotFrame({
     className,
     style,
     placeholderColor = "#27272a",
+    transform,
   } = screenshot;
+  const pannable = editable && Boolean(src);
+  const pan = useImagePan(pannable, onImagePan);
+  const drop = useImageDropZone(editable, onImageDrop);
   const padding = designScale(strokeWidth);
   const topRadius = designScale(layout.radius);
   const innerTopRadius = `max(0px, calc(${topRadius} - ${padding}))`;
@@ -378,11 +544,19 @@ function OgScreenshotFrame({
 
   return (
     <div
-      className={cn("absolute", roundedClass, className)}
+      className={cn(
+        "absolute",
+        roundedClass,
+        pannable && "cursor-grab touch-none active:cursor-grabbing",
+        drop.over && "ring-2 ring-white/90",
+        className
+      )}
       style={{
         ...layerLayoutStyle(layout, undefined),
         ...style,
       }}
+      {...pan.bind}
+      {...drop.bind}
     >
       <div
         className="box-border size-full px-[var(--og-card-stroke)] pt-[var(--og-card-stroke)] shadow-[0_24px_80px_-20px_rgba(0,0,0,0.65)]"
@@ -399,10 +573,10 @@ function OgScreenshotFrame({
           {src ? (
             <img
               alt={alt ?? ""}
-              className="block size-full object-cover object-top"
+              className="block size-full object-cover"
               draggable={false}
               src={src}
-              style={{ objectPosition: layout.objectPosition }}
+              style={imageTransformStyle(transform)}
             />
           ) : (
             <OgPlaceholderPreview
@@ -426,6 +600,9 @@ function OgCenterCardFrame({
   strokeOpacity,
   backdropBlur,
   cardRadius,
+  editable = false,
+  onImagePan,
+  onImageDrop,
 }: {
   card: OgCenterCard;
   screenshot: OgScreenshot;
@@ -436,7 +613,11 @@ function OgCenterCardFrame({
   strokeOpacity: number;
   backdropBlur: number;
   cardRadius: number;
+  editable?: boolean;
+  onImagePan?: (delta: { dPosX: number; dPosY: number }) => void;
+  onImageDrop?: (file: File) => void;
 }) {
+  const drop = useImageDropZone(editable, onImageDrop);
   const padding = designScale(strokeWidth);
   const topRadius = designScale(layout.radius ?? cardRadius);
   const innerTopRadius = `max(0px, calc(${topRadius} - ${padding}))`;
@@ -447,15 +628,25 @@ function OgCenterCardFrame({
     imageSrc: card.imageSrc ?? screenshot.src,
     children: card.children,
   };
+  const pannable = editable && Boolean(resolvedCard.imageSrc);
+  const pan = useImagePan(pannable, onImagePan);
 
   return (
     <div
-      className={cn("absolute", screenshot.className, card.className)}
+      className={cn(
+        "absolute",
+        pannable && "cursor-grab touch-none active:cursor-grabbing",
+        drop.over && "ring-2 ring-white/90",
+        screenshot.className,
+        card.className
+      )}
       style={{
         ...layerLayoutStyle(layout, undefined),
         ...screenshot.style,
         ...card.style,
       }}
+      {...pan.bind}
+      {...drop.bind}
     >
       <div
         className="box-border size-full px-[var(--og-card-stroke)] pt-[var(--og-card-stroke)]"
@@ -474,7 +665,7 @@ function OgCenterCardFrame({
           }}
         >
           {resolvedCard.imageSrc || resolvedCard.children ? (
-            renderCenterCardContent(resolvedCard, layout.objectPosition)
+            renderCenterCardContent(resolvedCard, screenshot.transform)
           ) : (
             <OgPlaceholderPreview
               alt={resolvedCard.imageAlt ?? "Center card preview"}
@@ -510,6 +701,9 @@ export function FeaturedOgBanner({
   fadeToOpacity = 1,
   fadeHeight = 0.55,
   aspectRatio = "1400/735",
+  editable = false,
+  onImagePan,
+  onImageDrop,
   className,
 }: FeaturedOgBannerProps) {
   const resolvedMeshGradient = { ...DEFAULT_MESH, ...meshGradient };
@@ -554,7 +748,14 @@ export function FeaturedOgBanner({
 
       <div className="absolute inset-0 z-10">
         <OgScreenshotFrame
+          editable={editable}
           layout={resolvedLayout.left}
+          onImageDrop={
+            onImageDrop ? (file) => onImageDrop("left", file) : undefined
+          }
+          onImagePan={
+            onImagePan ? (delta) => onImagePan("left", delta) : undefined
+          }
           roundedClass="rounded-lg"
           screenshot={screenshotLeft}
           strokeFrom={strokeFrom}
@@ -563,7 +764,14 @@ export function FeaturedOgBanner({
           strokeWidth={strokeWidth}
         />
         <OgScreenshotFrame
+          editable={editable}
           layout={resolvedLayout.right}
+          onImageDrop={
+            onImageDrop ? (file) => onImageDrop("right", file) : undefined
+          }
+          onImagePan={
+            onImagePan ? (delta) => onImagePan("right", delta) : undefined
+          }
           roundedClass="rounded-lg"
           screenshot={screenshotRight}
           strokeFrom={strokeFrom}
@@ -575,7 +783,14 @@ export function FeaturedOgBanner({
           backdropBlur={backdropBlur}
           card={centerCard}
           cardRadius={cardRadius}
+          editable={editable}
           layout={resolvedLayout.center}
+          onImageDrop={
+            onImageDrop ? (file) => onImageDrop("center", file) : undefined
+          }
+          onImagePan={
+            onImagePan ? (delta) => onImagePan("center", delta) : undefined
+          }
           screenshot={screenshotCenter}
           strokeFrom={strokeFrom}
           strokeOpacity={strokeOpacity}

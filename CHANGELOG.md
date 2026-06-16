@@ -4,6 +4,33 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] - 2026-06-16
+
+Scoped the library down to its immediate use case — featured blog images, stats,
+and graphs — and gave two more blocks full generator controls.
+
+### Removed
+
+- **Primitives section** — the 12 re-exported shadcn primitives (`accordion`,
+  `button`, `card`, `dialog`, `dropdown-menu`, `input`, `label`,
+  `navigation-menu`, `separator`, `skeleton`, `tabs`, `tooltip`) are no longer
+  offered as installable registry items. Install these directly from shadcn.
+  (Breaking: their `@craftled/<name>` install URLs now 404.)
+- **`navbar`** (Navigation) and **`annotated-figure`** (Explainers) blocks.
+- **`/compose`** kitchen-sink page.
+
+Charts, dashboards, and CTAs are unaffected — their `registryDependencies`
+(`button`, `card`, `chart`, `input`) resolve to shadcn's registry, not Craftled's.
+
+### Added
+
+- **Background Pattern** full controls — Style, Surface (light/dark), Spacing,
+  Stroke width, Opacity, Dome strength (dome only), Pattern color, and Fade
+  edges in the **Variants** sidebar, on top of the existing presets.
+- **Integrations Orbit** is now a single live instance with full sidebar
+  customization (Surface, icon count/size, circle diameter, and editable
+  eyebrow/title/description) instead of a fixed light + dark pair.
+
 ## [0.3.11] - 2026-06-15
 
 ### Added

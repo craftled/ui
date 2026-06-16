@@ -10,7 +10,7 @@ A craft-led, shadcn-native component library. Charts, blocks, shaders, and primi
 
 Craftled UI sits on top of the shadcn ecosystem. Every primitive is shadcn-style — TSX you own, Tailwind classes you can edit, Radix for the unsexy a11y plumbing. No runtime dependency on a published `@craftled/ui` package. You install components by URL through the shadcn CLI, and they land in your repo as plain files.
 
-The library is opinionated about taste, not architecture. The atomic primitives (`button`, `card`, `input`, `label`, `separator`, `skeleton`) mirror shadcn's New York style with a few craft-led tweaks. The blocks on top — dashboards, charts, CTAs, testimonials, paper-design shaders — are the value-add: production-ready compositions you can drop into a site in under a minute.
+The library is opinionated about taste, not architecture. The value-add is the blocks — featured / OG images, charts, dashboards, CTAs, testimonials, and paper-design shaders — production-ready compositions built on shadcn primitives that you can drop into a site in under a minute.
 
 ## Install
 
@@ -51,12 +51,6 @@ Human/agent references live under [`brands/`](./brands/). Decorative accents (`-
 `theme-craftled` · `theme-elevenlabs` — `registry:theme` presets (not listed in the preview sidebar). ElevenLabs is light-only on the docs site; the theme toggle hides while it is active.
 
 ## What's inside
-
-### Primitives (12)
-
-`accordion` · `button` · `card` · `dialog` · `dropdown-menu` · `input` · `label` · `navigation-menu` · `separator` · `skeleton` · `tabs` · `tooltip`
-
-Drop-in replacements for the shadcn New York equivalents. The Button is opinionated — a layered ring + shadow treatment lifted from production work — but the rest mirror upstream so you can mix and match without surprises. Most are thin wrappers over Radix; chart blocks use shadcn's upstream chart wrapper through their registry dependencies.
 
 ### Layout backgrounds (1)
 
@@ -102,17 +96,12 @@ The original seven photo + generative shader blocks accept a shared text-overlay
 - `titleSize` — title font size in px; the eyebrow scales as `max(11, titleSize * 0.4)`, defaults to `30`
 - `titleColor` — optional inline hex color that wins over `titleClassName` via CSS specificity
 
-### Navigation (1)
-
-- **`navbar`** — Sticky top navbar with brand mark, center nav using NavigationMenu (flat links + rich icon/description dropdowns), CTA buttons, and a scroll-aware backdrop blur. Mobile menu uses Accordion. Position prop (`fixed` / `absolute` / `sticky` / `static`) so you can drop it on a real page or showcase it inside a card. Full-bleed preview at `/preview/navbar`. The docs shell uses `SiteTopBar` + sidebar nav instead of dogfooding this block.
-
-### Editorial blocks (7)
+### Editorial blocks (6)
 
 - **`featured-book-cover`** — Parametric 3D book in pure CSS (perspective + rotateX/Y/Z, no library): a single tilted hardcover, a stacked group, or a horizontal shelf, all from one `BookCover` atom. Typographic or image cover, page-block fore-edge, spine, and a theme-aware `solid` / `wireframe` variant. Grab-to-orbit drag (mouse/touch) via `draggable` + `onRotateChange`; the demo doubles as a cover generator with Copy JSON + Export JPG.
 - **`featured-event`** — Highlight reel for events / launches.
 - **`featured-integrations`** — Orbit-style logo carousel for ecosystem pages.
 - **`featured-story`** — Magazine-style story card with optional link wrapping.
-- **`annotated-figure`** — Marketing figure with callouts.
 - **`testimonial-video`** — Video thumbnail + quote, with optional play target.
 - **`carousel-do-dont`** — Side-by-side do/don't pattern with inline-editable content.
 
@@ -127,7 +116,7 @@ bun run check            # ultracite check (biome + opinionated rules)
 bun run fix              # ultracite fix (auto-fix safe issues)
 ```
 
-The `/` route is the gallery, `/themes` documents installable brand themes, `/preview/[name]` renders any component with Preview/Code tabs (Shiki dual-theme) and a **Variants** right rail on preview routes, and `/compose` is a kitchen-sink page exercising every primitive together for visual regression checks. The docs chrome is `AppShell` (sidebar + top bar + optional variant panel). Editing a primitive or block hot-reloads everywhere it's used.
+The `/` route is the gallery, `/themes` documents installable brand themes, and `/preview/[name]` renders any component with Preview/Code tabs (Shiki dual-theme) and a **Variants** right rail on preview routes. The docs chrome is `AppShell` (sidebar + top bar + optional variant panel). Editing a block hot-reloads everywhere it's used.
 
 `/raw/[name]` is the no-chrome iframe target for the full-bleed preview shell — its own root layout, no docs chrome. Don't link to it from docs; it exists for the iframe.
 

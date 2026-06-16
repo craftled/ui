@@ -32,6 +32,7 @@ import {
   getFxEffect,
   type ImageTransform,
 } from "@/lib/featured-fx";
+import { cn } from "@/lib/utils";
 import { TITLE_SIZE_PX, titleSizeTierFromPx } from "@/lib/variant-tiers";
 import { Button } from "@/registry/new-york/ui/button";
 
@@ -148,6 +149,7 @@ export function FeaturedFxExplorer({
     titleColor: getFxEffect(effectId).defaultTitleColor,
   });
   const [exporting, setExporting] = React.useState(false);
+  const [dragOver, setDragOver] = React.useState(false);
 
   const previewRef = React.useRef<HTMLDivElement>(null);
   const dragOrigin = React.useRef<{ x: number; y: number } | null>(null);
@@ -239,6 +241,45 @@ export function FeaturedFxExplorer({
     setImageTransform(DEFAULT_TRANSFORM);
   };
 
+  // Native file drag-and-drop onto the preview — drop an image to replace it.
+  // Pointer events handle panning; file drags (DataTransfer) load the image.
+  const onFileDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    if (!(interactive && event.dataTransfer.types.includes("Files"))) {
+      return;
+    }
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "copy";
+    setDragOver(true);
+  };
+
+  const onFileDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      setDragOver(false);
+    }
+  };
+
+  const onFileDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    if (!(interactive && event.dataTransfer.types.includes("Files"))) {
+      return;
+    }
+    event.preventDefault();
+    setDragOver(false);
+    const file = event.dataTransfer.files?.[0];
+    if (file?.type.startsWith("image/")) {
+      handleImage(URL.createObjectURL(file));
+    }
+  };
+
+  // Spread the drop handlers (the keyboard-accessible path is the sidebar
+  // upload button); spreading also keeps the a11y lint scoped to that control.
+  const fileDropBind = interactive
+    ? {
+        onDragLeave: onFileDragLeave,
+        onDragOver: onFileDragOver,
+        onDrop: onFileDrop,
+      }
+    : {};
+
   const handleExport = async (format: "png" | "jpeg") => {
     const node = previewRef.current;
     if (!node) {
@@ -297,16 +338,17 @@ export function FeaturedFxExplorer({
         files={filesByEffect[effectId] ?? []}
         preview={
           <div
-            className={
-              interactive
-                ? "cursor-grab touch-none active:cursor-grabbing"
-                : undefined
-            }
+            className={cn(
+              "relative",
+              interactive && "cursor-grab touch-none active:cursor-grabbing",
+              dragOver && "ring-2 ring-foreground/70"
+            )}
             onPointerCancel={endDrag}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={endDrag}
             ref={previewRef}
+            {...fileDropBind}
           >
             {effect.render({
               params,
@@ -315,6 +357,13 @@ export function FeaturedFxExplorer({
               imageTransform,
               webGlContextAttributes: EXPORT_WEBGL,
             })}
+            {dragOver ? (
+              <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-background/40">
+                <span className="rounded-md border bg-background px-3 py-1.5 font-medium text-foreground text-sm shadow-sm">
+                  Drop image to replace
+                </span>
+              </div>
+            ) : null}
           </div>
         }
       />
@@ -385,7 +434,8 @@ export function FeaturedFxExplorer({
               value={image}
             />
             <VariantNote>
-              Drag the preview to pan · scroll or pinch to zoom.
+              Drop an image onto the preview · drag to pan · scroll or pinch to
+              zoom.
             </VariantNote>
             <VariantSlider
               label="Zoom"

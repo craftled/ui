@@ -4,6 +4,40 @@ All notable changes to Craftled UI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project
 adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.4.1] - 2026-06-16
+
+Dependency maintenance, verified against real changelogs and a full
+`check` / `registry:build` / `build` pass. No registry source or `public/r/`
+changes.
+
+### Changed
+
+- **Safe dependency bumps** — Radix `react-slot` 1.3.0 (type-only generic
+  `SlotProps`/`createSlot`; compiled runtime byte-identical to 1.2.5) and
+  `react-tabs` 1.1.15, Lucide 1.18.0 (purely additive icons), Tailwind CSS +
+  `@tailwindcss/postcss` 4.3.1 (cosmetic spacing-utility output only, identical
+  computed values), `shadcn` 4.11.0 (build output unchanged — `public/r/`
+  rebuilds with no diff), and `ultracite` 7.8.3.
+- **`@types/node` 22 → 24** — aligned to the Node 24 runtime (Vercel default).
+  Held back from 25 to avoid the `undici-types` 6→7 global-`fetch` type churn and
+  a types-ahead-of-runtime mismatch.
+
+### Removed
+
+- **Seven unused Radix dependencies** — `react-accordion`, `react-dialog`,
+  `react-dropdown-menu`, `react-label`, `react-navigation-menu`,
+  `react-separator`, and `react-tooltip` had zero import sites after the v0.4.0
+  scope-down. Consumers still resolve these through shadcn's registry via
+  `registryDependencies`, so installs are unaffected. Only `react-slot` (button)
+  and `react-tabs` (tabs) remain — the two Radix packages actually bundled.
+
+### Held
+
+- **`@biomejs/biome` stays at 2.4.16.** 2.5.0 begins linting/formatting SVG files,
+  which flags the committed `public/*.svg` assets (Next.js defaults + brand logos)
+  with 25 new `noSvgWithoutTitle` / `useSortedAttributes` / format violations.
+  Deferred to a follow-up that ignores `public/**/*.svg` or curates those assets.
+
 ## [0.4.0] - 2026-06-16
 
 Scoped the library down to its immediate use case — featured blog images, stats,

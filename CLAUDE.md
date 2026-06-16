@@ -7,9 +7,11 @@ OpenClaw, etc.) working in this repo. Humans should read
 ## What this repo is
 
 A **craft-led, shadcn-native** component library. Distribution happens
-through the shadcn CLI — every block and primitive is fetched as a
-self-contained TSX file from `ui.craftled.com/r/<name>.json` and lives
-in the consumer's repo, not as an npm dependency.
+through the shadcn CLI — every block is fetched as a self-contained TSX
+file from `ui.craftled.com/r/<name>.json` and lives in the consumer's
+repo, not as an npm dependency. Base primitives (`button`, `card`,
+`chart`, `input`) are not shipped from this registry; blocks list them
+as `registryDependencies` that resolve to shadcn's own registry.
 
 Live at [ui.craftled.com](https://ui.craftled.com). Deployed on Vercel
 under the `craftled` team scope.

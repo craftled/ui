@@ -36,7 +36,7 @@ Tracked for a future minor release. PR welcome.
 
 **Affects:** Any preview page when opened in Cursor's built-in browser
 (Glass / Simple Browser / agent browse tools). Examples: `/preview/*`,
-`/compose`, any route using `PreviewCodeTabs` or demo sidebars.
+any route using `PreviewCodeTabs` or demo sidebars.
 
 **Symptom:** React reports a hydration mismatch on `data-cursor-ref`
 attributes — often surfacing near `TabsTrigger`, `Button`, `h3`, or `p`
@@ -83,6 +83,24 @@ if you need the full title-overlay control set.
   in demos, not primary UI chrome. See `brands/*.brand.md`.
 
 **Not a bug:** Intentional product rules for the parchment brand system.
+
+## Biome 2.5.0 flags committed SVG assets
+
+**Affects:** `bun run check` (Ultracite + Biome) if `@biomejs/biome` is bumped
+from the pinned `2.4.16` to `2.5.0`+.
+
+**Symptom:** Biome 2.5.0 began linting and formatting `.svg` files. The committed
+assets under `public/` (Next.js defaults + brand logos) then trip
+`lint/a11y/noSvgWithoutTitle`, `assist/source/useSortedAttributes`, and the
+formatter — 25 findings on an otherwise-clean tree.
+
+**Impact:** `bun run check` fails after a naive Biome bump. Held at `2.4.16` in
+[`package.json`](./package.json) since v0.4.1; Ultracite `7.8.3` pairs cleanly
+with it (no peer constraint, so the two can move independently).
+
+**Planned fix:** Add `public/**/*.svg` to Biome's ignore list (or add `<title>`
+elements and sort attributes on the SVGs), then take Biome 2.5.0+. Tracked for a
+future chore release.
 
 ## Anything else?
 

@@ -1,6 +1,6 @@
 # Craftled UI
 
-A craft-led, shadcn-native component library. Charts, blocks, shaders, and primitives — copy/paste with the shadcn CLI.
+A craft-led, shadcn-native component library. Charts, dashboards, CTAs, featured / OG images, and shaders — copy/paste with the shadcn CLI.
 
 **[ui.craftled.com](https://ui.craftled.com)** · [Components](https://ui.craftled.com)
 
@@ -8,7 +8,7 @@ A craft-led, shadcn-native component library. Charts, blocks, shaders, and primi
 
 ## What this is
 
-Craftled UI sits on top of the shadcn ecosystem. Every primitive is shadcn-style — TSX you own, Tailwind classes you can edit, Radix for the unsexy a11y plumbing. No runtime dependency on a published `@craftled/ui` package. You install components by URL through the shadcn CLI, and they land in your repo as plain files.
+Craftled UI sits on top of the shadcn ecosystem. Every block is shadcn-style — TSX you own, Tailwind classes you can edit, built on shadcn's primitives with Radix for the unsexy a11y plumbing. No runtime dependency on a published `@craftled/ui` package. You install components by URL through the shadcn CLI, and they land in your repo as plain files. The base primitives themselves (`button`, `card`, `chart`, `input`) come from shadcn's registry, not this one.
 
 The library is opinionated about taste, not architecture. The value-add is the blocks — featured / OG images, charts, dashboards, CTAs, testimonials, and paper-design shaders — production-ready compositions built on shadcn primitives that you can drop into a site in under a minute.
 
@@ -19,7 +19,7 @@ You'll need [Bun](https://bun.com) (or `pnpm`/`npm`) and a Tailwind v4 project w
 ### Direct URL (simplest)
 
 ```bash
-bunx shadcn@latest add https://ui.craftled.com/r/button.json
+bunx shadcn@latest add https://ui.craftled.com/r/chart-area-gradient.json
 ```
 
 Every component has a registry JSON at `ui.craftled.com/r/<name>.json`. Block items automatically pull in their primitive `registryDependencies` (e.g. installing `dashboard-finance` brings `card`, `chart`, and Recharts with it).
@@ -48,7 +48,7 @@ Human/agent references live under [`brands/`](./brands/). Decorative accents (`-
 
 ### Brand themes (2)
 
-`theme-craftled` · `theme-elevenlabs` — `registry:theme` presets (not listed in the preview sidebar). ElevenLabs is light-only on the docs site; the theme toggle hides while it is active.
+`theme-craftled` · `theme-elevenlabs` — install and usage are covered under **Install → Brand themes** above. Not listed in the preview sidebar; ElevenLabs is light-only on the docs site (the theme toggle hides while it is active).
 
 ## What's inside
 
@@ -144,10 +144,7 @@ For a new **brand theme**, edit `lib/brand-themes.ts` and `brands/<name>.brand.m
 
 ## Stand on the shoulders of giants
 
-Craftled UI is shadcn-native, not a fork. We use shadcn's CLI, registry format, and primitives directly. The custom work is:
-
-1. **Craft-led variants** of the atomic primitives where we have an opinion (Button's layered ring, Card's surface treatment).
-2. **Production-quality blocks** assembled from those primitives, written to be deleted from your repo when you outgrow them.
+Craftled UI is shadcn-native, not a fork. We use shadcn's CLI, registry format, and primitives directly — the base primitives (`button`, `card`, `chart`, `input`) resolve to shadcn's own registry, not ours. The custom work is the **production-quality blocks**: featured / OG images, charts, dashboards, CTAs, testimonials, and paper-design shaders — assembled on those primitives and written to be deleted from your repo when you outgrow them.
 
 Special thanks to **[@shadcn](https://x.com/shadcn)** for the registry pattern that makes any of this possible, **[Paper Design](https://paper.design)** for the shaders, and **[Recharts](https://recharts.org)** for being the only chart library that survives every React major bump.
 
